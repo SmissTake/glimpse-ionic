@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Glimpse",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}

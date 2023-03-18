@@ -1,0 +1,8 @@
+{
+  "name": "Glimpse",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue",
+  "id": "3e7974aa"
+}
