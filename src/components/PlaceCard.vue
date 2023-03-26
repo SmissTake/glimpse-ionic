@@ -1,5 +1,5 @@
 <template>
-  <ion-card>
+  <ion-card @click="cardClicked">
     <img :src="place.imageUrl" />
     <div class="cardInfos">
         <ion-card-header>
@@ -19,34 +19,45 @@
         </ion-card-content>
     </div>
   </ion-card>
+  <PlaceModal :place="place" :is-open="showModal" @close="showModal = false" />
 </template>
 
 <script lang="ts">
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { heartOutline } from 'ionicons/icons';
+import PlaceModal from './PlaceModal.vue';
 
 export default defineComponent({
-  name: 'PlaceCard',
-  components: {
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardContent,
-    IonIcon,
-    IonButton,
-  },
-  props: {
-    place: {
-      type: Object,
-      required: true,
+    name: 'PlaceCard',
+    components: {
+        PlaceModal,
+        IonCard,
+        IonCardHeader,
+        IonCardTitle,
+        IonCardContent,
+        IonIcon,
+        IonButton,
     },
-  },
+    props: {
+        place: {
+        type: Object,
+        required: true,
+        },
+    },
     data() {
         return {
         heartIcon: heartOutline,
+        showModal: false,
         };
     },
+    methods: {
+        cardClicked() {
+            this.showModal = true;
+            console.log('card clicked');
+        },
+    },
+
 });
 </script>
 
