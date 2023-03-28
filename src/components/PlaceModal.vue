@@ -2,7 +2,6 @@
     <ion-modal :is-open="isOpen">
       <ion-header>
         <ion-toolbar>
-          <ion-title>{{ place.title }}</ion-title>
           <ion-buttons slot="end">
             <ion-button @click="$emit('close')">
               <ion-icon slot="icon-only" :icon="closeIcon"></ion-icon>
@@ -13,14 +12,9 @@
       <ion-content>
         <img :src="place.imageUrl" />
         <ion-card-content>
+          <PlaceModalToolBar />
           <div class="posted-by">
             Posted by {{ place.username }}
-          </div>
-          <div class="likes">
-            <ion-button fill="clear" size="small">
-              <ion-icon :icon="heartIcon" />
-            </ion-button>
-            <span class="like-count">{{ place.likes }}</span>
           </div>
           <div class="description">
             {{ place.description }}
@@ -31,23 +25,24 @@
   </template>
   
   <script lang="ts">
-  import { IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonCardContent, IonIcon, IonButton, IonButtons } from '@ionic/vue';
+  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons } from '@ionic/vue';
   import { defineComponent } from 'vue';
   import { closeOutline, heartOutline } from 'ionicons/icons';
+  import PlaceModalToolBar from './PlaceModalToolBar.vue';
   
   export default defineComponent({
     name: 'PlaceModal',
     components: {
-      IonModal,
-      IonHeader,
-      IonToolbar,
-      IonTitle,
-      IonContent,
-      IonCardContent,
-      IonIcon,
-      IonButton,
-      IonButtons,
-    },
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonContent,
+    IonCardContent,
+    IonIcon,
+    IonButton,
+    IonButtons,
+    PlaceModalToolBar
+},
     props: {
       place: {
         type: Object,
