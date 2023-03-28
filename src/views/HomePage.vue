@@ -1,6 +1,24 @@
 <template>
   <ion-page>
-    <ion-content>
+    <ion-header>
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-segment value="home">
+        <ion-segment-button value="home">
+          <ion-icon :icon="sparklesIcon"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="heart">
+          <ion-icon :icon="heartIcon"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="pin">
+          <ion-icon :icon="albumsIcon"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+    <ion-content >
       <div class="example-content">
         <PlaceCard :place="places[0]" />
         <PlaceCard :place="places[1]" />
@@ -13,15 +31,28 @@
 
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
+import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonIcon, IonSegment, IonSegmentButton } from '@ionic/vue';
+import { sparkles, heartOutline, albumsOutline } from 'ionicons/icons';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'MyComponent',
   components: {
     PlaceCard,
+    IonHeader,
+    IonToolbar,
+    IonSearchbar,
+    IonPage,
+    IonContent,
+    IonIcon,
+    IonSegment,
+    IonSegmentButton,
   },
   data() {
     return {
+      sparklesIcon: sparkles,
+      heartIcon: heartOutline,
+      albumsIcon: albumsOutline,
       places: [
         {
           id: 0,
