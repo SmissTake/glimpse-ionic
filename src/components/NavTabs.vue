@@ -30,7 +30,7 @@
   <script lang="ts">
     import { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon } from '@ionic/vue';
   
-    import { homeOutline, heartOutline, atCircle, notificationsOutline, personOutline, addOutline } from 'ionicons/icons';
+    import { homeOutline, heartOutline, notificationsOutline, personOutline, addOutline } from 'ionicons/icons';
   
     export default {
       components: { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon },
