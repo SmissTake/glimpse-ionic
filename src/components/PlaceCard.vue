@@ -1,6 +1,6 @@
 <template>
   <ion-card @click="cardClicked">
-    <img :src="place.imageUrl" />
+    <ion-img :src="place.imageUrl" />
     <div class="cardInfos">
         <ion-card-header>
           <ion-card-title>{{ place.title }} - {{ place.category }}</ion-card-title>
