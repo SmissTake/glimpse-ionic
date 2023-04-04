@@ -1,38 +1,19 @@
 <template>
   <ion-page>
     <ion-header>
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
-    <ion-toolbar>
-      <ion-segment value="home">
-        <ion-segment-button value="home">
-          <ion-icon :icon="sparklesIcon"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button value="heart">
-          <ion-icon :icon="heartIcon"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button value="pin">
-          <ion-icon :icon="albumsIcon"></ion-icon>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ion-header>
+      <ion-toolbar>
+        <ion-searchbar></ion-searchbar>
+      </ion-toolbar>
+    </ion-header>
     <ion-content >
-      <div class="example-content">
-        <PlaceCard :place="places[0]" />
-        <PlaceCard :place="places[1]" />
-        <PlaceCard :place="places[2]" />
-        <!-- ... -->
-      </div>
+        <PlaceCard v-for="place in places" :key="place.id" :place="place" />
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
-import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonIcon, IonSegment, IonSegmentButton } from '@ionic/vue';
-import { sparkles, heartOutline, albumsOutline } from 'ionicons/icons';
+import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -44,21 +25,15 @@ export default defineComponent({
     IonSearchbar,
     IonPage,
     IonContent,
-    IonIcon,
-    IonSegment,
-    IonSegmentButton,
   },
   data() {
     return {
-      sparklesIcon: sparkles,
-      heartIcon: heartOutline,
-      albumsIcon: albumsOutline,
       places: [
         {
           id: 0,
           title: 'Fonderie Abandonnée',
           category: 'Industriel',
-          imageUrl: 'https://via.placeholder.com/500x300',
+          imageUrl: 'https://i.pinimg.com/564x/3f/06/5d/3f065dffd939e56ef443dafd3fa08f38.jpg',
           userId: 1,
           username: 'User2',
           likes: 10,
@@ -67,7 +42,7 @@ export default defineComponent({
           id: 1,
           title: 'Cimetière de bateaux',
           category: 'Autre',
-          imageUrl: 'https://via.placeholder.com/500x300',
+          imageUrl: 'https://i.pinimg.com/564x/6a/9f/4e/6a9f4e68a7e7684ed34c026645b8b1fb.jpg',
           userId: 1,
           username: 'User1',
           likes: 10,
@@ -76,7 +51,7 @@ export default defineComponent({
           id: 2,
           title: 'Fonderie Abandonnée',
           category: 'Outdoor',
-          imageUrl: 'https://via.placeholder.com/500x300',
+          imageUrl: 'https://i.pinimg.com/564x/4f/3a/b2/4f3ab22726426ffa115152af04de4f02.jpg',
           userId: 1,
           username: 'John Doe',
           likes: 10,
