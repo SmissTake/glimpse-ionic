@@ -1,6 +1,6 @@
 <template>
   <ion-card @click="cardClicked">
-    <ion-img :src="place.imageUrl" />
+    <ion-img :src="place.imageUrl" class="card-image"/>
     <div class="cardInfos">
         <ion-card-header>
           <ion-card-title>{{ place.title }} - {{ place.category }}</ion-card-title>
@@ -82,5 +82,11 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 </style>

@@ -10,7 +10,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding-bottom">
-        <img :src="place.imageUrl" />
+        <img :src="place.imageUrl" class="place-image"/>
         <ion-card-content class="ion-margin-bottom">
           <PlaceModalToolBar />
           <ion-row class="place-data">
@@ -192,6 +192,12 @@
 
   .place-data {
     border-top: #8c8c8c solid 1px;
+  }
+
+  .place-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
   }
   </style>
   
