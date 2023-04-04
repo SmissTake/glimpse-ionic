@@ -65,6 +65,7 @@
           </div>
           <div class="comments">
             <h2>Commentaires</h2>
+            <CommentInput/>
             <div v-if="placeAPI.comments.length > 0">
               <p>
                 {{ placeAPI.comments.length }} commentaire(s)
@@ -91,6 +92,7 @@
   import PlaceModalToolBar from './PlaceModalToolBar.vue';
   import CommentPlace from './CommentPlace.vue';
   import UserAvatar from './UserAvatar.vue';
+import CommentInput from './CommentInput.vue';
   
   export default defineComponent({
     name: 'PlaceModal',
@@ -105,7 +107,8 @@
     IonButtons,
     PlaceModalToolBar,
     CommentPlace,
-    UserAvatar
+    UserAvatar,
+    CommentInput
 },
     props: {
       place: {
