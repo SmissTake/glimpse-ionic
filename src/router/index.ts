@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../components/NavTabs.vue';
+import { usePlaceStore } from '../stores';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'home',
         component: () => import('../views/HomePage.vue'),
+        beforeEnter: (to, from, next) => {
+          const store = usePlaceStore();
+          if (store.places.length > 0) next();
+        
+          store.fetchPlaces().then(() => {
+            next();
+          });
+        },
       },
       {
         path: 'like',
