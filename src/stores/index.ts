@@ -24,11 +24,11 @@ export const usePlaceStore = defineStore("places", {
     },
     actions: {
         async fetchPlaces() {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/places/listall`);
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/place/listall`);
             this.places = await res.json();
         },
         async fetchPlace(id: number) {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/places/show/${id}`);
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/place/show/${id}`);
             this.places = await res.json();
         }
     }
