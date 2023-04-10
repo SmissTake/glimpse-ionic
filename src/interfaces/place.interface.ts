@@ -12,10 +12,10 @@ export interface Place {
     history: string | null;
     town: string | null;
     keyword: string;
-    picturePlaces: Picture[];
+    PicturePlaces: Picture[];
     postedBy: User;
-    category: Category;
-    accessibility: Accessibility;
-    comments: CommentPlace[] | null;
-    favoriteUsers: User[] | null;
+    Category: Category;
+    Accessibility: Accessibility;
+    Comments: CommentPlace[] | null;
+    favoriteUsers: {} | null;
 }

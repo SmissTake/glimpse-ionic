@@ -28,8 +28,5 @@ export const usePlaceStore = defineStore("places", {
         setPlaces(places: Place[]) {
             this.places = places;
         },
-        setPlace(place: Place) {
-            this.places.push(place);
-        },
     }
 })

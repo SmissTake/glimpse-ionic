@@ -1,11 +1,12 @@
 <template>
   <ion-card @click="cardClicked">
-    <ion-img :src="place.imageUrl" class="card-image"/>
+    <ion-img v-if="place.PicturePlace" :src="place.PicturePlace.url" class="card-image"/>
+    <ion-img v-else src="https://picsum.photos/640/360" class="card-image"/>
     <div class="cardInfos">
         <ion-card-header>
-          <ion-card-title>{{ place.title }} - {{ place.category }}</ion-card-title>
+          <ion-card-title>{{ place.title }} - {{ place.Category.label }}</ion-card-title>
           <div class="posted-by">
-            Posted by {{ place.username }}
+            Posted by {{ place.postedBy.pseudonym }}
             <!-- <router-link :to="{ name: 'User', params: { userId: place.userId } }">{{ place.username }}</router-link> -->
           </div>
         </ion-card-header>
@@ -19,7 +20,7 @@
         </ion-card-content>
     </div>
   </ion-card>
-  <PlaceModal :place="place" :is-open="showModal" @close="showModal = false" />
+  <PlaceModal :placeId="place.id" :placeCardInfo="place" :is-open="showModal" @close="showModal = false"/>
 </template>
 
 <script lang="ts">
@@ -54,7 +55,6 @@ export default defineComponent({
     methods: {
         cardClicked() {
             this.showModal = true;
-            console.log('card clicked');
         },
     },
 

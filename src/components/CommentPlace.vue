@@ -2,20 +2,22 @@
     <ion-grid>
         <ion-row>
             <ion-col size="auto">
-                <UserAvatar :userAvatar="comment.userAvatar" />
+                <!-- <UserAvatar :userAvatar="CommentPlace.User.avatar" /> -->
+                <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="user-avatar"/>
             </ion-col>
             <ion-col>
                 <p class="username">
-                    {{ comment.username }}
+                    <!-- {{ CommentPlace.User.pseudonym }} -->
+                    UserComment
                 </p>
                 <p class="comment">
-                    {{ comment.comment }}
+                    {{ CommentPlace.comment }}
                 </p>
             </ion-col>
         </ion-row>
         <ion-row class="ion-justify-content-end">
-            <ion-col v-for="image in comment.images" :key="image"  size="2">
-                <img :src="image" class="comment-image"/>
+            <ion-col v-for="(image, index) in CommentPlace.PictureComments" :key="index"  size="2">
+                <img :src="image.url" class="comment-image"/>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -24,13 +26,14 @@
 <script lang="ts">
     import { IonCol, IonRow, IonGrid } from '@ionic/vue';
     import { defineComponent } from 'vue';
-    import UserAvatar from './UserAvatar.vue';
+    import { CommentPlace } from '@/interfaces/comment.interface';
+    // import UserAvatar from './UserAvatar.vue';
 
     export default defineComponent({
-        components: { IonCol, IonRow, IonGrid, UserAvatar },
+        components: { IonCol, IonRow, IonGrid },
         props: {
-            comment: {
-                type: Object as () => Comment,
+            CommentPlace: {
+                type: Object as () => CommentPlace,
                 required: true,
             },
         },

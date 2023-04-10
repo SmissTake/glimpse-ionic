@@ -1,5 +1,6 @@
 <template>
-    <img :src="userAvatar" class="user-avatar"/>
+    <img v-if="userAvatar" :src="userAvatar" class="user-avatar"/>
+    <img v-else src="https://picsum.photos/640/360" class="user-avatar"/>
 </template>
 
 <script lang="ts">

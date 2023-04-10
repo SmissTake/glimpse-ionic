@@ -10,7 +10,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content v-if="place" class="ion-padding-bottom">
-        <div v-for="(picture, index) in place.picturePlaces" :key="index">
+        <div v-for="(picture, index) in place.PicturePlaces" :key="index">
           <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
           <ion-img src="https://picsum.photos/640/360" class="card-image"/>
         </div>
@@ -19,11 +19,11 @@
           <ion-row class="place-data">
             <ion-col class="flex">
               <ion-icon :icon="accessibilityIcon"></ion-icon>
-              <span>{{ place.accessibility }}</span>
+              <span>{{ place.Accessibility.label }}</span>
             </ion-col>
             <ion-col class="flex">
               <ion-icon :icon="businessIcon"></ion-icon>
-              <span>{{ place.category }}</span>
+              <span>{{ place.Category.label }}</span>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -69,12 +69,12 @@
           <div class="comments">
             <h2>Commentaires</h2>
             <CommentInput :idPlace="placeId"/>
-            <div v-if="place.comments">
+            <div v-if="place.Comments">
               <p>
-                {{ place.comments.length }} commentaire(s)
+                {{ place.Comments.length }} commentaire(s)
               </p>
-              <div v-for="comment in place.comments" :key="comment.id">
-                <CommentPlace :commentPlace="comment" />
+              <div v-for="comment in place.Comments" :key="comment.id">
+                <CommentPlace :CommentPlace="comment" />
               </div>
             </div>
             <div v-else>
@@ -95,7 +95,7 @@
   
   <script lang="ts">
   import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons } from '@ionic/vue';
-  import { defineComponent, onMounted } from 'vue';
+  import { defineComponent } from 'vue';
   import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
   import PlaceModalToolBar from './PlaceModalToolBar.vue';
   import CommentPlace from './CommentPlace.vue';
@@ -136,7 +136,6 @@ import { Place } from '@/interfaces/place.interface';
         accessibilityIcon: accessibilityOutline,
         businessIcon: businessOutline,
         place: {} as Place,
-
       };
     },
     mounted(){
@@ -144,7 +143,8 @@ import { Place } from '@/interfaces/place.interface';
         .then((response) => response.json())
         .then((data) => {
           this.place = data;
-          console.log(this.place.favoriteUsers);
+          //display the place data
+          console.log(this.place);
         });
     }
   });

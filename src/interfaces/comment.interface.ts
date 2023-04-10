@@ -5,8 +5,8 @@ import { Picture } from './picture.interface';
 export interface CommentPlace {
     id: number;
     comment: string;
-    user: User;
-    place: Place;
+    User: User;
+    Place: Place;
     created_at: string;
     PictureComments: Picture[] | null;
 }
