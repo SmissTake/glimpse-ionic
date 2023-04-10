@@ -9,14 +9,17 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding-bottom">
-        <img :src="place.imageUrl" class="place-image"/>
+      <ion-content v-if="place" class="ion-padding-bottom">
+        <div v-for="(picture, index) in place.picturePlaces" :key="index">
+          <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
+          <ion-img src="https://picsum.photos/640/360" class="card-image"/>
+        </div>
         <ion-card-content class="ion-margin-bottom">
           <PlaceModalToolBar />
           <ion-row class="place-data">
             <ion-col class="flex">
               <ion-icon :icon="accessibilityIcon"></ion-icon>
-              <span>{{ placeAPI.accessibility }}</span>
+              <span>{{ place.accessibility }}</span>
             </ion-col>
             <ion-col class="flex">
               <ion-icon :icon="businessIcon"></ion-icon>
@@ -32,49 +35,49 @@
                 <ion-row>
                   <ion-col>
                     <p class="username">
-                      {{ place.username }}
+                      {{ place.postedBy.pseudonym }}
                     </p>
                     <p class="posted-at">
-                      {{ placeAPI.postedAt }}
+                      {{ place.createdAt }}
                     </p>
                   </ion-col>
                   <ion-col class="flex">
-                    <UserAvatar :userAvatar="placeAPI.userAvatar" />
+                    <UserAvatar :userAvatar="place.postedBy.avatar" />
                   </ion-col>
                 </ion-row>
               </div>
             </ion-col>
           </ion-row>
           <div class="description">
-            <h2>Déscription</h2>
+            <h2>Description</h2>
             <p>
-              {{ placeAPI.description }}
+              {{ place.description }}
             </p>
           </div>
           <div class="history">
             <h2>Histoire</h2>
             <p>
-              {{ placeAPI.history }}
+              {{ place.history }}
             </p>
           </div>
           <div class="keywords">
             <h2>Mots clés</h2>
             <p>
-              {{ placeAPI.keywords }}
+              {{ place.keyword }}
             </p>
           </div>
           <div class="comments">
             <h2>Commentaires</h2>
-            <CommentInput/>
-            <div v-if="placeAPI.comments.length > 0">
+            <CommentInput :idPlace="placeId"/>
+            <div v-if="place.comments">
               <p>
-                {{ placeAPI.comments.length }} commentaire(s)
+                {{ place.comments.length }} commentaire(s)
               </p>
-              <div v-for="comment in placeAPI.comments" :key="comment.id">
-                <CommentPlace :comment="comment" />
+              <div v-for="comment in place.comments" :key="comment.id">
+                <CommentPlace :commentPlace="comment" />
               </div>
             </div>
-            <div v-if="placeAPI.comments.length === 0">
+            <div v-else>
               <p>
                 Aucun commentaire pour le moment.
               </p>
@@ -82,17 +85,23 @@
           </div>
         </ion-card-content>
       </ion-content>
+      <ion-content v-else>
+          <p>
+            Aucun lieu trouvé.
+          </p>
+        </ion-content>
     </ion-modal>
   </template>
   
   <script lang="ts">
   import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons } from '@ionic/vue';
-  import { defineComponent } from 'vue';
-  import { closeOutline, heartOutline, accessibilityOutline, businessOutline } from 'ionicons/icons';
+  import { defineComponent, onMounted } from 'vue';
+  import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
   import PlaceModalToolBar from './PlaceModalToolBar.vue';
   import CommentPlace from './CommentPlace.vue';
   import UserAvatar from './UserAvatar.vue';
-import CommentInput from './CommentInput.vue';
+  import CommentInput from './CommentInput.vue';
+import { Place } from '@/interfaces/place.interface';
   
   export default defineComponent({
     name: 'PlaceModal',
@@ -111,14 +120,14 @@ import CommentInput from './CommentInput.vue';
     CommentInput
 },
     props: {
-      place: {
-        type: Object,
-        required: true,
-      },
       isOpen: {
         type: Boolean,
         required: true,
-      }
+      },
+      placeId: {
+        type: Number,
+        required: true,
+      },
     },
     data() {
       return {
@@ -126,31 +135,18 @@ import CommentInput from './CommentInput.vue';
         heartIcon: heartOutline,
         accessibilityIcon: accessibilityOutline,
         businessIcon: businessOutline,
-        placeAPI : {
-          description: 'Fonderie Abandonnée dans les alentours de Rennes. Lieu agréable mais protégé et parfois dangereux',
-          history: 'Bâtie en 1908, la fonderie de savon était idéalement située, à la fois proche d’une ligne de chemin de fer et d’un lac. Après avoir résisté pendant les deux Guerres Mondiales, la fonderie passe en liquidation judiciaire en 1973 et l’ensemble de ses 120 employés sont licenciés. Elle est rachetée, mais au bout de 15 ans, en 1988, elle ferme définitivement. Depuis 10 ans, la fonderie appartient à L’Etat et est à l’abandon pour attendre sa dépollution (encore longtemps).',
-          postedAt: '17/12/2023',
-          userAvatar: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-          accessibility: 'Moyen',
-          keywords: "fonderie,abandonnée,rennes,savon,lac,dangereux, protege",
-          comments: [{
-            id: 0,
-            username: "Jean",
-            comment: "Superbe endroit, je recommande !",
-            postedAt: "17/12/2023",
-            userAvatar: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-          },
-          {
-            id: 1,
-            username: "Michel",
-            comment: "J'y suis allé, c'est vraiment très beau !",
-            postedAt: "17/12/2023",
-            userAvatar: "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-            images: ["https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png", "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"]
-          }]
-        }
+        place: {} as Place,
+
       };
     },
+    mounted(){
+      fetch(`${process.env.VUE_APP_API_URL}/place/show/${this.placeId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.place = data;
+          console.log(this.place.favoriteUsers);
+        });
+    }
   });
   </script>
   

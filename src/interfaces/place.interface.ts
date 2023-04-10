@@ -2,20 +2,20 @@ import { User } from './user.interface';
 import { Category } from './category.interface';
 import { Accessibility } from './accessibility.interface';
 import { Picture } from './picture.interface';
-import { Comment } from './comment.interface';
+import { CommentPlace } from './comment.interface';
 
 export interface Place {
     id: number;
     title: string;
-    created_at: string;
+    createdAt: string;
     description: string;
     history: string | null;
     town: string | null;
     keyword: string;
-    PicturePlaces: Picture[];
+    picturePlaces: Picture[];
     postedBy: User;
-    Category: Category;
-    Accessibility: Accessibility;
-    FavoriteUsers: User[] | null;
-    Comments: Comment[] | null;
+    category: Category;
+    accessibility: Accessibility;
+    comments: CommentPlace[] | null;
+    favoriteUsers: User[] | null;
 }

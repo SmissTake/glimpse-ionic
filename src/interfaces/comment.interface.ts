@@ -2,7 +2,7 @@ import { User } from './user.interface';
 import { Place } from './place.interface';
 import { Picture } from './picture.interface';
 
-export interface Comment {
+export interface CommentPlace {
     id: number;
     comment: string;
     user: User;

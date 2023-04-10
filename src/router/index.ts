@@ -26,7 +26,6 @@ const routes: Array<RouteRecordRaw> = [
           store.fetchPlaces().then(() => {
             next();
           });
-          console.log(store.places);
         },
       },
       {
