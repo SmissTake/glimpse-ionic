@@ -1,5 +1,5 @@
 <template>
-  <ion-card @click="cardClicked">
+  <ion-card @click="cardClicked" v-if="place">
     <ion-img v-if="place.PicturePlace" :src="place.PicturePlace.url" class="card-image"/>
     <ion-img v-else src="https://picsum.photos/640/360" class="card-image"/>
     <div class="cardInfos">
@@ -20,11 +20,33 @@
         </ion-card-content>
     </div>
   </ion-card>
-  <PlaceModal :placeId="place.id" :placeCardInfo="place" :is-open="showModal" @close="showModal = false"/>
+  <PlaceModal v-if="place" :placeId="place.id" :placeCardInfo="place" :is-open="showModal" @close="showModal = false"/>
+
+  <ion-card v-else>
+    <ion-skeleton-text animated style="width: 100%; height: 200px;"></ion-skeleton-text>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-skeleton-text animated style="width: 100%; height: 20px;"></ion-skeleton-text>
+      </ion-card-title>
+      <div class="posted-by">
+        <ion-skeleton-text animated style="width: 100%; height: 20px;"></ion-skeleton-text>
+      </div>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="likes">
+        <ion-button fill="clear" size="small">
+          <ion-skeleton-text animated style="width: 20px; height: 20px;"></ion-skeleton-text>
+        </ion-button>
+        <span class="like-count">
+          <ion-skeleton-text animated style="width: 30px; height: 20px;"></ion-skeleton-text>
+        </span>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonButton } from '@ionic/vue';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonButton, IonSkeletonText, IonImg } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { heartOutline } from 'ionicons/icons';
 import PlaceModal from './PlaceModal.vue';
@@ -39,11 +61,17 @@ export default defineComponent({
         IonCardContent,
         IonIcon,
         IonButton,
+        IonSkeletonText,
+        IonImg,
     },
     props: {
         place: {
         type: Object,
-        required: true,
+        required: false,
+        },
+        loadedSkeleton: {
+            type: Boolean,
+            required: false,
         },
     },
     data() {

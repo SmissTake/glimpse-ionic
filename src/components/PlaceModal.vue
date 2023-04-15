@@ -1,5 +1,5 @@
 <template>
-    <ion-modal :is-open="isOpen">
+    <ion-modal :is-open="isOpen" :presenting-element="presentingElement" v-if="loaded">
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="end">
@@ -91,11 +91,201 @@
           </p>
         </ion-content>
     </ion-modal>
+    <ion-modal v-else>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button @click="$emit('close')">
+              <ion-icon slot="icon-only" :icon="closeIcon"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content v-if="place" class="ion-padding-bottom">
+        <div v-for="(picture, index) in place.PicturePlaces" :key="index">
+          <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
+          <ion-img src="https://picsum.photos/640/360" class="card-image"/>
+        </div>
+        <ion-card-content class="ion-margin-bottom">
+          <PlaceModalToolBar />
+          <ion-row class="place-data">
+            <ion-col class="flex">
+              <ion-icon :icon="accessibilityIcon"></ion-icon>
+              <span>{{ place.Accessibility.label }}</span>
+            </ion-col>
+            <ion-col class="flex">
+              <ion-icon :icon="businessIcon"></ion-icon>
+              <span>{{ place.Category.label }}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h1>{{ place.title }}</h1>
+            </ion-col>
+            <ion-col>
+              <div class="posted-by">
+                <ion-row>
+                  <ion-col>
+                    <p class="username">
+                      {{ place.postedBy.pseudonym }}
+                    </p>
+                    <p class="posted-at">
+                      {{ place.createdAt }}
+                    </p>
+                  </ion-col>
+                  <ion-col class="flex">
+                    <UserAvatar :userAvatar="place.postedBy.avatar" />
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+          </ion-row>
+          <div class="description">
+            <h2>Description</h2>
+            <p>
+              {{ place.description }}
+            </p>
+          </div>
+          <div class="history">
+            <h2>Histoire</h2>
+            <p>
+              {{ place.history }}
+            </p>
+          </div>
+          <div class="keywords">
+            <h2>Mots clés</h2>
+            <p>
+              {{ place.keyword }}
+            </p>
+          </div>
+          <div class="comments">
+            <h2>Commentaires</h2>
+            <CommentInput :idPlace="placeId"/>
+            <div v-if="place.Comments">
+              <p>
+                {{ place.Comments.length }} commentaire(s)
+              </p>
+              <div v-for="comment in place.Comments" :key="comment.id">
+                <CommentPlace :CommentPlace="comment" />
+              </div>
+            </div>
+            <div v-else>
+              <p>
+                Aucun commentaire pour le moment.
+              </p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-content>
+      
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button @click="$emit('close')">
+              <ion-icon slot="icon-only" :icon="closeIcon"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding-bottom">
+        <div>
+          <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
+          <ion-img class="card-image">
+            <ion-skeleton-text :animated="true" />
+          </ion-img>
+        </div>
+        <ion-card-content class="ion-margin-bottom">
+          <PlaceModalToolBar />
+          <ion-row class="place-data">
+            <ion-col class="flex">
+              <ion-icon :icon="accessibilityIcon"></ion-icon>
+              <span>
+                <ion-skeleton-text :animated="true" width="70px" />
+              </span>
+            </ion-col>
+            <ion-col class="flex">
+              <ion-icon :icon="businessIcon"></ion-icon>
+              <span>
+                <ion-skeleton-text :animated="true" width="70px" />
+              </span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h1>
+                <ion-skeleton-text :animated="true" width="80%" />
+              </h1>
+            </ion-col>
+            <ion-col>
+              <div class="posted-by">
+                <ion-row>
+                  <ion-col>
+                    <p class="username">
+                      <ion-skeleton-text :animated="true" width="70px" />
+                    </p>
+                    <p class="posted-at">
+                      <ion-skeleton-text :animated="true" width="50px" />
+                    </p>
+                  </ion-col>
+                  <ion-col class="flex">
+                    <ion-thumbnail slot="start">
+                      <ion-skeleton-text :animated="true"/>
+                    </ion-thumbnail>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-col>
+          </ion-row>
+          <div class="description">
+            <h2>
+              <ion-skeleton-text :animated="true" width="100px" />
+            </h2>
+            <p>
+              <ion-skeleton-text :animated="true" width="100%" />
+              <ion-skeleton-text :animated="true" width="80%" />
+              <ion-skeleton-text :animated="true" width="90%" />
+              <ion-skeleton-text :animated="true" width="70%" />
+            </p>
+          </div>
+          <div class="history">
+            <h2>
+              <ion-skeleton-text :animated="true" width="100px" />
+            </h2>
+            <p>
+              <ion-skeleton-text :animated="true" width="100%" />
+              <ion-skeleton-text :animated="true" width="80%" />
+              <ion-skeleton-text :animated="true" width="90%" />
+              <ion-skeleton-text :animated="true" width="70%" />
+            </p>
+          </div>
+          <div class="keywords">
+            <h2>
+              <ion-skeleton-text :animated="true" width="100px" />
+            </h2>
+            <p>
+              <ion-skeleton-text :animated="true" width="100%" />
+              <ion-skeleton-text :animated="true" width="80%" />
+            </p>
+          </div>
+          <div class="comments">
+            <h2>
+              <ion-skeleton-text :animated="true" width="100px" />
+            </h2>
+            <CommentInput :idPlace="placeId"/>
+            <div v-if="place.Comments">
+              <p>
+                <ion-skeleton-text :animated="true" width="70px" />
+              </p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-content>
+    </ion-modal>
   </template>
   
   <script lang="ts">
-  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons } from '@ionic/vue';
-  import { defineComponent } from 'vue';
+  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonSkeletonText, IonThumbnail } from '@ionic/vue';
+  import { defineComponent, ref } from 'vue';
   import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
   import PlaceModalToolBar from './PlaceModalToolBar.vue';
   import CommentPlace from './CommentPlace.vue';
@@ -117,7 +307,9 @@ import { Place } from '@/interfaces/place.interface';
     PlaceModalToolBar,
     CommentPlace,
     UserAvatar,
-    CommentInput
+    CommentInput,
+    IonSkeletonText,
+    IonThumbnail
 },
     props: {
       isOpen: {
@@ -128,6 +320,12 @@ import { Place } from '@/interfaces/place.interface';
         type: Number,
         required: true,
       },
+      presentingElement: null
+    },
+    setup(){
+      const loaded = ref(false);
+      const setLoaded = (state: boolean) => loaded.value = state;
+      return { loaded, setLoaded };
     },
     data() {
       return {
@@ -143,8 +341,11 @@ import { Place } from '@/interfaces/place.interface';
         .then((response) => response.json())
         .then((data) => {
           this.place = data;
-          //display the place data
+          this.setLoaded(true);
           console.log(this.place);
+        })
+        .catch((error) => {
+          console.error(error);
         });
     }
   });
