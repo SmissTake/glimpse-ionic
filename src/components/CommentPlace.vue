@@ -2,13 +2,12 @@
     <ion-grid>
         <ion-row>
             <ion-col size="auto">
-                <!-- <UserAvatar :userAvatar="CommentPlace.User.avatar" /> -->
-                <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" class="user-avatar"/>
+                <UserAvatar v-if="CommentPlace.postedBy.avatar" :userAvatar="CommentPlace.postedBy.avatar" />
+                <UserAvatar v-else userAvatar="https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder-300-grey.jpg" />
             </ion-col>
             <ion-col>
                 <p class="username">
-                    <!-- {{ CommentPlace.User.pseudonym }} -->
-                    UserComment
+                    {{ CommentPlace.postedBy.pseudonym }}
                 </p>
                 <p class="comment">
                     {{ CommentPlace.comment }}
@@ -27,10 +26,10 @@
     import { IonCol, IonRow, IonGrid } from '@ionic/vue';
     import { defineComponent } from 'vue';
     import { CommentPlace } from '@/interfaces/comment.interface';
-    // import UserAvatar from './UserAvatar.vue';
+    import UserAvatar from './UserAvatar.vue';
 
     export default defineComponent({
-        components: { IonCol, IonRow, IonGrid },
+        components: { IonCol, IonRow, IonGrid, UserAvatar },
         props: {
             CommentPlace: {
                 type: Object as () => CommentPlace,
