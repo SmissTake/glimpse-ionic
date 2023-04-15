@@ -35,6 +35,16 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'add',
         component: () => import('../views/AddPage.vue'),
+        beforeEnter: (to, from, next) => {
+          const categoriesStore = usePlaceStore();
+          if (categoriesStore.categories.length > 0 && categoriesStore.accessibilities.length > 0) next();
+          
+          categoriesStore.fetchCategories().then(() => {
+            categoriesStore.fetchAccessibilities().then(() => {
+              next();
+            });
+          });
+        },
       },
       {
         path: 'notifications',

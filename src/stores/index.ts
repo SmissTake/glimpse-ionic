@@ -18,15 +18,30 @@ export const usePlaceStore = defineStore("places", {
     getters: {
         getPlaces: (state) => state.places,
         getUsers: (state) => state.users,
+        getCategories: (state) => state.categories,
+        getAccessibilities: (state) => state.accessibilities,
     },
     actions: {
         async fetchPlaces() {
             const res = await fetch(`${process.env.VUE_APP_API_URL}/place/listall`);
-            this.places = await res.json();
-            await this.setPlaces(this.places);
+            this.setPlaces(await res.json());
+        },
+        async fetchCategories() {
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/category/listall`);
+            this.setCategories(await res.json());
+        },
+        async fetchAccessibilities() {
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/accessibility/listall`);
+            this.setAccessibilities(await res.json());
         },
         setPlaces(places: Place[]) {
             this.places = places;
         },
+        setCategories(categories: Category[]) {
+            this.categories = categories;
+        },
+        setAccessibilities(accessibilities: Accessibility[]) {
+            this.accessibilities = accessibilities;
+        }
     }
 })
