@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { IonItem, IonInput, IonRow, IonButton } from '@ionic/vue';
+import { IonItem, IonInput, IonRow, IonButton, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { sendOutline } from 'ionicons/icons';
 
@@ -21,6 +21,7 @@ export default defineComponent({
         IonInput,
         IonRow,
         IonButton,
+        IonIcon,
     },
     props: {
         idPlace: {

@@ -284,7 +284,7 @@
   </template>
   
   <script lang="ts">
-  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonSkeletonText, IonThumbnail } from '@ionic/vue';
+  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonSkeletonText, IonThumbnail, IonCol, IonRow, IonImg } from '@ionic/vue';
   import { defineComponent, ref } from 'vue';
   import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
   import PlaceModalToolBar from './PlaceModalToolBar.vue';
@@ -309,7 +309,10 @@ import { Place } from '@/interfaces/place.interface';
     UserAvatar,
     CommentInput,
     IonSkeletonText,
-    IonThumbnail
+    IonThumbnail,
+    IonCol,
+    IonRow,
+    IonImg
 },
     props: {
       isOpen: {
