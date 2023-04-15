@@ -10,10 +10,12 @@
         </ion-toolbar>
       </ion-header>
       <ion-content v-if="place" class="ion-padding-bottom">
-        <div v-for="(picture, index) in place.PicturePlaces" :key="index">
-          <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
-          <ion-img src="https://picsum.photos/640/360" class="card-image"/>
-        </div>
+        <swiper>
+          <swiper-slide v-for="(picture, index) in place.PicturePlaces" :key="index">
+            <!-- <img v-if="picture.url" :src="picture.url" class="place-image"/> -->
+            <ion-img src="https://picsum.photos/640/360" class="card-image"/>
+          </swiper-slide>
+        </swiper>
         <ion-card-content class="ion-margin-bottom">
           <PlaceModalToolBar />
           <ion-row class="place-data">
@@ -291,7 +293,9 @@
   import CommentPlace from './CommentPlace.vue';
   import UserAvatar from './UserAvatar.vue';
   import CommentInput from './CommentInput.vue';
-import { Place } from '@/interfaces/place.interface';
+  import { Place } from '@/interfaces/place.interface';
+  import 'swiper/css';
+  import { Swiper, SwiperSlide } from 'swiper/vue';
   
   export default defineComponent({
     name: 'PlaceModal',
@@ -312,7 +316,9 @@ import { Place } from '@/interfaces/place.interface';
     IonThumbnail,
     IonCol,
     IonRow,
-    IonImg
+    IonImg,
+    Swiper,
+    SwiperSlide
 },
     props: {
       isOpen: {
