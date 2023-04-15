@@ -12,8 +12,7 @@
       <ion-content v-if="place" class="ion-padding-bottom">
         <swiper>
           <swiper-slide v-for="(picture, index) in place.PicturePlaces" :key="index">
-            <!-- <img v-if="picture.url" :src="picture.url" class="place-image" loading="lazy" /> -->
-            <ion-img src="https://picsum.photos/640/360" class="card-image" loading="lazy"/>
+            <img v-if="imageSource+'/'+picture.url" :src="imageSource+'/'+picture.url" class="place-image" loading="lazy" />
           </swiper-slide>
         </swiper>
         <ion-card-content class="ion-margin-bottom">
@@ -343,6 +342,7 @@
         accessibilityIcon: accessibilityOutline,
         businessIcon: businessOutline,
         place: {} as Place,
+        imageSource : process.env.VUE_APP_API_URL,
       };
     },
     mounted(){

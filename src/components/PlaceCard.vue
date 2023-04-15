@@ -1,6 +1,7 @@
 <template>
   <ion-card @click="cardClicked" v-if="place">
-    <ion-img v-if="place.PicturePlace" :src="place.PicturePlace.url" class="card-image"/>
+    <ion-img v-if="place.PicturePlaces[0]" :src="imageSource+'/'+place.PicturePlaces[0].url" class="card-image"/>
+    
     <ion-img v-else src="https://picsum.photos/640/360" class="card-image"/>
     <div class="cardInfos">
         <ion-card-header>
@@ -12,9 +13,7 @@
         </ion-card-header>
         <ion-card-content>
           <div class="likes">
-            <ion-button fill="clear" size="small">
-              <ion-icon :icon="heartIcon" />
-            </ion-button>
+            <LikeButton :placeId="place.id" />
             <span class="like-count">{{ place.likes }}</span>
           </div>
         </ion-card-content>
@@ -46,24 +45,25 @@
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonIcon, IonButton, IonSkeletonText, IonImg } from '@ionic/vue';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonSkeletonText, IonImg } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { heartOutline } from 'ionicons/icons';
 import PlaceModal from './PlaceModal.vue';
+import LikeButton from './LikeButton.vue';
 
 export default defineComponent({
     name: 'PlaceCard',
     components: {
-        PlaceModal,
-        IonCard,
-        IonCardHeader,
-        IonCardTitle,
-        IonCardContent,
-        IonIcon,
-        IonButton,
-        IonSkeletonText,
-        IonImg,
-    },
+    PlaceModal,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonButton,
+    IonSkeletonText,
+    IonImg,
+    LikeButton
+},
     props: {
         place: {
         type: Object,
@@ -78,6 +78,7 @@ export default defineComponent({
         return {
         heartIcon: heartOutline,
         showModal: false,
+        imageSource : process.env.VUE_APP_API_URL,
         };
     },
     methods: {
@@ -85,7 +86,6 @@ export default defineComponent({
             this.showModal = true;
         },
     },
-
 });
 </script>
 
