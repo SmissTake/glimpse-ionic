@@ -3,7 +3,6 @@
   <ion-item>
     <ion-label position="stacked">{{ label }}</ion-label>
     <ion-input
-      :type="type"
       :placeholder="placeholder"
       :value="value"
       @input="onInput"
