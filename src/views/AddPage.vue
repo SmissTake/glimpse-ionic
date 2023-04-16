@@ -133,7 +133,7 @@ export default defineComponent({
         accessibilitiesId: "",
         keyword: "",
         image: [],
-        usersId: 1,
+        usersId: `${process.env.VUE_APP_USER_ID}`,
       },
     }
   },
@@ -157,28 +157,24 @@ export default defineComponent({
       for (let i = 0; i < this.form.image.length; i++) {
         data.append('pictures', this.form.image[i]);
       }
-      data.append('usersId', "1");
-      
-      for (const pair of data.entries()) {
-          console.log(pair[0]+ ', ' + pair[1]); 
-      }
-      // fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
-      //   method: 'POST',
-      //   body: data,
-      // })
-      // .then(response => response.json())
-      // .then(data => {
-      //   console.log(data); // handle success
-      // })
-      // .catch(error => {
-      //   console.error(error); // handle error
-      // });
+      data.append('usersId', this.form.usersId);
+
+      fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
+        method: 'POST',
+        body: data,
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // handle success
+      })
+      .catch(error => {
+        console.error(error); // handle error
+      });
     },
     onInput(event: any) {
       const name = event.target.name;
       const value = event.target.value;
       this.form = { ...this.form, [name]: value };
-      console.log(this.form);
     },
   },
 });
