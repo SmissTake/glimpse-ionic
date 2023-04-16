@@ -53,6 +53,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'user',
         component: () => import('../views/UserPage.vue'),
+        beforeEnter: (to, from, next) => {
+          const store = usePlaceStore();
+          if (store.users.length > 0) next();
+        
+          store.fetchUser(parseInt(`${process.env.VUE_APP_USER_ID}`)).then(() => {
+            next();
+          });
+        }
       },
       {
         path: 'user/:id',

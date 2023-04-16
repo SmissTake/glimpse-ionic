@@ -20,6 +20,7 @@ export const usePlaceStore = defineStore("places", {
         getUsers: (state) => state.users,
         getCategories: (state) => state.categories,
         getAccessibilities: (state) => state.accessibilities,
+        getUser: (state) => (id: number) => state.users.find((user) => user.id === id),
     },
     actions: {
         async fetchPlaces() {
@@ -34,6 +35,10 @@ export const usePlaceStore = defineStore("places", {
             const res = await fetch(`${process.env.VUE_APP_API_URL}/accessibility/listall`);
             this.setAccessibilities(await res.json());
         },
+        async fetchUser(id:number) {
+            const res = await fetch(`${process.env.VUE_APP_API_URL}/user/show/${id}`);
+            this.setUser(await res.json());
+        },
         setPlaces(places: Place[]) {
             this.places = places;
         },
@@ -42,6 +47,9 @@ export const usePlaceStore = defineStore("places", {
         },
         setAccessibilities(accessibilities: Accessibility[]) {
             this.accessibilities = accessibilities;
+        },
+        setUser(user: User) {
+            this.users.push(user);
         }
     }
 })
