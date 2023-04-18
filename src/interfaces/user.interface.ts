@@ -5,7 +5,7 @@ export interface User {
     pseudonym: string;
     biography: string | null;
     avatar: string;
-    favoritePlaces: Place[] | null;
-    postedPlaces: Place[] | null;
+    FavoritePlaces: Place[] | null;
+    posted: Place[] | null;
     followedUsers: User[] | null;
 }

@@ -49,6 +49,7 @@ export const usePlaceStore = defineStore("places", {
             this.accessibilities = accessibilities;
         },
         setUser(user: User) {
+            if(!this.users.find((u) => u.id === user.id))
             this.users.push(user);
         }
     }
