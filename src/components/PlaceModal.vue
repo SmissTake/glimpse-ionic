@@ -36,7 +36,7 @@
                 <ion-row>
                   <ion-col>
                     <p class="username">
-                      {{ place.postedBy.pseudonym }}
+                      <router-link :to="{ name: 'user', params: { id: place.postedBy.id } }">{{ place.postedBy.pseudonym }}</router-link>
                     </p>
                     <p class="posted-at">
                       {{ place.createdAt }}
@@ -94,7 +94,7 @@
     </ion-modal>
     <ion-modal v-else>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar :idPlace="placeId">
           <ion-buttons slot="end">
             <ion-button @click="$emit('close')">
               <ion-icon slot="icon-only" :icon="closeIcon"></ion-icon>

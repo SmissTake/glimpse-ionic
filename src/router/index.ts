@@ -51,21 +51,25 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/NotificationsPage.vue'),
       },
       {
-        path: 'user',
+        path: 'user/:id?',
+        name: 'user',
         component: () => import('../views/UserPage.vue'),
         beforeEnter: (to, from, next) => {
           const store = usePlaceStore();
-          if (store.users.length > 0) next();
-        
-          store.fetchUser(parseInt(`${process.env.VUE_APP_USER_ID}`)).then(() => {
-            next();
-          });
+
+          if (to.params.id) {
+            if (store.users.find((user) => user.id === parseInt(`${to.params.id}`))) next();
+            store.fetchUser(parseInt(`${to.params.id}`)).then(() => {
+              next();
+            });
+          } else {
+            if (store.users.find((user) => user.id === parseInt(`${process.env.VUE_APP_USER_ID}`))) next();
+            store.fetchUser(parseInt(`${process.env.VUE_APP_USER_ID}`)).then(() => {
+              next();
+            });
+          }
         }
-      },
-      {
-        path: 'user/:id',
-        component: () => import('../views/UserPage.vue'),
-      },
+      }
     ],
   },
 ];

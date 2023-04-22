@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import type { User } from '@/interfaces/user.interface';
 import { usePlaceStore } from '@/stores';
+import { RouteLocationNormalized, useRoute } from 'vue-router';
+
+const route: RouteLocationNormalized = useRoute();
 
 const store = usePlaceStore();
-const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
+// Get the user id from the route or if not found, use the connected user id
+const userId = parseInt(route.params.id) || parseInt(`${process.env.VUE_APP_USER_ID}`);
+const user: User = store.getUser(userId);
 </script>
 
 <template>
@@ -12,10 +17,10 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
       <div class="header">
       <ion-row class="banner ion-justify-content-end" >
         <ion-col size="2">
-          <ion-button size="small">
+          <ion-button size="small" v-if="user.id == connectedUserId">
             <ion-icon :icon="settingsIcon"></ion-icon>
           </ion-button>
-          <ion-button size="small" color="danger">
+          <ion-button size="small" color="danger" v-else>
             <ion-icon :icon="flagIcon"></ion-icon>
           </ion-button>
         </ion-col>
