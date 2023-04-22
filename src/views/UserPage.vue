@@ -8,7 +8,8 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
 
 <template>
   <ion-page>
-    <ion-content>
+    <ion-content v-if="user">
+      <div class="header">
       <ion-row class="banner ion-justify-content-end" >
         <ion-col size="2">
           <ion-button size="small">
@@ -29,11 +30,15 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
         <ion-text>
           <h1>{{ user.pseudonym }}</h1>
         </ion-text>
-        <ion-button color="success">Suivre</ion-button>
+        <!-- if connected user is the user page, don't display the follow button -->
+        <ion-button v-if="user.id !== connectedUserId" color="primary" size="small" fill="outline">
+          <ion-icon :icon="addOutline"></ion-icon>
+          Suivre
+        </ion-button>
       </ion-row>
       <ion-row>
         <ion-col>
-          <span v-if="user.followedUsers">{{ user.followedUsers.length }}</span>
+          <span v-if="user.Followings">{{ user.Followings.length }}</span>
           <span v-else>0</span>
           abonné(s)
         </ion-col>
@@ -48,12 +53,6 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
           <p>publication(s)</p>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
-        <ion-button color="primary" expand="block" >
-          <ion-icon :icon="addOutline"></ion-icon>
-          Publier une nouvelle experience
-        </ion-button>
-      </ion-row>
       <ion-row>
         <ion-col>
           <ion-text>
@@ -61,6 +60,50 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
           </ion-text>
         </ion-col>
       </ion-row>
+      <ion-row class="ion-justify-content-center" v-if="user.id == connectedUserId">
+        <ion-button color="primary" expand="block" href="/add">
+          <ion-icon :icon="addOutline"></ion-icon>
+          Publier une nouvelle experience
+        </ion-button>
+      </ion-row>
+    </div>
+    <div class="body">
+      <ion-row v-if="user.posted.length">
+        <h2>Publié</h2>
+        <swiper
+        :freemode="true"
+        :modules="modules">
+        <swiper-slide v-for="place in user.posted" :key="place.id">
+          <PlaceCard :place="place" />
+        </swiper-slide>
+        </swiper>
+      </ion-row>
+      <ion-row v-if="user.Visited.length">
+        <h2>Lieux visités</h2>
+        <swiper
+        :freemode="true"
+        :modules="modules">
+        <swiper-slide v-for="place in user.Visited" :key="place.id">
+          <PlaceCard :place="place" />
+        </swiper-slide>
+        </swiper>
+      </ion-row>
+      <ion-row v-if="user.FavoritePlaces.length">
+        <h2>Lieux favoris</h2>
+        <swiper
+        :freemode="true"
+        :modules="modules">
+        <swiper-slide v-for="place in user.FavoritePlaces" :key="place.id">
+          <PlaceCard :place="place" />
+        </swiper-slide>
+        </swiper>
+      </ion-row>
+    </div>
+    </ion-content>
+    <ion-content v-else>
+      <ion-text>
+        <h1>Utilisateur introuvable</h1>
+      </ion-text>
     </ion-content>
   </ion-page>
 </template>
@@ -70,27 +113,40 @@ const user: User = store.getUser(parseInt(`${process.env.VUE_APP_USER_ID}`));
 
 <script lang="ts">
   import { IonContent, IonPage, IonRow, IonCol, IonText, IonAvatar, IonImg, IonButton, IonIcon } from '@ionic/vue';
-  import { flagOutline, settingsOutline, addOutline } from 'ionicons/icons';
+  import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
+  import PlaceCard from '@/components/PlaceCard.vue';
+  import { Swiper,SwiperSlide } from 'swiper/vue';
+  import { FreeMode } from 'swiper';
+  import 'swiper/css';
+
+  import 'swiper/css/free-mode';
 
   export default {
-    components: { 
-      IonContent,
-      IonPage,
-      IonRow,
-      IonCol,
-      IonText,
-      IonAvatar,
-      IonImg
-    },
+    components: {
+    IonContent,
+    IonPage,
+    IonRow,
+    IonCol,
+    IonText,
+    IonAvatar,
+    IonImg,
+    Swiper,
+    SwiperSlide,
+    IonButton,
+  },
 
     data() {
       return {
         imageSource : process.env.VUE_APP_API_URL,
         flagIcon: flagOutline,
         settingsIcon: settingsOutline,
-        addOutline: addOutline
+        addOutline: addOutline,
+        checkmarkIcon: checkmark,
+        modules: [FreeMode],
+        connectedUserId: parseInt(`${process.env.VUE_APP_USER_ID}`),
       };
     },
+
   };
   
 </script>

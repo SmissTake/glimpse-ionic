@@ -7,5 +7,7 @@ export interface User {
     avatar: string;
     FavoritePlaces: Place[] | null;
     posted: Place[] | null;
-    followedUsers: User[] | null;
+    Visited: Place[] | null;
+    Followers: User[] | null;
+    Followings: User[] | null;
 }
