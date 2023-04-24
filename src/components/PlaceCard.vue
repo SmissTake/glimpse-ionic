@@ -6,9 +6,8 @@
     <div class="cardInfos">
         <ion-card-header>
           <ion-card-title>{{ place.title }} - {{ place.Category.label }}</ion-card-title>
-          <div class="posted-by">
+          <div class="posted-by" v-if="place.postedBy">
             Posted by {{ place.postedBy.pseudonym }}
-            <!-- <router-link :to="{ name: 'User', params: { userId: place.userId } }">{{ place.username }}</router-link> -->
           </div>
         </ion-card-header>
         <ion-card-content>
