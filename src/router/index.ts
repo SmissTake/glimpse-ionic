@@ -19,13 +19,15 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'home',
         component: () => import('../views/HomePage.vue'),
-        beforeEnter: (to, from, next) => {
+        beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
-          if (store.places.length > 0) next();
+          
+          if (store.places.length > 0) {
+            return next();
+          }
         
-          store.fetchPlaces().then(() => {
-            next();
-          });
+          await store.fetchPlaces();
+          next();
         },
       },
       {
@@ -37,13 +39,20 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/AddPage.vue'),
         beforeEnter: (to, from, next) => {
           const categoriesStore = usePlaceStore();
-          if (categoriesStore.categories.length > 0 && categoriesStore.accessibilities.length > 0) next();
-          
-          categoriesStore.fetchCategories().then(() => {
-            categoriesStore.fetchAccessibilities().then(() => {
-              next();
+          let isFetchingDone = false;
+        
+          if (categoriesStore.categories.length > 0 && categoriesStore.accessibilities.length > 0) {
+            isFetchingDone = true;
+            next();
+          }
+        
+          if (!isFetchingDone) {
+            categoriesStore.fetchCategories().then(() => {
+              categoriesStore.fetchAccessibilities().then(() => {
+                next();
+              });
             });
-          });
+          }
         },
       },
       {
@@ -54,19 +63,22 @@ const routes: Array<RouteRecordRaw> = [
         path: 'user/:id?',
         name: 'user',
         component: () => import('../views/UserPage.vue'),
-        beforeEnter: (to, from, next) => {
+        
+        beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
-
-          if (to.params.id) {
-            if (store.users.find((user) => user.id === parseInt(`${to.params.id}`))) next();
-            store.fetchUser(parseInt(`${to.params.id}`)).then(() => {
+          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(process.env.VUE_APP_USER_ID);
+          try {
+            const userExists = store.users.find((user) => user.id === userId);
+        
+            if (userExists) {
               next();
-            });
-          } else {
-            if (store.users.find((user) => user.id === parseInt(`${process.env.VUE_APP_USER_ID}`))) next();
-            store.fetchUser(parseInt(`${process.env.VUE_APP_USER_ID}`)).then(() => {
+            } else {
+              await store.fetchUser(userId);
               next();
-            });
+            }
+          } catch (error) {
+            console.error(error);
+            next(false);
           }
         }
       }
