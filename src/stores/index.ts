@@ -25,20 +25,42 @@ export const usePlaceStore = defineStore("places", {
     },
     actions: {
         async fetchPlaces() {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/place/listall`);
-            this.setPlaces(await res.json());
+            try {
+                const res = await fetch(`${process.env.VUE_APP_API_URL}/place/listall`);
+                this.setPlaces(await res.json());
+                this.setFetchError('');
+            } catch (error : any) {
+                this.setFetchError(error.message + ' places');
+            }
         },
         async fetchCategories() {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/category/listall`);
-            this.setCategories(await res.json());
+            try {
+                const res = await fetch(`${process.env.VUE_APP_API_URL}/category/listall`);
+                this.setCategories(await res.json());
+                this.setFetchError('');
+            } catch (error : any) {
+                this.setFetchError(error.message + ' categories');
+            }
         },
         async fetchAccessibilities() {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/accessibility/listall`);
-            this.setAccessibilities(await res.json());
+            try {
+                const res = await fetch(`${process.env.VUE_APP_API_URL}/accessibility/listall`);
+                this.setAccessibilities(await res.json());
+                this.fetchError = '';
+            }
+            catch (error : any) {
+                this.setFetchError(error.message + ' accessibilities');
+            }
         },
         async fetchUser(id:number) {
-            const res = await fetch(`${process.env.VUE_APP_API_URL}/user/show/${id}`);
-            this.setUser(await res.json());
+            try {
+                const res = await fetch(`${process.env.VUE_APP_API_URL}/user/show/${id}`);
+                this.setUser(await res.json());
+                this.setFetchError('');
+            }
+            catch (error : any) {
+                this.setFetchError(error.message + ' user');
+            }
         },
         setPlaces(places: Place[]) {
             this.places = places;
