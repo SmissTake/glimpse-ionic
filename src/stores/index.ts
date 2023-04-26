@@ -14,6 +14,7 @@ export const usePlaceStore = defineStore("places", {
         categories: [] as Category[],
         accessibilities: [] as Accessibility[],
         pictures: [] as Picture[],
+        fetchError: "",
     }),
     getters: {
         getPlaces: (state) => state.places,
@@ -51,6 +52,9 @@ export const usePlaceStore = defineStore("places", {
         setUser(user: User) {
             if(!this.users.find((u) => u.id === user.id))
             this.users.push(user);
+        },
+        setFetchError(error: string) {
+            this.fetchError = error;
         }
     }
 })

@@ -26,8 +26,14 @@ const routes: Array<RouteRecordRaw> = [
             return next();
           }
         
-          await store.fetchPlaces();
-          next();
+          try {
+            await store.fetchPlaces();
+            store.setFetchError('');
+            next();
+          } catch (error: any) {
+            store.setFetchError(error.message);
+            next();
+          }
         },
       },
       {

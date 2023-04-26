@@ -13,15 +13,26 @@ const places: Place[] = store.places;
         <ion-searchbar></ion-searchbar>
       </ion-toolbar>
     </ion-header>
-    <ion-content >
+    <ion-content v-if="!store.fetchError">
         <PlaceCard v-for="place in places" :key="place.id" :place="place" />
+    </ion-content>
+    <ion-content v-else>
+      <PlaceCardSkeleton v-for="n in 10" :key="n" />
+      <ion-toast
+      :message="store.fetchError"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.fetchError = null"
+    ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
-import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent } from '@ionic/vue';
+import PlaceCardSkeleton from '@/components/skeletons/PlaceCardSkeleton.vue';
+import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -33,6 +44,7 @@ export default defineComponent({
     IonSearchbar,
     IonPage,
     IonContent,
+    IonToast,
   },
 });
 </script>
