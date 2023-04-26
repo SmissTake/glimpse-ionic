@@ -37,6 +37,7 @@
       IonCardTitle,
       IonCardContent,
       IonSkeletonText,
+      IonButton,
   },
   });
   </script>
