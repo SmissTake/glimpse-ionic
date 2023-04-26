@@ -97,13 +97,22 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-button type="submit" expand="block">Créer</ion-button>
+        <ion-button type="submit" expand="block" v-if="!store.fetchError">Créer</ion-button>
+        <ion-button type="submit" expand="block" v-if="store.fetchError" disabled onClick="presentErrorToast">Créer</ion-button>
       </form>
+      <ion-toast
+      :message="store.fetchError"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.fetchError = null"
+      v-if="store.fetchError"
+    ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { ref } from 'vue';
 
@@ -120,7 +129,8 @@ export default defineComponent({
     IonRadioGroup,
     IonRadio,
     IonButton,
-    IonPage
+    IonPage,
+    IonToast
   },
   data(){
     return {
@@ -138,6 +148,15 @@ export default defineComponent({
     }
   },
   methods: {
+    async presentSuccessToast() {
+      const toast = document.createElement('ion-toast');
+      toast.message = 'Votre lieu a bien été ajouté';
+      toast.duration = 2000;
+      toast.color = "success";
+      toast.position = "bottom";
+      document.body.appendChild(toast);
+      return toast.present();
+    },
     getFile(event: any){
         const fileInfo = ref<any>(null)
         console.log(event.target.files);
@@ -166,6 +185,7 @@ export default defineComponent({
       .then(response => response.json())
       .then(data => {
         console.log(data); // handle success
+        this.presentSuccessToast();
       })
       .catch(error => {
         console.error(error); // handle error
