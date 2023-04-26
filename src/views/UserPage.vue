@@ -13,7 +13,7 @@ const user: User = store.getUser(userId);
 
 <template>
   <ion-page>
-    <ion-content v-if="user">
+    <ion-content v-if="!store.fetchError && user">
       <div class="header">
       <ion-row class="banner ion-justify-content-end" >
         <ion-col size="2">
@@ -106,9 +106,14 @@ const user: User = store.getUser(userId);
     </div>
     </ion-content>
     <ion-content v-else>
-      <ion-text>
-        <h1>Utilisateur introuvable</h1>
-      </ion-text>
+      <UserViewSkeleton />
+      <ion-toast
+      :message="store.fetchError"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.fetchError = null"
+    ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
@@ -117,9 +122,10 @@ const user: User = store.getUser(userId);
 </style>
 
 <script lang="ts">
-  import { IonContent, IonPage, IonRow, IonCol, IonText, IonAvatar, IonImg, IonButton, IonIcon } from '@ionic/vue';
+  import { IonContent, IonPage, IonRow, IonCol, IonText, IonAvatar, IonImg, IonButton, IonIcon, IonToast } from '@ionic/vue';
   import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
   import PlaceCard from '@/components/PlaceCard.vue';
+  import UserViewSkeleton from '@/components/skeletons/UserViewSkeleton.vue';
   import { Swiper,SwiperSlide } from 'swiper/vue';
   import { FreeMode } from 'swiper';
   import 'swiper/css';
@@ -138,6 +144,7 @@ const user: User = store.getUser(userId);
     Swiper,
     SwiperSlide,
     IonButton,
+    IonToast
   },
 
     data() {
