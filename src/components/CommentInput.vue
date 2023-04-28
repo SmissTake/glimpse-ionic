@@ -78,3 +78,28 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped>
+
+    form {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    ion-button {
+        --background: var(--ion-color-primary);
+        --color: var(--ion-color-secondary-contrast);
+        border-radius: 0.5em;
+    }
+
+    ion-input {
+    --placeholder-color: #ddd;
+    --placeholder-opacity: .8;
+    --border-radius: 0.5em;
+  }
+
+  ion-input {
+    color: var(--ion-color-step-700, #373737);
+  }
+</style>

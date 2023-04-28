@@ -7,7 +7,7 @@ import { CommentPlace } from './comment.interface';
 export interface Place {
     id: number;
     title: string;
-    createdAt: string;
+    created_at: string;
     description: string;
     history: string | null;
     town: string | null;
