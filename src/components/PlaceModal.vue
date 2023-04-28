@@ -96,7 +96,7 @@
   </template>
   
   <script lang="ts">
-  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonCol, IonRow, IonImg } from '@ionic/vue';
+  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonCol, IonRow, IonImg, IonText } from '@ionic/vue';
   import { defineComponent, ref } from 'vue';
   import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
   import CommentPlace from './CommentPlace.vue';
@@ -130,7 +130,8 @@
     Swiper,
     SwiperSlide,
     ShareButton,
-    GlimpseButton
+    GlimpseButton,
+    IonText
 },
     props: {
       isOpen: {
