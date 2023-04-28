@@ -13,7 +13,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
     <ion-content>
       <form @submit.prevent="submitForm">
         <ion-item>
-          <ion-label position="stacked">Image</ion-label>
+          <ion-label position="floating">Image</ion-label>
           <ion-input
             type="file"
             placeholder="Choisir une image"
@@ -23,19 +23,21 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Titre</ion-label>
+          <ion-label position="floating">Titre</ion-label>
           <ion-input
-            placeholder="Titre"
+            placeholder="Batiment abondonné"
             :required="true"
             :value="form.title"
             name="title"
+            maxlength="50"
+            :counter="true"
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Description</ion-label>
+          <ion-label position="floating">Description</ion-label>
           <ion-textarea
-            placeholder="Description"
+            placeholder="Un batiment abandonné dans la ville de Lyon"
             :required="true"
             :value="form.description"
             name="description"
@@ -43,26 +45,26 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Histoire</ion-label>
+          <ion-label position="floating">Histoire</ion-label>
           <ion-textarea
-            placeholder="Histoire"
+            placeholder="Ce batiment a été construit en 1900 par l'architecte ..."
             :value="form.history"
             name="history"
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Ville</ion-label>
+          <ion-label position="floating">Ville</ion-label>
           <ion-input
             type="text"
-            placeholder="Ville"
+            placeholder="Lyon"
             :value="form.town"
             name="town"
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Catégorie</ion-label>
+          <ion-label position="floating">Catégorie</ion-label>
           <ion-select
             placeholder="Choisir une catégorie"
             :required="true"
@@ -76,7 +78,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Accessibilité</ion-label>
+          <ion-label position="floating">Accessibilité</ion-label>
           <ion-radio-group
             :required="true"
             :value="form.accessibilitiesId"
@@ -89,9 +91,9 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </ion-radio-group>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked">Mots-clés</ion-label>
+          <ion-label position="floating">Mots-clés</ion-label>
           <ion-textarea
-            placeholder="Mots-clés"
+            placeholder="Mots-clés séparés par des virgules. Ex : batiment, abandonné, Lyon"
             :value="form.keyword"
             name="keyword"
             @ionInput="onInput($event)"
