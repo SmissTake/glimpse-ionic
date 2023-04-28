@@ -22,7 +22,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @change="getFile"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item counter="true">
           <ion-label position="floating">Titre</ion-label>
           <ion-input
             placeholder="Batiment abondonné"
@@ -30,7 +30,6 @@ const accessibilities: Accessibility[] = store.accessibilities;
             :value="form.title"
             name="title"
             maxlength="50"
-            :counter="true"
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
@@ -53,13 +52,14 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-item>
+        <ion-item counter="true">
           <ion-label position="floating">Ville</ion-label>
           <ion-input
             type="text"
             placeholder="Lyon"
             :value="form.town"
             name="town"
+            maxlength="50"
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
@@ -90,12 +90,13 @@ const accessibilities: Accessibility[] = store.accessibilities;
             </ion-item>
           </ion-radio-group>
         </ion-item>
-        <ion-item>
+        <ion-item counter="true">
           <ion-label position="floating">Mots-clés</ion-label>
           <ion-textarea
             placeholder="Mots-clés séparés par des virgules. Ex : batiment, abandonné, Lyon"
             :value="form.keyword"
             name="keyword"
+            maxlength="255"
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
