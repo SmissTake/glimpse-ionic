@@ -1,6 +1,11 @@
 :root {
     --ion-font-family: 'PolySans', sans-serif;
-    --ion-font-size: 16px;
+    --ion-font-size: 14px;
+    --ion-text-paragraph: 500 1em 'Krub', sans-serif !important;
+    --ion-title-big: bold 2.5em 'PolySans', sans-serif !important;
+    --ion-title-medium: bold 2em 'PolySans', sans-serif !important;
+    --ion-title-small: bold 1.25em 'PolySans', sans-serif !important;
+
     --ion-color-primary: #90A855;
     --ion-color-primary-rgb: 144,168,85;
     --ion-color-primary-contrast: #000000;
@@ -57,4 +62,3 @@
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
   }
-  
