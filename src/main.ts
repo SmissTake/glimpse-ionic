@@ -25,7 +25,8 @@ import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
+import '../public/assets/css/fonts.css';
+import '../public/assets/css/variables.css';
 
 const app = createApp(App)
   .use(IonicVue)
