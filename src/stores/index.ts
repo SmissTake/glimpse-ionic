@@ -15,6 +15,7 @@ export const usePlaceStore = defineStore("places", {
         accessibilities: [] as Accessibility[],
         pictures: [] as Picture[],
         fetchError: "",
+        successMessage: "",
     }),
     getters: {
         getPlaces: (state) => state.places,
@@ -77,6 +78,9 @@ export const usePlaceStore = defineStore("places", {
         },
         setFetchError(error: string) {
             this.fetchError = error;
+        },
+        setSuccessMessage(message: string) {
+            this.successMessage = message;
         }
     }
 })

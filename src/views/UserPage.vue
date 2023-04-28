@@ -115,6 +115,14 @@ const user: User = store.getUser(userId);
       @ionToastDidDismiss="store.fetchError = null"
     ></ion-toast>
     </ion-content>
+    <ion-toast
+      :message="store.successMessage"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.successMessage = null"
+      v-if="store.fetchError"
+    ></ion-toast>
   </ion-page>
 </template>
 
