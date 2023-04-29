@@ -1,6 +1,6 @@
 <template>
     <ion-row>
-        <form @submit="submitComment">
+        <form @submit.prevent="submitComment">
             <ion-item>
                 <ion-input 
                 label="Commentaire"
@@ -67,7 +67,6 @@ export default defineComponent({
             const value = event.target.value.trim();
             if(value === '') return;
             this.commentForm = { ...this.commentForm, [name]: value };
-            console.log(this.commentForm);
         },
         submitComment() {
             const data = new FormData();
@@ -83,10 +82,18 @@ export default defineComponent({
             .then((data) => {
                 store.setSuccessMessage("Votre commentaire a bien été ajouté !");
                 console.log('Success:', data);
+                //reset the success message after toast duration
+                setTimeout(() => {
+                    store.setSuccessMessage("");
+                }, 4000);
             })
             .catch((error) => {
                 store.setFetchError("Une erreur est survenue");
                 console.error('Error:', error);
+                //reset the error message after toast duration
+                setTimeout(() => {
+                    store.setFetchError("");
+                }, 4000);
             });
         },
     },
