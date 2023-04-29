@@ -25,7 +25,7 @@
         </swiper>
         <ion-card-content class="ion-margin-bottom">
           <ion-row class="posted-by">
-                  <UserAvatar :userAvatar="place.postedBy.avatar" />
+                  <UserAvatar :userAvatar="imageSource+'/'+place.postedBy.avatar" />
                 <ion-col>
                   <p class="username">
                     <router-link :to="{ name: 'user', params: { id: place.postedBy.id } }">{{ place.postedBy.pseudonym }}</router-link>

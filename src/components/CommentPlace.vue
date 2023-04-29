@@ -2,7 +2,7 @@
     <ion-grid>
         <ion-row>
             <ion-col size="auto">
-                <UserAvatar v-if="CommentPlace.postedBy.avatar" :userAvatar="CommentPlace.postedBy.avatar" />
+                <UserAvatar v-if="CommentPlace.postedBy.avatar" :userAvatar="imageSource+'/'+CommentPlace.postedBy.avatar" />
                 <UserAvatar v-else userAvatar="https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder-300-grey.jpg" />
             </ion-col>
             <ion-col>
@@ -35,6 +35,11 @@
                 type: Object as () => CommentPlace,
                 required: true,
             },
+        },
+        data() {
+            return {
+                imageSource: `${process.env.VUE_APP_API_URL}`,
+            };
         },
     });
 </script>
