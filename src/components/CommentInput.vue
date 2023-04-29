@@ -11,7 +11,10 @@
                 :value="commentForm.comment"
                 @ionInput="onInput($event)"></ion-input>
             </ion-item>
-            <ion-button type="submit">
+            <ion-button v-if="commentForm.comment != ''" type="submit">
+                <ion-icon slot="icon-only" :icon="sendOutline"></ion-icon>
+            </ion-button>
+            <ion-button v-if="commentForm.comment == ''" type="submit" disabled>
                 <ion-icon slot="icon-only" :icon="sendOutline"></ion-icon>
             </ion-button>
         </form>
