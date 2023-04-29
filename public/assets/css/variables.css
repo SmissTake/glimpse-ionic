@@ -62,3 +62,16 @@
     --ion-color-light-shade: #d7d8da;
     --ion-color-light-tint: #f5f6f9;
   }
+
+  ion-item.custom::part(native) {
+    --placeholder-color: #ddd !important;
+    --placeholder-opacity: .8 !important;
+    --border-style: none;
+    border-radius: 0.5em;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.212);
+  }
+
+  ion-item.custom {
+    overflow: visible !important;
+    margin-top: 1em;
+  }
