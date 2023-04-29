@@ -125,6 +125,7 @@ const handleRefresh = (event: CustomEvent) => {
       color="danger"
       :duration="4000"
       @ionToastDidDismiss="store.fetchError = null"
+      v-if="store.fetchError"
     ></ion-toast>
     </ion-content>
     <ion-toast

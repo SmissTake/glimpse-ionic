@@ -19,12 +19,31 @@
             </ion-button>
         </form>
     </ion-row>
+    <ion-toast
+      :message="store.fetchError"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.fetchError = null"
+      v-if="store.fetchError"
+    ></ion-toast>
+    <ion-toast
+      :message="store.successMessage"
+      position="bottom"
+      color="success"
+      :duration="4000"
+      @ionToastDidDismiss="store.successMessage = null"
+      v-if="store.successMessage"
+    ></ion-toast>
 </template>
 
 <script lang="ts">
-import { IonItem, IonInput, IonRow, IonButton, IonIcon } from '@ionic/vue';
+import { IonItem, IonInput, IonRow, IonButton, IonIcon, IonToast } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { sendOutline } from 'ionicons/icons';
+import { usePlaceStore } from '@/stores';
+
+const store = usePlaceStore();
 
 export default defineComponent({
     name: 'CommentInput',
@@ -34,6 +53,7 @@ export default defineComponent({
         IonRow,
         IonButton,
         IonIcon,
+        IonToast,
     },
     props: {
         idPlace: {
@@ -61,9 +81,11 @@ export default defineComponent({
             })
             .then((response) => response.json())
             .then((data) => {
+                store.setSuccessMessage("Votre commentaire a bien été ajouté !");
                 console.log('Success:', data);
             })
             .catch((error) => {
+                store.setFetchError("Une erreur est survenue");
                 console.error('Error:', error);
             });
         },
@@ -76,7 +98,8 @@ export default defineComponent({
                 images: [],
                 usersId: `${process.env.VUE_APP_USER_ID}`,
                 placesId: this.idPlace,
-            }
+            },
+            store
         };
     },
 });
