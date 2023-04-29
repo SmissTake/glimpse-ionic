@@ -13,14 +13,20 @@ const accessibilities: Accessibility[] = store.accessibilities;
     <ion-content>
       <form @submit.prevent="submitForm">
         <ion-item>
-          <ion-label position="floating">Image</ion-label>
-          <ion-input
+          <div v-if="filePreview" class="dropper">
+            <ion-img v-for="file in filePreview" :key=file :src="file" alt="fileName" class="image" style="max-height: 256px"/>
+          </div>
+          <input
+            id="file-input"
+            class="hide-file-input"
             type="file"
             placeholder="Choisir une image"
-            :required="true"
+            required="true"
+            accept="image/*"
+            multiple
             name="image"
-            @change="getFile"
-          ></ion-input>
+            @change="getFile"/>
+          <label class="file-label" for="file-input"> Upload a file </label>
         </ion-item>
         <ion-item counter="true">
           <ion-label position="floating">Titre</ion-label>
@@ -115,9 +121,13 @@ const accessibilities: Accessibility[] = store.accessibilities;
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { ref } from 'vue';
+
+interface CustomFile extends File {
+  previewBase64: string;
+}
 
 export default defineComponent({
   name: 'AddPage',
@@ -133,7 +143,8 @@ export default defineComponent({
     IonRadio,
     IonButton,
     IonPage,
-    IonToast
+    IonToast,
+    IonImg
   },
   data(){
     return {
@@ -145,26 +156,32 @@ export default defineComponent({
         categoriesId: "",
         accessibilitiesId: "",
         keyword: "",
-        image: [],
+        image: [] as File[],
         usersId: `${process.env.VUE_APP_USER_ID}`,
       },
+      fileName: '',
+      filePreview: [] as string[],
     }
   },
   methods: {
-    async presentSuccessToast() {
-      const toast = document.createElement('ion-toast');
-      toast.message = 'Votre lieu a bien été ajouté';
-      toast.duration = 2000;
-      toast.color = "success";
-      toast.position = "bottom";
-      document.body.appendChild(toast);
-      return toast.present();
-    },
     getFile(event: any){
-        const fileInfo = ref<any>(null)
-        console.log(event.target.files);
-        fileInfo.value= event.target.files[0];
-        this.form.image = fileInfo.value;
+        const file: CustomFile = event.target.files[0];
+        const reader: FileReader = new FileReader();
+        if (file) {
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            // Set a new property on the captured `file` and set it to the converted base64 image
+            (file as any).previewBase64 = reader.result;
+            // Push the new file into the filePreview array
+            this.filePreview.push(file.previewBase64);
+            // Emit the file with the new previewBase64 property on it
+            // this.$emit('file-updated', file);
+            this.form.image.push(file);
+          };
+          reader.onerror = (error) => {
+            console.log('Error ', error);
+          };
+        }
     },
     submitForm() {
       const data = new FormData();
@@ -188,7 +205,6 @@ export default defineComponent({
       .then(response => response.json())
       .then(data => {
         console.log(data); // handle success
-        this.presentSuccessToast();
       })
       .catch(error => {
         console.error(error); // handle error
@@ -210,6 +226,41 @@ ion-radio-group {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+
+.hide-file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.file-label {
+  color: #fff;
+  background-color: #3730a3;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+input[type='file']:focus + .file-label {
+  box-shadow: 0 0 0 4px #bae6fd;
+}
+
+.dropper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ion-img {
+  margin: 0.5rem;
+  border-radius: 0.25rem;
+  width: clamp(50px, 40%, 100px);
+  height: clamp(50px, 40%, 100px);
 }
 
 </style>
