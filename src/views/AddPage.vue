@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { Accessibility } from '@/interfaces/accessibility.interface';
 import { Category } from '@/interfaces/category.interface';
-import { usePlaceStore } from '@/stores';
 
-const store = usePlaceStore();
 const categories: Category[] = store.categories;
 const accessibilities: Accessibility[] = store.accessibilities;
 </script>
@@ -150,11 +148,13 @@ const accessibilities: Accessibility[] = store.accessibilities;
 import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { addOutline, accessibilityOutline } from 'ionicons/icons';
-import { ref } from 'vue';
+import { usePlaceStore } from '@/stores';
 
 interface CustomFile extends File {
   previewBase64: string;
 }
+
+const store = usePlaceStore();
 
 export default defineComponent({
   name: 'AddPage',
@@ -238,6 +238,8 @@ export default defineComponent({
       .then(response => response.json())
       .then(data => {
         console.log(data); // handle success
+        store.setSuccessMessage("Votre lieu a bien été ajouté !");
+        this.$router.push({ path: '/user' });
       })
       .catch(error => {
         console.error(error); // handle error
