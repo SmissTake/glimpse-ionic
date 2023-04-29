@@ -96,17 +96,22 @@ const accessibilities: Accessibility[] = store.accessibilities;
             </ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
-          <ion-label position="floating">Accessibilité</ion-label>
+
+        <ion-item class="accessibility">
           <ion-radio-group
             :required="true"
             :value="form.accessibilitiesId"
             name="accessibilitiesId"
             @ionInput="onInput($event)">
+          <ion-label>Accessibilité</ion-label>
+          <div class="choices">
             <ion-item v-for="accessibility in accessibilities" :key="accessibility.id">
-              <ion-label>{{ accessibility.label }}</ion-label>
+              <ion-label>
+                <ion-icon :icon="accessibilityOutline"></ion-icon>
+              </ion-label>
               <ion-radio slot="start" :value="accessibility.id"></ion-radio>
             </ion-item>
+          </div>
           </ion-radio-group>
         </ion-item>
         <ion-item class="custom" counter="true">
@@ -119,8 +124,8 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-button type="submit" expand="block" v-if="!store.fetchError">Créer</ion-button>
-        <ion-button type="submit" expand="block" v-if="store.fetchError" disabled onClick="presentErrorToast">Créer</ion-button>
+        <ion-button type="submit" expand="block" v-if="!store.fetchError">Publier</ion-button>
+        <ion-button type="submit" expand="block" v-if="store.fetchError || canSubmit" disabled onClick="presentErrorToast">Publier</ion-button>
       </form>
       <ion-toast
       :message="store.fetchError"
@@ -142,9 +147,9 @@ const accessibilities: Accessibility[] = store.accessibilities;
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { addOutline } from 'ionicons/icons';
+import { addOutline, accessibilityOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 
 interface CustomFile extends File {
@@ -170,7 +175,8 @@ export default defineComponent({
     IonNote,
     IonHeader,
     IonToolbar,
-    IonTitle
+    IonTitle,
+    IonIcon
   },
   data(){
     return {
@@ -187,7 +193,9 @@ export default defineComponent({
       },
       fileName: '',
       filePreview: [] as string[],
-      addOutline
+      addOutline,
+      accessibilityOutline,
+      canSubmit : false,
     }
   },
   methods: {
@@ -307,4 +315,19 @@ ion-img {
   object-fit: cover;
 }
 
+ion-item.accessibility::part(native) {
+  --border-style: none;
+  margin-top: 1em;
+}
+
+.accessibility .choices {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+ion-label {
+  --border-style: none !important;
+}
 </style>
