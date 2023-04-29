@@ -9,11 +9,20 @@ const store = usePlaceStore();
 // Get the user id from the route or if not found, use the connected user id
 const userId = parseInt(route.params.id) || parseInt(`${process.env.VUE_APP_USER_ID}`);
 const user: User = store.getUser(userId);
+
+const handleRefresh = (event: CustomEvent) => {
+  store.fetchPlaces().then(() => {
+    event.detail.complete();
+  });
+};
 </script>
 
 <template>
   <ion-page>
     <ion-content v-if="!store.fetchError && user">
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <div class="header">
       <ion-row class="banner ion-justify-content-end" >
         <ion-col size="2">
@@ -106,6 +115,9 @@ const user: User = store.getUser(userId);
     </div>
     </ion-content>
     <ion-content v-else>
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
       <UserViewSkeleton />
       <ion-toast
       :message="store.fetchError"
@@ -130,7 +142,7 @@ const user: User = store.getUser(userId);
 </style>
 
 <script lang="ts">
-  import { IonContent, IonPage, IonRow, IonCol, IonText, IonAvatar, IonImg, IonButton, IonIcon, IonToast } from '@ionic/vue';
+  import { IonContent, IonPage, IonRow, IonCol, IonText, IonAvatar, IonImg, IonButton, IonIcon, IonToast, IonRefresher, IonRefresherContent } from '@ionic/vue';
   import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
   import PlaceCard from '@/components/PlaceCard.vue';
   import UserViewSkeleton from '@/components/skeletons/UserViewSkeleton.vue';
@@ -152,7 +164,9 @@ const user: User = store.getUser(userId);
     Swiper,
     SwiperSlide,
     IonButton,
-    IonToast
+    IonToast,
+    IonRefresher,
+    IonRefresherContent,
   },
 
     data() {
