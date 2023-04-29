@@ -10,25 +10,37 @@ const accessibilities: Accessibility[] = store.accessibilities;
 
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Ajouter un lieu</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
       <form @submit.prevent="submitForm">
         <ion-item>
-          <div v-if="filePreview" class="dropper">
-            <ion-img v-for="file in filePreview" :key=file :src="file" alt="fileName" class="image" style="max-height: 256px"/>
+          <div v-if="filePreview" >
+            <div class="dropper">
+              <ion-img v-for="file in filePreview" :key=file :src="file" alt="fileName" class="image" style="max-height: 256px"/>
+            </div>
           </div>
-          <input
-            id="file-input"
-            class="hide-file-input"
-            type="file"
-            placeholder="Choisir une image"
-            required="true"
-            accept="image/*"
-            multiple
-            name="image"
-            @change="getFile"/>
-          <label class="file-label" for="file-input"> Upload a file </label>
+          <div class="add-image">
+            <input
+              id="file-input"
+              class="hide-file-input"
+              type="file"
+              placeholder="Choisir une image"
+              required="true"
+              accept="image/*"
+              multiple
+              name="image"
+              @change="getFile"/>
+            <label class="file-label" for="file-input" aria-label="Choisir une image">
+              <ion-icon :icon="addOutline"></ion-icon>
+            </label>
+            <ion-note>{{ filePreview.length }} /8</ion-note>
+          </div>
         </ion-item>
-        <ion-item counter="true">
+        <ion-item class="custom" counter="true">
           <ion-label position="floating">Titre</ion-label>
           <ion-input
             placeholder="Batiment abondonné"
@@ -37,9 +49,10 @@ const accessibilities: Accessibility[] = store.accessibilities;
             name="title"
             maxlength="50"
             @ionInput="onInput($event)"
+            class="custom"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item class="custom">
           <ion-label position="floating">Description</ion-label>
           <ion-textarea
             placeholder="Un batiment abandonné dans la ville de Lyon"
@@ -49,7 +62,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-item>
+        <ion-item class="custom">
           <ion-label position="floating">Histoire</ion-label>
           <ion-textarea
             placeholder="Ce batiment a été construit en 1900 par l'architecte ..."
@@ -58,7 +71,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-item counter="true">
+        <ion-item class="custom" counter="true">
           <ion-label position="floating">Ville</ion-label>
           <ion-input
             type="text"
@@ -69,7 +82,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item class="custom">
           <ion-label position="floating">Catégorie</ion-label>
           <ion-select
             placeholder="Choisir une catégorie"
@@ -96,7 +109,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
             </ion-item>
           </ion-radio-group>
         </ion-item>
-        <ion-item counter="true">
+        <ion-item class="custom" counter="true">
           <ion-label position="floating">Mots-clés</ion-label>
           <ion-textarea
             placeholder="Mots-clés séparés par des virgules. Ex : batiment, abandonné, Lyon"
@@ -114,15 +127,24 @@ const accessibilities: Accessibility[] = store.accessibilities;
       position="bottom"
       color="danger"
       :duration="4000"
-      @ionToastDidDismiss="store.fetchError = null"
+      @ionToastDidDismiss="store.fetchError == null"
       v-if="store.fetchError"
-    ></ion-toast>
+      ></ion-toast>
+      <ion-toast
+      :message="store.successMessage"
+      position="bottom"
+      color="danger"
+      :duration="4000"
+      @ionToastDidDismiss="store.successMessage == null"
+      v-if="store.successMessage"
+      ></ion-toast>
     </ion-content>
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { addOutline } from 'ionicons/icons';
 import { ref } from 'vue';
 
 interface CustomFile extends File {
@@ -144,7 +166,11 @@ export default defineComponent({
     IonButton,
     IonPage,
     IonToast,
-    IonImg
+    IonImg,
+    IonNote,
+    IonHeader,
+    IonToolbar,
+    IonTitle
   },
   data(){
     return {
@@ -161,6 +187,7 @@ export default defineComponent({
       },
       fileName: '',
       filePreview: [] as string[],
+      addOutline
     }
   },
   methods: {
@@ -175,7 +202,6 @@ export default defineComponent({
             // Push the new file into the filePreview array
             this.filePreview.push(file.previewBase64);
             // Emit the file with the new previewBase64 property on it
-            // this.$emit('file-updated', file);
             this.form.image.push(file);
           };
           reader.onerror = (error) => {
@@ -192,7 +218,6 @@ export default defineComponent({
       data.append('town', this.form.town);
       data.append('history', this.form.history);
       data.append('keyword', this.form.keyword);
-      // data.append('pictures', this.form.image);
       for (let i = 0; i < this.form.image.length; i++) {
         data.append('pictures', this.form.image[i]);
       }
@@ -222,6 +247,11 @@ export default defineComponent({
 
 <style scoped>
 
+form {
+  padding: 0.5em;
+  overflow: visible;
+}
+
 ion-radio-group {
   display: flex;
   flex-direction: row;
@@ -236,31 +266,45 @@ ion-radio-group {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+  opacity: 0;
+  cursor: pointer;
 }
 .file-label {
   color: #fff;
-  background-color: #3730a3;
+  background-color: var(--ion-color-primary);
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   cursor: pointer;
 }
-input[type='file']:focus + .file-label {
-  box-shadow: 0 0 0 4px #bae6fd;
+
+#file-input {
+  width: 100%;
+  height: 100%;
 }
 
 .dropper {
   display: flex;
   flex-wrap: wrap;
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+.add-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 ion-img {
   margin: 0.5rem;
   border-radius: 0.25rem;
-  width: clamp(50px, 40%, 100px);
-  height: clamp(50px, 40%, 100px);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
 </style>
