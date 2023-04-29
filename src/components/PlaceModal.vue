@@ -206,9 +206,9 @@
   }
 
   h2 {
-    font: var(--ion-title-medium);
+    font: var(--ion-title-small);
     margin-top: 2em;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
   }
   
   .swiper {
