@@ -71,11 +71,15 @@ export default defineComponent({
         submitComment() {
             const data = new FormData();
             data.append('comment', this.commentForm.comment);
-            data.append('usersId', this.commentForm.usersId);
             data.append('placesId', JSON.stringify(this.commentForm.placesId));
+
+            const token = usePlaceStore().token;
 
             fetch(`${process.env.VUE_APP_API_URL}/comment/create`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
                 body: data,
             })
             .then((response) => response.json())
@@ -103,7 +107,6 @@ export default defineComponent({
             commentForm: {
                 comment: '',
                 images: [],
-                usersId: `${process.env.VUE_APP_USER_ID}`,
                 placesId: this.idPlace,
             },
             store
