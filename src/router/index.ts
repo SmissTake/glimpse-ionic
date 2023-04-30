@@ -17,6 +17,18 @@ const routes: Array<RouteRecordRaw> = [
         redirect: '/home',
       },
       {
+        path: '/login',
+        component: () => import('../views/LoginPage.vue'),
+        beforeEnter: (to, from, next) => {
+          const store = usePlaceStore();
+          if (!store.token) {
+            next();
+          } else {
+            next('/');
+          }
+        },   
+      }, 
+      {
         path: 'home',
         component: () => import('../views/HomePage.vue'),
         beforeEnter: async (to, from, next) => {
@@ -90,6 +102,15 @@ const router = createRouter({
   // Use: createWebHistory(process.env.BASE_URL) in your app
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const store = usePlaceStore();
+  if (!store.token && to.path !== '/login') {
+    next('/login');
+  } else {
+    next();
+  }
 });
 
 export default router;

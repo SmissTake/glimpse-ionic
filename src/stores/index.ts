@@ -16,7 +16,7 @@ export const usePlaceStore = defineStore("places", {
         pictures: [] as Picture[],
         fetchError: "",
         successMessage: "",
-        token: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0lkIjo1LCJuYW1lIjoidXNlci01IiwibWFpbCI6ImFkcmVzcys1QG1haWwuY29tIiwiYWNjZXNzVHlwZXMiOlsiVXRpbGlzYXRldXIiXSwiaWF0IjoxNjgyODYwMTM4LCJleHAiOjE2ODI4OTYxMzh9.o56Bpbd2jagStSjZ-zjhln_enucc5v1NS19GANE0g4j7q1YnLdycZZ3e6s-uv-BNhRmYz5LoDQAKYe5dNbfH1Xoz0SD9It83Z6ncIdf1KjaZQMpHECY8Glg5bvuVSdsKr8nCf8HGBCWaemcXzyfy66ip5HbQndGkhGat8niOec2afEpgFeh8D4rrG22enw4iaOu-sizehxaR6rPs-wc9AH1hNS3lOPclYZBjACf5YJ4q7QlqdnkyL8ZV29QCNKlhlJUMT4xmYf6I7MN4QtxpXOKarSutdRRENPBKuz1PoEpz2lBQWykIUSpBzZvUXkU0ZB08K71IgMe55O64wAY4Xw",
+        token: "",
     }),
     getters: {
         getPlaces: (state) => state.places,
