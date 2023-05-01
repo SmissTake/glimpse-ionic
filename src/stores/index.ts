@@ -16,8 +16,6 @@ export const usePlaceStore = defineStore("places", {
         pictures: [] as Picture[],
         fetchError: "",
         successMessage: "",
-        token: "",
-        connectedUserId: "",
     }),
     getters: {
         getPlaces: (state) => state.places,
@@ -83,9 +81,6 @@ export const usePlaceStore = defineStore("places", {
         },
         setSuccessMessage(message: string) {
             this.successMessage = message;
-        },
-        setToken(token: string) {
-            this.token = token;
         },
     }
 })

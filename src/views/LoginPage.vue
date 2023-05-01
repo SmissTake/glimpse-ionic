@@ -88,8 +88,8 @@
                 setTimeout(() => {
                   store.setSuccessMessage("");
                 }, 4000);
-                store.connectedUserId = data.id;
-                store.token = data.token;
+                localStorage.setItem("userId", data.id);
+                localStorage.setItem("token", data.token);
                 this.$router.push({ path : '/home'});
               } else {
                 store.fetchError = "Identifiants incorrects";

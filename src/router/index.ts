@@ -21,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/LoginPage.vue'),
         beforeEnter: (to, from, next) => {
           const store = usePlaceStore();
-          if (!store.token) {
+          if (!localStorage.getItem('token')) {
             next();
           } else {
             next('/');
@@ -78,7 +78,7 @@ const routes: Array<RouteRecordRaw> = [
         
         beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
-          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(`${store.connectedUserId}`);
+          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(`${localStorage.getItem('userId')}`);
           try {
             const userExists = store.users.find((user) => user.id === userId);
         
@@ -106,7 +106,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = usePlaceStore();
-  if (!store.token && to.path !== '/login') {
+  if (!localStorage.getItem('token') && to.path !== '/login') {
     next('/login');
   } else {
     next();

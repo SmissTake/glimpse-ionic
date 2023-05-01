@@ -73,7 +73,7 @@ export default defineComponent({
             data.append('comment', this.commentForm.comment);
             data.append('placesId', JSON.stringify(this.commentForm.placesId));
 
-            const token = usePlaceStore().token;
+            const token = localStorage.getItem('token');
 
             fetch(`${process.env.VUE_APP_API_URL}/comment/create`, {
                 method: 'POST',

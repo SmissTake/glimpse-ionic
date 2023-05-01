@@ -222,7 +222,7 @@ export default defineComponent({
         data.append('pictures', this.form.image[i]);
       }
 
-      const token = usePlaceStore().token;
+      const token = localStorage.getItem('token');
 
       fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
         method: 'POST',
