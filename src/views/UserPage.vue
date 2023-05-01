@@ -7,7 +7,7 @@ const route: RouteLocationNormalized = useRoute();
 
 const store = usePlaceStore();
 // Get the user id from the route or if not found, use the connected user id
-const userId = parseInt(route.params.id) || parseInt(`${process.env.VUE_APP_USER_ID}`);
+const userId = parseInt(route.params.id) || parseInt(store.connectedUserId);
 const user: User = store.getUser(userId);
 
 const handleRefresh = (event: CustomEvent) => {

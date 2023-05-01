@@ -78,7 +78,7 @@ const routes: Array<RouteRecordRaw> = [
         
         beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
-          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(process.env.VUE_APP_USER_ID);
+          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(`${store.connectedUserId}`);
           try {
             const userExists = store.users.find((user) => user.id === userId);
         

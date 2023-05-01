@@ -17,6 +17,7 @@ export const usePlaceStore = defineStore("places", {
         fetchError: "",
         successMessage: "",
         token: "",
+        connectedUserId: "",
     }),
     getters: {
         getPlaces: (state) => state.places,
