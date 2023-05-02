@@ -9,6 +9,18 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/home',
   },
   {
+    path: '/login',
+    component: () => import('../views/LoginPage.vue'),
+    beforeEnter: (to, from, next) => {
+      const store = usePlaceStore();
+      if (!localStorage.getItem('token')) {
+        next();
+      } else {
+        next('/');
+      }
+    },   
+  }, 
+  {
     path: '/',
     component: Tabs,
     children: [
@@ -16,18 +28,6 @@ const routes: Array<RouteRecordRaw> = [
         path: '',
         redirect: '/home',
       },
-      {
-        path: '/login',
-        component: () => import('../views/LoginPage.vue'),
-        beforeEnter: (to, from, next) => {
-          const store = usePlaceStore();
-          if (!localStorage.getItem('token')) {
-            next();
-          } else {
-            next('/');
-          }
-        },   
-      }, 
       {
         path: 'home',
         component: () => import('../views/HomePage.vue'),
