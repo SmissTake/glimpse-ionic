@@ -2,7 +2,7 @@
     <ion-page>
       <ion-tabs>
         <ion-router-outlet></ion-router-outlet>
-        <ion-tab-bar slot="bottom">
+        <ion-tab-bar slot="bottom" color="dark">
           <ion-tab-button tab="home" href="/home">
             <ion-icon :icon="homeIcon"></ion-icon>
           </ion-tab-button>
@@ -45,3 +45,10 @@
       },
     };
   </script>
+
+<style scoped>
+ion-tab-button {
+  --color-selected: var(--ion-color-primary);
+}
+
+</style>
