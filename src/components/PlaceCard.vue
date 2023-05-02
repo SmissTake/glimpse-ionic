@@ -20,35 +20,17 @@
   </ion-card>
   <PlaceModal v-if="place" :placeId="place.id" :placeCardInfo="place" :is-open="showModal" @close="showModal = false"/>
 
-  <ion-card v-else>
-    <ion-skeleton-text animated style="width: 100%; height: 200px;"></ion-skeleton-text>
-    <ion-card-header>
-      <ion-card-title>
-        <ion-skeleton-text animated style="width: 100%; height: 20px;"></ion-skeleton-text>
-      </ion-card-title>
-      <div class="posted-by">
-        <ion-skeleton-text animated style="width: 100%; height: 20px;"></ion-skeleton-text>
-      </div>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="likes">
-        <ion-button fill="clear" size="small">
-          <ion-skeleton-text animated style="width: 20px; height: 20px;"></ion-skeleton-text>
-        </ion-button>
-        <span class="like-count">
-          <ion-skeleton-text animated style="width: 30px; height: 20px;"></ion-skeleton-text>
-        </span>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <place-card-skeleton v-else>
+  </place-card-skeleton>
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonSkeletonText, IonImg } from '@ionic/vue';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { heartOutline } from 'ionicons/icons';
 import PlaceModal from './PlaceModal.vue';
 import LikeButton from './LikeButton.vue';
+import PlaceCardSkeleton from './skeletons/PlaceCardSkeleton.vue';
 
 export default defineComponent({
     name: 'PlaceCard',
@@ -58,10 +40,9 @@ export default defineComponent({
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonButton,
-    IonSkeletonText,
     IonImg,
-    LikeButton
+    LikeButton,
+    PlaceCardSkeleton,
 },
     props: {
         place: {
