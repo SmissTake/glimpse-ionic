@@ -15,8 +15,8 @@ const handleRefresh = (event: CustomEvent) => {
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-searchbar></ion-searchbar>
+      <ion-toolbar color="primary">
+        <ion-searchbar class="custom" animated="true" placeholder="Rechercher"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
     <ion-content v-if="!store.fetchError">
@@ -62,3 +62,30 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+ion-toolbar {
+  border-radius: 0 0 0.5em 0.5em;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.226);
+}
+ion-header {
+  background : white;
+}
+
+ion-searchbar.ios.custom {
+  --color: #fff;
+  --placeholder-color: #fff;
+  --icon-color: #fff;
+  --clear-button-color: #fff;
+}
+ion-searchbar.md.custom {
+  --background: var(--ion-color-primary);
+  --border-radius: 0.5em;
+  --placeholder-color: #fff;
+  --icon-color: #fff;
+  --color: #fff;
+  --clear-button-color: #fff;
+  --box-shadow: none;
+}
+
+</style>
