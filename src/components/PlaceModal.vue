@@ -98,7 +98,7 @@
   <script lang="ts">
   import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonCol, IonRow, IonImg, IonText } from '@ionic/vue';
   import { defineComponent, ref } from 'vue';
-  import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
+  import { closeOutline, heartOutline, accessibilityOutline, businessOutline } from 'ionicons/icons';
   import CommentPlace from './CommentPlace.vue';
   import UserAvatar from './UserAvatar.vue';
   import CommentInput from './CommentInput.vue';

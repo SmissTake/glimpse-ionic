@@ -15,17 +15,7 @@
     components: {
       IonIcon
     },
-    props: {
-      count: {
-        type: Number,
-        default: 0,
-      },
-      label: {
-        type: String,
-        default: 'Glimpse',
-      },
-    },
-    setup(props) {
+    setup() {
       const glimpsed = ref(false);
       const glimpseIcon = ref(eyeOutline);
   

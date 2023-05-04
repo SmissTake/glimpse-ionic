@@ -15,13 +15,7 @@
     components: {
       IonIcon,
     },
-    props: {
-      shareCount: {
-        type: Number,
-        default: 0,
-      },
-    },
-    setup(props) {
+    setup() {
       const shared = ref(false);
       const shareIcon = ref(shareSocialOutline);
   

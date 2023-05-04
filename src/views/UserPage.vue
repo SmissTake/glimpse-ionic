@@ -105,8 +105,9 @@ const handleRefresh = (event: CustomEvent) => {
       <ion-row v-if="user.FavoritePlaces.length">
         <h2>Lieux favoris</h2>
         <swiper
-        :freemode="true"
-        :modules="modules">
+        :modules="modules"
+        :slidesPerView="2"
+        :freemode="true">
         <swiper-slide v-for="place in user.FavoritePlaces" :key="place.id">
           <PlaceCard :place="place" />
         </swiper-slide>
@@ -147,11 +148,15 @@ const handleRefresh = (event: CustomEvent) => {
   import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
   import PlaceCard from '@/components/PlaceCard.vue';
   import UserViewSkeleton from '@/components/skeletons/UserViewSkeleton.vue';
-  import { Swiper,SwiperSlide } from 'swiper/vue';
-  import { FreeMode } from 'swiper';
+  // Import Swiper Vue.js components
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+
+  // Import Swiper styles
   import 'swiper/css';
 
   import 'swiper/css/free-mode';
+  // import required modules
+  import { FreeMode } from 'swiper';
 
   export default {
     components: {

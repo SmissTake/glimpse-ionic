@@ -25,9 +25,8 @@
   </template>
   
   <script lang="ts">
-  import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonSkeletonText, IonImg } from '@ionic/vue';
+  import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonSkeletonText } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  import { heartOutline } from 'ionicons/icons';
   
   export default defineComponent({
       name: 'PlaceCardSkeleton',

@@ -12,7 +12,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     component: () => import('../views/LoginPage.vue'),
     beforeEnter: (to, from, next) => {
-      const store = usePlaceStore();
       if (!localStorage.getItem('token')) {
         next();
       } else {
@@ -105,7 +104,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const store = usePlaceStore();
   if (!localStorage.getItem('token') && to.path !== '/login') {
     next('/login');
   } else {
