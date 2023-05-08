@@ -97,4 +97,12 @@ export default defineComponent({
   height: 200px;
   object-fit: cover;
 }
+
+ion-card-title {
+  font: var(--ion-title-small);
+}
+
+ion-card {
+  max-width: 400px;
+}
 </style>
