@@ -12,7 +12,7 @@
         </ion-card-header>
         <ion-card-content>
           <div class="likes">
-            <LikeButton :placeId="place.id" :initialLikeCount="place.FavoriteUsers.lenght"/>
+            <LikeButton :placeId="place.id"/>
           </div>
         </ion-card-content>
     </div>
