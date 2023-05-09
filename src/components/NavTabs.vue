@@ -19,7 +19,7 @@
             <ion-icon :icon="notificationsIcon"></ion-icon>
           </ion-tab-button>
 
-          <ion-tab-button tab="user" href="/user">
+          <ion-tab-button tab="user" :href="'/user/' + userId">
             <ion-icon :icon="personIcon"></ion-icon>
           </ion-tab-button>
         </ion-tab-bar>
@@ -41,6 +41,7 @@
           addIcon: addOutline,
           notificationsIcon: notificationsOutline,
           personIcon: personOutline,
+          userId : localStorage.userId
         };
       },
     };
