@@ -17,5 +17,5 @@ export interface Place {
     Category: Category;
     Accessibility: Accessibility;
     Comments: CommentPlace[] | null;
-    favoriteUsers: {} | null;
+    FavoriteUsers: [] | null;
 }

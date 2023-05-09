@@ -12,8 +12,7 @@
         </ion-card-header>
         <ion-card-content>
           <div class="likes">
-            <LikeButton :placeId="place.id" />
-            <span class="like-count">{{ place.likes }}</span>
+            <LikeButton :placeId="place.id" :initialLikeCount="place.FavoriteUsers.lenght"/>
           </div>
         </ion-card-content>
     </div>

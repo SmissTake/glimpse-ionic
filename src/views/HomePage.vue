@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import type { Place } from '@/interfaces/place.interface';
-import { usePlaceStore } from '@/stores';
-
-const store = usePlaceStore();
 const places: Place[] = store.places;
 
 const handleRefresh = (event: CustomEvent) => {
@@ -23,7 +19,42 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <PlaceCard v-for="place in places" :key="place.id" :place="place" />
+        <ion-row class="popular-categories">
+          <h2>Categories les plus populaires</h2>
+          <swiper
+          :freemode="true"
+          :modules="modules">
+          <swiper-slide v-for="place in mostLikedPlaces" :key="place.id">
+            <PlaceCard :place="place" />
+          </swiper-slide>
+          </swiper>
+        </ion-row>
+
+        <ion-row class="recent-places">
+          <h2>Lieux les plus recents</h2>
+          <swiper
+          :freemode="true"
+          :modules="modules">
+          <swiper-slide v-for="place in places" :key="place.id">
+            <PlaceCard :place="place" />
+          </swiper-slide>
+          </swiper>
+        </ion-row>
+
+        <ion-row class="popular-categories">
+          <h2>Lieux les plus likes</h2>
+          <swiper
+          :freemode="true"
+          :modules="modules">
+          <swiper-slide v-for="place in places" :key="place.id">
+            <PlaceCard :place="place" />
+          </swiper-slide>
+          </swiper>
+        </ion-row>
+        <ion-button expand="full" color="primary" fill="solid">
+          <ion-icon :icon="earth" slot="start"></ion-icon>
+          Fais-moi rêver !
+        </ion-button>
     </ion-content>
     <ion-content v-else>
       <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
@@ -44,8 +75,20 @@ const handleRefresh = (event: CustomEvent) => {
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
 import PlaceCardSkeleton from '@/components/skeletons/PlaceCardSkeleton.vue';
-import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast, IonRefresher, IonRefresherContent } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast, IonRefresher, IonRefresherContent, IonRow, IonButton, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { earth } from 'ionicons/icons';
+import { usePlaceStore } from '@/stores';
+import { Place } from '@/interfaces/place.interface';
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/free-mode';
+// import required modules
+import { FreeMode } from 'swiper';
+
+const store = usePlaceStore();
 
 export default defineComponent({
   name: 'HomePage',
@@ -58,8 +101,27 @@ export default defineComponent({
     IonContent,
     IonToast,
     IonRefresher,
-    IonRefresherContent
+    IonRefresherContent,
+    Swiper,
+    SwiperSlide,
+    IonRow,
+    IonButton
   },
+  data() {
+    return {
+      earth,
+      modules: [FreeMode],
+    };
+  },
+  computed: {
+    mostLikedPlaces() {
+      return store.places.sort((a: Place, b: Place) => {
+        const aFavoriteUsersLength = (a.FavoriteUsers as string[] | undefined)?.length ?? 0;
+        const bFavoriteUsersLength = (b.FavoriteUsers as string[] | undefined)?.length ?? 0;
+        return bFavoriteUsersLength - aFavoriteUsersLength;
+      });
+    },
+  }
 });
 </script>
 
