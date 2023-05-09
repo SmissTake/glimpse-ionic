@@ -47,7 +47,7 @@ export const usePlaceStore = defineStore("places", {
             try {
                 const res = await fetch(`${process.env.VUE_APP_API_URL}/accessibility/listall`);
                 this.setAccessibilities(await res.json());
-                this.fetchError = '';
+                this.setFetchError('');
             }
             catch (error : any) {
                 this.setFetchError(error.message + ' accessibilities');
