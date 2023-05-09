@@ -15,6 +15,7 @@ const routes: Array<RouteRecordRaw> = [
       if (!localStorage.getItem('token')) {
         next();
       } else {
+        //TODO: verify if token is valid
         next('/');
       }
     },   
@@ -32,11 +33,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/HomePage.vue'),
         beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
-          
-          if (store.places.length > 0) {
-            return next();
-          }
-        
           await store.fetchPlaces();
           next();
         },
