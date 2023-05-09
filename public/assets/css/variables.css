@@ -75,3 +75,7 @@
     overflow: visible !important;
     margin-top: 1em;
   }
+
+  h2 {
+    font: var(--ion-title-small);
+  }
