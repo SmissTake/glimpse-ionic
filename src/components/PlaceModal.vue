@@ -35,7 +35,7 @@
                   </p>
                 </ion-col>
                 <ion-col>
-                  <LikeButton :placeId="place.id" ></LikeButton>
+                  <LikeButton :placeId="place.id" :initialIsLiked="isFavorited(place.id)" :initialLikeCount="likeCount"></LikeButton>
                 </ion-col>
           </ion-row>
           <hr>
@@ -112,7 +112,10 @@
   import ShareButton from './ShareButton.vue';
   import LikeButton from './LikeButton.vue';
   import GlimpseButton from './GlimpseButton.vue';
+  import { usePlaceStore } from '@/stores';
   
+  const store = usePlaceStore();
+
   export default defineComponent({
     name: 'PlaceModal',
     components: {
@@ -184,6 +187,26 @@
         const date = new Date(this.place.created_at);
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
       },
+      likeCount() {
+        if(this.place.FavoriteUsers) {
+          return this.place.FavoriteUsers.length;
+        }
+        else {
+          return 0;
+        }
+      }
+    },
+    methods: {
+      isFavorited(placeId: number) {
+        const connectedUser = store.getUser(Number(localStorage.userId));
+        if(connectedUser?.FavoritePlaces?.find(place => place.id === placeId)){
+          return true;
+        }
+        else {
+          console.log(connectedUser);
+          return false;
+        }
+      }
     }
   });
   </script>
