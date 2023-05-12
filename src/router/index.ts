@@ -19,7 +19,18 @@ const routes: Array<RouteRecordRaw> = [
         next('/');
       }
     },   
-  }, 
+  },
+  {
+    path: '/signin',
+    component: () => import('../views/SigninPage.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem('token')) {
+        next();
+      } else {
+        next('/');
+      }
+    },
+  },
   {
     path: '/',
     component: Tabs,
@@ -100,7 +111,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!localStorage.getItem('token') && to.path !== '/login') {
+  if (!localStorage.getItem('token') && to.path !== '/login' && to.path !== '/signin') {
     next('/login');
   } else {
     next();
