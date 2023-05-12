@@ -34,6 +34,9 @@
                     {{ placeDate }}
                   </p>
                 </ion-col>
+                <ion-col>
+                  <LikeButton :placeId="place.id" ></LikeButton>
+                </ion-col>
           </ion-row>
           <hr>
           <ion-row class="place-data">
@@ -107,6 +110,7 @@
   import 'swiper/css';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import ShareButton from './ShareButton.vue';
+  import LikeButton from './LikeButton.vue';
   import GlimpseButton from './GlimpseButton.vue';
   
   export default defineComponent({
@@ -131,7 +135,8 @@
     SwiperSlide,
     ShareButton,
     GlimpseButton,
-    IonText
+    IonText,
+    LikeButton
 },
     props: {
       isOpen: {
