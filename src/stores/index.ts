@@ -73,9 +73,13 @@ export const usePlaceStore = defineStore("places", {
             this.accessibilities = accessibilities;
         },
         setUser(user: User) {
-            if(!this.users.find((u) => u.id === user.id))
+          const index = this.users.findIndex((u) => u.id === user.id);
+          if (index !== -1) {
+            this.users[index] = { ...this.users[index], ...user };
+          } else {
             this.users.push(user);
-        },
+          }
+        },          
         setFetchError(error: string) {
             this.fetchError = error;
         },

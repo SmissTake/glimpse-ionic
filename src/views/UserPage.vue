@@ -2,16 +2,20 @@
 import type { User } from '@/interfaces/user.interface';
 import { usePlaceStore } from '@/stores';
 import { RouteLocationNormalized, useRoute } from 'vue-router';
+import { computed } from 'vue';
+
 
 const route: RouteLocationNormalized = useRoute();
 
 const store = usePlaceStore();
 // Get the user id from the route or if not found, use the connected user id
 const userId = parseInt(route.params.id) || parseInt(localStorage.getItem('userId') || '0');
-const user: User = store.getUser(userId);
+const user = computed(() => {
+  return store.getUser(userId);
+});
 
 const handleRefresh = (event: CustomEvent) => {
-  store.fetchPlaces().then(() => {
+  store.fetchUser(userId).then(() => {
     event.detail.complete();
   });
 };
