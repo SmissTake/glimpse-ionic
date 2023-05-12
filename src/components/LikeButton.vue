@@ -54,8 +54,6 @@
       };
 
       const likePlace = (props:any) => {
-        const data = JSON.stringify({placesId: parseInt(props.placeId)});
-        console.log(data);
         const token = localStorage.getItem('token');
 
         fetch(`${process.env.VUE_APP_API_URL}/favorite`, {
@@ -85,17 +83,16 @@
       }
 
       const unlikePlace = (props:any) => {
-        const data = new FormData();
-        data.append('placesId', props.placeId);
-
         const token = localStorage.getItem('token');
 
         fetch(`${process.env.VUE_APP_API_URL}/unfavorite`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: data,
+          body: JSON.stringify({placesId: parseInt(props.placeId)})
         })
         .then((response) => response.json())
         .then((data) => {

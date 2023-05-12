@@ -203,7 +203,6 @@
           return true;
         }
         else {
-          console.log(connectedUser);
           return false;
         }
       }
