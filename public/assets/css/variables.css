@@ -79,4 +79,5 @@
 
   h2 {
     font: var(--ion-title-small);
+    padding-left: 1em;
   }
