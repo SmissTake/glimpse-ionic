@@ -6,8 +6,8 @@ export interface Category {
     Place: {
         id: number;
         numberLike: number;
-        PicturePlaces: {
+        PicturePlaces: [{
             url: string;
-        }
+        }]
     }
 }
