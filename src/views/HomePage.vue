@@ -27,11 +27,14 @@ const handleRefresh = (event: CustomEvent) => {
               <CategoryLink :category="category"/>
             </ion-col>
           </ion-row>
+        </ion-row>
 
+        <ion-row class="popular-categories">
+          <h2>Lieux les plus populaires</h2>
           <ion-row class="slider">
-            <ion-col size="10" v-for="place in mostLikedPlaces" :key="place.id">
-              <PlaceCard :place="place" />
-            </ion-col>
+          <ion-col size="10" v-for="place in mostLikedPlaces" :key="place.id">
+            <PlaceCard :place="place" />
+          </ion-col>
           </ion-row>
         </ion-row>
 
@@ -47,20 +50,12 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-row class="recent-places">
           <h2>Lieux les plus recents</h2>
           <ion-row class="slider">
-            <ion-col size="10" v-for="place in places" :key="place.id">
+            <ion-col size="10" v-for="place in mostRecentPlaces" :key="place.id">
               <PlaceCard :place="place" />
             </ion-col>
           </ion-row>
         </ion-row>
 
-        <ion-row class="popular-categories">
-          <h2>Lieux les plus likes</h2>
-          <ion-row class="slider">
-          <ion-col size="10" v-for="place in places" :key="place.id">
-            <PlaceCard :place="place" />
-          </ion-col>
-          </ion-row>
-        </ion-row>
         <ion-button expand="full" color="primary" fill="solid">
           <ion-icon :icon="earth" slot="start"></ion-icon>
           Fais-moi rêver !
@@ -130,6 +125,14 @@ export default defineComponent({
     mostPlacesCategories() {
       return store.categories.sort((a: Category, b: Category) => {
         return b.numberPlaces - a.numberPlaces;
+      });
+    },
+    mostRecentPlaces() {
+      return store.places.sort((a: Place, b: Place) => {
+        //created_at is a date so we cant compare it directly
+        const aDate = new Date(a.created_at as string);
+        const bDate = new Date(b.created_at as string);
+        return bDate.getTime() - aDate.getTime();
       });
     },
   }
