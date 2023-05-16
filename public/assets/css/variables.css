@@ -81,3 +81,10 @@
     font: var(--ion-title-small);
     padding-left: 1em;
   }
+
+  .slider {
+    padding-left: 1em;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    gap: 0.4em;
+  }

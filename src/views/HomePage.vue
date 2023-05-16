@@ -160,11 +160,4 @@ ion-searchbar.md.custom {
   --clear-button-color: #fff;
   --box-shadow: none;
 }
-
-.slider {
-  padding-left: 1em;
-  overflow-x: scroll;
-  flex-wrap: nowrap;
-  gap: 0.4em;
-}
 </style>
