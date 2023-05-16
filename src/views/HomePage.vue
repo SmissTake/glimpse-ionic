@@ -139,10 +139,9 @@ export default defineComponent({
 <style scoped>
 ion-toolbar {
   border-radius: 0 0 0.5em 0.5em;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.226);
 }
 ion-header {
-  background : white;
+  background : none;
 }
 
 ion-searchbar.ios.custom {
