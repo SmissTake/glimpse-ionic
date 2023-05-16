@@ -207,8 +207,6 @@
         .then((data) => {
           this.place = data;
           this.setLoaded(true);
-          console.log(this.place);
-          console.log('Modal loaded')
         })
         .catch((error) => {
           console.error(error);
