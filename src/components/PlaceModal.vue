@@ -242,6 +242,7 @@
     font: var(--ion-title-small);
     margin-top: 2em;
     margin-bottom: 0.5em;
+    padding-left: 0;
   }
   
   .swiper {
