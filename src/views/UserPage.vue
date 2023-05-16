@@ -86,36 +86,29 @@ const handleRefresh = (event: CustomEvent) => {
       </ion-row>
     </div>
     <div class="body">
-      <ion-row v-if="user.posted.length">
+      <ion-row v-if="user.posted.length" class="section">
         <h2>Publié</h2>
-        <swiper
-        :freemode="true"
-        :modules="modules">
-        <swiper-slide v-for="place in user.posted" :key="place.id">
+        <ion-row class="slider">
+        <ion-col size="10" v-for="place in user.posted" :key="place.id">
           <PlaceCard :place="place" />
-        </swiper-slide>
-        </swiper>
+        </ion-col>
+        </ion-row>
       </ion-row>
-      <ion-row v-if="user.Visited.length">
+      <ion-row v-if="user.Visited.length" class="section">
         <h2>Lieux visités</h2>
-        <swiper
-        :freemode="true"
-        :modules="modules">
-        <swiper-slide v-for="place in user.Visited" :key="place.id">
+        <ion-row class="slider">
+        <ion-col size="10" v-for="place in user.Visited" :key="place.id">
           <PlaceCard :place="place" />
-        </swiper-slide>
-        </swiper>
+        </ion-col>
+        </ion-row>
       </ion-row>
-      <ion-row v-if="user.FavoritePlaces.length">
+      <ion-row v-if="user.FavoritePlaces.length" class="section">
         <h2>Lieux favoris</h2>
-        <swiper
-        :modules="modules"
-        :slidesPerView="2"
-        :freemode="true">
-        <swiper-slide v-for="place in user.FavoritePlaces" :key="place.id">
+        <ion-row class="slider">
+        <ion-col size="10" v-for="place in user.FavoritePlaces" :key="place.id">
           <PlaceCard :place="place" />
-        </swiper-slide>
-        </swiper>
+        </ion-col>
+        </ion-row>
       </ion-row>
     </div>
     </ion-content>
@@ -152,15 +145,6 @@ const handleRefresh = (event: CustomEvent) => {
   import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
   import PlaceCard from '@/components/PlaceCard.vue';
   import UserViewSkeleton from '@/components/skeletons/UserViewSkeleton.vue';
-  // Import Swiper Vue.js components
-  import { Swiper, SwiperSlide } from 'swiper/vue';
-
-  // Import Swiper styles
-  import 'swiper/css';
-
-  import 'swiper/css/free-mode';
-  // import required modules
-  import { FreeMode } from 'swiper';
 
   export default {
     components: {
@@ -171,8 +155,6 @@ const handleRefresh = (event: CustomEvent) => {
     IonText,
     IonAvatar,
     IonImg,
-    Swiper,
-    SwiperSlide,
     IonButton,
     IonToast,
     IonRefresher,
@@ -186,7 +168,6 @@ const handleRefresh = (event: CustomEvent) => {
         settingsIcon: settingsOutline,
         addOutline: addOutline,
         checkmarkIcon: checkmark,
-        modules: [FreeMode],
         connectedUserId: parseInt(`${localStorage.getItem('userId')}`),
       };
     },
@@ -209,5 +190,10 @@ const handleRefresh = (event: CustomEvent) => {
 
   .biography {
     text-align: center;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
   }
 </style>
