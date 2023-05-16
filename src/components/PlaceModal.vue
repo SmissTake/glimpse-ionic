@@ -167,17 +167,12 @@
         imageSource : process.env.VUE_APP_API_URL,
       };
     },
-    mounted(){
-      fetch(`${process.env.VUE_APP_API_URL}/place/show/${this.placeId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.place = data;
-          this.setLoaded(true);
-          console.log(this.place);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    watch: {
+      isOpen(newVal) {
+        if (newVal) {
+          this.fetchPlace();
+        }
+      }
     },
     computed: {
       keywords() {
@@ -205,6 +200,19 @@
         else {
           return false;
         }
+      },
+      fetchPlace(){
+        fetch(`${process.env.VUE_APP_API_URL}/place/show/${this.placeId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.place = data;
+          this.setLoaded(true);
+          console.log(this.place);
+          console.log('Modal loaded')
+        })
+        .catch((error) => {
+          console.error(error);
+        });
       }
     }
   });
