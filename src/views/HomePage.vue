@@ -22,23 +22,22 @@ const handleRefresh = (event: CustomEvent) => {
         </ion-refresher>
         <ion-row class="popular-categories" v-if="categories">
           <h2>Categories les plus populaires</h2>
-        <ion-row class="categories-list">
-          <ion-col v-for="category in categories" :key="category.id" >
-            <CategoryLink :category="category"/>
-          </ion-col>
-        </ion-row>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="place in mostLikedPlaces" :key="place.id">
-            <PlaceCard :place="place" />
-          </swiper-slide>
-          </swiper>
+          <ion-row class="slider">
+            <ion-col v-for="category in categories" :key="category.id" >
+              <CategoryLink :category="category"/>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="slider">
+            <ion-col size="10" v-for="place in mostLikedPlaces" :key="place.id">
+              <PlaceCard :place="place" />
+            </ion-col>
+          </ion-row>
         </ion-row>
 
         <ion-row class="last-categories">
           <h2>Categories avec le plus de lieux</h2>
-          <ion-row class="categories-card-list">
+          <ion-row class="slider">
             <ion-col v-for="category in mostPlacesCategories" :key="category.id">
               <CategoryCard :category="category" :label="true"/>
             </ion-col>
@@ -47,24 +46,20 @@ const handleRefresh = (event: CustomEvent) => {
 
         <ion-row class="recent-places">
           <h2>Lieux les plus recents</h2>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="place in places" :key="place.id">
-            <PlaceCard :place="place" />
-          </swiper-slide>
-          </swiper>
+          <ion-row class="slider">
+            <ion-col size="10" v-for="place in places" :key="place.id">
+              <PlaceCard :place="place" />
+            </ion-col>
+          </ion-row>
         </ion-row>
 
         <ion-row class="popular-categories">
           <h2>Lieux les plus likes</h2>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="place in places" :key="place.id">
+          <ion-row class="slider">
+          <ion-col size="10" v-for="place in places" :key="place.id">
             <PlaceCard :place="place" />
-          </swiper-slide>
-          </swiper>
+          </ion-col>
+          </ion-row>
         </ion-row>
         <ion-button expand="full" color="primary" fill="solid">
           <ion-icon :icon="earth" slot="start"></ion-icon>
@@ -97,13 +92,6 @@ import { earth } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
 import { Place } from '@/interfaces/place.interface';
 import { Category } from '@/interfaces/category.interface';
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/free-mode';
-// import required modules
-import { FreeMode } from 'swiper';
 import CategoryCard from '@/components/CategoryCard.vue';
 
 const store = usePlaceStore();
@@ -121,8 +109,6 @@ export default defineComponent({
     IonToast,
     IonRefresher,
     IonRefresherContent,
-    Swiper,
-    SwiperSlide,
     IonRow,
     IonCol,
     IonButton,
@@ -131,7 +117,6 @@ export default defineComponent({
   data() {
     return {
       earth,
-      modules: [FreeMode],
     };
   },
   computed: {
@@ -176,12 +161,7 @@ ion-searchbar.md.custom {
   --box-shadow: none;
 }
 
-.categories-list {
-  overflow-x: scroll;
-  flex-wrap: nowrap;
-  gap: 0.4em;
-}
-.categories-card-list{
+.slider {
   padding-left: 1em;
   overflow-x: scroll;
   flex-wrap: nowrap;
