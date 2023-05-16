@@ -1,21 +1,23 @@
 <template>
-  <ion-card @click="cardClicked" v-if="place">
+  <ion-card v-if="place" @click="clickOverlay">
     <ion-img v-if="place.PicturePlaces[0]" :src="imageSource+'/'+place.PicturePlaces[0].url" class="card-image"/>
-    
-    <ion-img v-else src="https://picsum.photos/640/360" class="card-image"/>
-    <div class="cardInfos">
-        <ion-card-header>
-          <ion-card-title>{{ place.title }} - {{ place.Category.label }}</ion-card-title>
-          <div class="posted-by" v-if="place.postedBy">
-            Posted by {{ place.postedBy.pseudonym }}
-          </div>
-        </ion-card-header>
-        <ion-card-content>
-          <div class="likes">
-            <LikeButton :placeId="place.id"/>
-          </div>
-        </ion-card-content>
-    </div>
+    <ion-card-content :class="{ show: showOverlay }">
+      <ion-row class="toolbar">
+        <ion-col size="auto">
+          <CategoryLink class="category" :category="place.Category" :style="'simple'" :label="false" :size="'small'"/>
+        </ion-col>
+        <ion-col size="auto">
+          <LikeButton class="like-button" :placeId="place.id" :initialIsLiked="isFavorited(place.id)" :size="'large'"></LikeButton>
+        </ion-col>
+      </ion-row>
+      <ion-row class="titles">
+        <ion-card-title>{{ place.title }}</ion-card-title>
+        <ion-card-subtitle>{{ place.town }}</ion-card-subtitle>
+      </ion-row>
+      <ion-button @click="cardClicked" fill="clear" >
+        <ion-icon :icon="chevronUpOutline"/>
+      </ion-button>
+    </ion-card-content>
   </ion-card>
   <PlaceModal v-if="place" :placeId="place.id" :placeCardInfo="place" :is-open="showModal" @close="showModal = false"/>
 
@@ -24,29 +26,38 @@
 </template>
 
 <script lang="ts">
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg } from '@ionic/vue';
+import { IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, IonImg, IonCol, IonRow, IonButton, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { heartOutline } from 'ionicons/icons';
+import { chevronUpOutline } from 'ionicons/icons';
 import PlaceModal from './PlaceModal.vue';
-import LikeButton from './LikeButton.vue';
 import PlaceCardSkeleton from './skeletons/PlaceCardSkeleton.vue';
+import LikeButton from './LikeButton.vue';
+import CategoryLink from './CategoryLink.vue';
+import { usePlaceStore } from '@/stores';
+
+const store = usePlaceStore();
 
 export default defineComponent({
     name: 'PlaceCard',
     components: {
     PlaceModal,
     IonCard,
-    IonCardHeader,
-    IonCardTitle,
     IonCardContent,
+    IonCardTitle,
+    IonCardSubtitle,
     IonImg,
-    LikeButton,
     PlaceCardSkeleton,
+    LikeButton,
+    CategoryLink,
+    IonCol,
+    IonRow,
+    IonButton,
+    IonIcon,
 },
     props: {
         place: {
-        type: Object,
-        required: false,
+          type: Object,
+          required: true,
         },
         loadedSkeleton: {
             type: Boolean,
@@ -55,53 +66,107 @@ export default defineComponent({
     },
     data() {
         return {
-        heartIcon: heartOutline,
-        showModal: false,
-        imageSource : process.env.VUE_APP_API_URL,
+          chevronUpOutline,
+          showModal: false,
+          imageSource : process.env.VUE_APP_API_URL,
+          showOverlay: false,
         };
+    },
+    computed: {
+      likeCount() {
+        if(this.place.FavoriteUsers) {
+          return this.place.FavoriteUsers.length;
+        }
+        else {
+          return 0;
+        }
+      }
     },
     methods: {
         cardClicked() {
             this.showModal = true;
         },
+        clickOverlay(event: Event) {
+            event.stopPropagation();
+
+            const target = event.target as HTMLElement;
+            if (target.closest('.like-button') || target.closest('ion-button')) {
+              return;
+            }
+            this.showOverlay = !this.showOverlay;
+        },
+        isFavorited(placeId: number) {
+        const connectedUser = store.getUser(Number(localStorage.userId));
+        if(connectedUser?.FavoritePlaces?.find(place => place.id === placeId)){
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
     },
 });
 </script>
 
 <style scoped>
 
-.cardInfos {
+ion-card-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.posted-by {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.posted-by router-link {
-  margin-left: 5px;
-}
-
-.likes {
-  display: flex;
   flex-direction: column;
-  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  transition: all 0.1s ease-in-out;
+}
+
+.show {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.1s ease-in-out;
 }
 
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
 ion-card-title {
   font: var(--ion-title-small);
+  color: var(--ion-color-light);
 }
 
 ion-card {
   max-width: 400px;
+  border-radius: 0.5rem;
+}
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-icon {
+  color: white;
 }
 </style>
