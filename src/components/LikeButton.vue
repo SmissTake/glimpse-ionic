@@ -1,7 +1,7 @@
 <template>
-    <div class="like-button" @click="toggleLike">
-      <ion-icon :icon="isLiked ? filledIcon : outlineIcon" />
-      <span class="like-count">{{ likeCount }}</span>
+    <div :class="'like-button ' + size" @click="toggleLike">
+      <ion-icon :icon="isLiked ? filledIcon : outlineIcon" :size="size"/>
+      <span class="like-count" v-if="initialLikeCount>0">{{ likeCount }}</span>
     </div>
   </template>
   
@@ -36,7 +36,11 @@
       placeId: {
         type: Number,
         required: true,
-      }
+      },
+      size: {
+        type: String,
+        default: '',
+      },
     },
     setup(props) {
       const likeCount = ref(props.initialLikeCount);
@@ -131,5 +135,9 @@
   .like-button .like-count {
     font-size: 12px;
     margin-top: 3px;
+  }
+
+  .large ion-icon {
+    color : #fff;
   }
   </style>
