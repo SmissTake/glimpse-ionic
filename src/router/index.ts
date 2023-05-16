@@ -45,6 +45,7 @@ const routes: Array<RouteRecordRaw> = [
         beforeEnter: async (to, from, next) => {
           const store = usePlaceStore();
           await store.fetchPlaces();
+          await store.fetchCategories();
           next();
         },
       },
