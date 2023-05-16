@@ -36,6 +36,15 @@ const handleRefresh = (event: CustomEvent) => {
           </swiper>
         </ion-row>
 
+        <ion-row class="last-categories">
+          <h2>Categories avec le plus de lieux</h2>
+          <ion-row class="categories-card-list">
+            <ion-col v-for="category in mostPlacesCategories" :key="category.id">
+              <CategoryCard :category="category" :label="true"/>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+
         <ion-row class="recent-places">
           <h2>Lieux les plus recents</h2>
           <swiper
@@ -95,6 +104,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 // import required modules
 import { FreeMode } from 'swiper';
+import CategoryCard from '@/components/CategoryCard.vue';
 
 const store = usePlaceStore();
 
@@ -115,8 +125,9 @@ export default defineComponent({
     SwiperSlide,
     IonRow,
     IonCol,
-    IonButton
-  },
+    IonButton,
+    CategoryCard
+},
   data() {
     return {
       earth,
@@ -129,6 +140,11 @@ export default defineComponent({
         const aFavoriteUsersLength = (a.FavoriteUsers as string[] | undefined)?.length ?? 0;
         const bFavoriteUsersLength = (b.FavoriteUsers as string[] | undefined)?.length ?? 0;
         return bFavoriteUsersLength - aFavoriteUsersLength;
+      });
+    },
+    mostPlacesCategories() {
+      return store.categories.sort((a: Category, b: Category) => {
+        return b.numberPlaces - a.numberPlaces;
       });
     },
   }
@@ -161,6 +177,12 @@ ion-searchbar.md.custom {
 }
 
 .categories-list {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  gap: 0.4em;
+}
+.categories-card-list{
+  padding-left: 1em;
   overflow-x: scroll;
   flex-wrap: nowrap;
   gap: 0.4em;
