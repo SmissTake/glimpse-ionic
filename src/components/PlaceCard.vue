@@ -147,6 +147,9 @@ ion-card-title {
   font: var(--ion-title-small);
   color: var(--ion-color-light);
 }
+ion-card-subtitle {
+  color: var(--ion-color-light);
+}
 
 ion-card {
   max-width: 400px;
