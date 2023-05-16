@@ -176,7 +176,7 @@
     },
     computed: {
       keywords() {
-        return this.place.keyword.split(',');
+        return this.place.keyword ? this.place.keyword.split(",") : null;
       },
       placeDate() {
         const date = new Date(this.place.created_at);
