@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const places: Place[] = store.places;
+const categories: Category[] = store.categories;
 
 const handleRefresh = (event: CustomEvent) => {
   store.fetchPlaces().then(() => {
@@ -19,8 +20,13 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <ion-row class="popular-categories">
+        <ion-row class="popular-categories" v-if="categories">
           <h2>Categories les plus populaires</h2>
+        <ion-row class="categories-list">
+          <ion-col v-for="category in categories" :key="category.id" >
+            <CategoryLink :category="category"/>
+          </ion-col>
+        </ion-row>
           <swiper
           :freemode="true"
           :modules="modules">
@@ -74,12 +80,14 @@ const handleRefresh = (event: CustomEvent) => {
 
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
+import CategoryLink from '@/components/CategoryLink.vue';
 import PlaceCardSkeleton from '@/components/skeletons/PlaceCardSkeleton.vue';
-import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast, IonRefresher, IonRefresherContent, IonRow, IonButton, IonIcon } from '@ionic/vue';
+import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast, IonRefresher, IonRefresherContent, IonRow, IonCol, IonButton, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { earth } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
 import { Place } from '@/interfaces/place.interface';
+import { Category } from '@/interfaces/category.interface';
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
 // Import Swiper styles
@@ -94,6 +102,7 @@ export default defineComponent({
   name: 'HomePage',
   components: {
     PlaceCard,
+    CategoryLink,
     IonHeader,
     IonToolbar,
     IonSearchbar,
@@ -105,6 +114,7 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     IonRow,
+    IonCol,
     IonButton
   },
   data() {
@@ -150,4 +160,9 @@ ion-searchbar.md.custom {
   --box-shadow: none;
 }
 
+.categories-list {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  gap: 0.4em;
+}
 </style>
