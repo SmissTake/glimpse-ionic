@@ -110,7 +110,18 @@
           },
           body: JSON.stringify({placesId: parseInt(props.placeId)})
         })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status === 401) {
+            store.setFetchError("Vous devez être connecté");
+            setTimeout(() => {
+              store.setFetchError("");
+            }, 4000);
+            logout();
+          }
+          else {
+            return response.json();
+          }
+        })
         .then((data) => {
           store.setSuccessMessage("Lieu supprimé des favoris");
           console.log('Success: ', data);
