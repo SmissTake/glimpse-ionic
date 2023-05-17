@@ -8,8 +8,9 @@
   <script lang="ts">
   import { IonIcon } from '@ionic/vue';
   import { defineComponent, ref } from 'vue';
-  import { heartOutline, heart } from 'ionicons/icons';
+  import { heartOutline, heart, logOut } from 'ionicons/icons';
   import { usePlaceStore } from '@/stores';
+  import { logout } from '@/utils/auth';
 
   const store = usePlaceStore();
   
@@ -69,7 +70,18 @@
           },
           body: JSON.stringify({placesId: parseInt(props.placeId)})
         })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status === 401) {
+            store.setFetchError("Vous devez être connecté");
+            setTimeout(() => {
+              store.setFetchError("");
+            }, 4000);
+            logout();
+          }
+          else {
+            return response.json();
+          }
+        })
         .then((data) => {
           store.setSuccessMessage("Lieu ajouté aux favoris");
           console.log('Success: ', data);
