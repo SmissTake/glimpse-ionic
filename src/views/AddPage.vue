@@ -141,6 +141,7 @@ import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelec
 import { defineComponent } from 'vue';
 import { addOutline, accessibilityOutline } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
+import { logout } from '@/utils/auth';
 
 interface CustomFile extends File {
   previewBase64: string;
@@ -249,12 +250,12 @@ export default defineComponent({
       .catch(error => {
         console.error(error); // handle error
         if (error.message === 'Unauthorized') {
-          store.setFetchError("Vous n'êtes pas devez être connecté pour ajouter un lieu");
+          store.setFetchError("Vous devez être connecté pour ajouter un lieu");
           //reset the error message after toast duration
           setTimeout(() => {
             store.setFetchError("");
           }, 4000);
-          // this.$router.push({ path: '/login' });
+          logout();
         } else {
           store.setFetchError("Une erreur est survenue lors de l'ajout de votre lieu");
           //reset the error message after toast duration
