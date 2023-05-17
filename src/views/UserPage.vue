@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { User } from '@/interfaces/user.interface';
 import { usePlaceStore } from '@/stores';
 import { RouteLocationNormalized, useRoute } from 'vue-router';
 import { computed } from 'vue';

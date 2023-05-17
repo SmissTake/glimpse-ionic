@@ -8,7 +8,7 @@
   <script lang="ts">
   import { IonIcon } from '@ionic/vue';
   import { defineComponent, ref } from 'vue';
-  import { heartOutline, heart, logOut } from 'ionicons/icons';
+  import { heartOutline, heart } from 'ionicons/icons';
   import { usePlaceStore } from '@/stores';
   import { logout } from '@/utils/auth';
 

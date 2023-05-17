@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const places: Place[] = store.places;
 const categories: Category[] = store.categories;
 
 const handleRefresh = (event: CustomEvent) => {
