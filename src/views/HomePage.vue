@@ -116,7 +116,8 @@ export default defineComponent({
   },
   computed: {
     mostLikedPlaces() {
-      return store.places.sort((a: Place, b: Place) => {
+      //slice() to create a copy of the stored data to prevent mutation and so vue warn message (maximum recursive updates exceeded)
+      return store.places.slice().sort((a: Place, b: Place) => {
         const aFavoriteUsersLength = (a.FavoriteUsers as string[] | undefined)?.length ?? 0;
         const bFavoriteUsersLength = (b.FavoriteUsers as string[] | undefined)?.length ?? 0;
         return bFavoriteUsersLength - aFavoriteUsersLength;
@@ -128,7 +129,7 @@ export default defineComponent({
       });
     },
     mostRecentPlaces() {
-      return store.places.sort((a: Place, b: Place) => {
+      return store.places.slice().sort((a: Place, b: Place) => {
         //created_at is a date so we cant compare it directly
         const aDate = new Date(a.created_at as string);
         const bDate = new Date(b.created_at as string);
