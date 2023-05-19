@@ -3,6 +3,7 @@ const { VUE_APP_API_URL } = process.env;
 
 export const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('userId');
   router.push('/login');
 }
 
@@ -20,16 +21,12 @@ export const checkToken = async () => {
         }
       });
       const data = await response.json();
-      console.log(data);
       if (response.status === 200) {
-        console.log('valid token');
         return true;
       } else {
-        console.error("invalid token");
         return false;
       }
     } catch (error) {
-      console.error("invalid token");
       return false;
     }
   }
