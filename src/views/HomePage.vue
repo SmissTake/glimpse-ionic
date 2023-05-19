@@ -1,8 +1,9 @@
 <script setup lang="ts">
-const categories: Category[] = store.categories;
-
 const handleRefresh = (event: CustomEvent) => {
   store.fetchPlaces().then(() => {
+    event.detail.complete();
+  });
+  store.fetchCategories().then(() => {
     event.detail.complete();
   });
 };
@@ -133,6 +134,9 @@ export default defineComponent({
         const bDate = new Date(b.created_at as string);
         return bDate.getTime() - aDate.getTime();
       });
+    },
+    categories() {
+      return store.categories;
     },
   }
 });
