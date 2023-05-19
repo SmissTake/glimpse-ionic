@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../components/NavTabs.vue';
 import { usePlaceStore } from '../stores';
+import { checkToken, logout } from '@/utils/auth';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -11,25 +12,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     component: () => import('../views/LoginPage.vue'),
-    beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem('token')) {
-        next();
+    beforeEnter: async (to, from, next) => {
+      const isValidToken = await checkToken();
+      if (isValidToken) {
+        next('/home');
       } else {
-        //TODO: verify if token is valid
-        next('/');
+        next();
       }
-    },   
+    }
   },
   {
     path: '/signin',
     component: () => import('../views/SigninPage.vue'),
-    beforeEnter: (to, from, next) => {
-      if (!localStorage.getItem('token')) {
-        next();
+    beforeEnter: async (to, from, next) => {
+      const isValidToken = await checkToken();
+      if (isValidToken) {
+        next('/home');
       } else {
-        next('/');
+        next();
       }
-    },
+    }
   },
   {
     path: '/',
@@ -111,10 +113,17 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (!localStorage.getItem('token') && to.path !== '/login' && to.path !== '/signin') {
-    next('/login');
-  } else {
+router.beforeEach(async (to, from, next) => {
+  if (to.path !== '/login' && to.path !== '/signin') {
+    const isValidToken = await checkToken();
+    if (!isValidToken) {
+      logout();
+      next('/login');
+    } else {
+      next();
+    }
+  }
+  else {
     next();
   }
 });
