@@ -41,7 +41,7 @@
           <hr>
           <ion-row class="place-data">
             <ion-col class="flex">
-              <GlimpseButton />
+              <GlimpseButton :placeId="place.id" :initialIsVisited="isVisited(place.id)"/>
             </ion-col>
             <ion-col class="flex">
               <ion-icon :icon="accessibilityIcon"></ion-icon>
@@ -195,6 +195,15 @@
       isFavorited(placeId: number) {
         const connectedUser = store.getUser(Number(localStorage.userId));
         if(connectedUser?.FavoritePlaces?.find(place => place.id === placeId)){
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+      isVisited(placeId: number) {
+        const connectedUser = store.getUser(Number(localStorage.userId));
+        if(connectedUser?.Visited?.find(place => place.id === placeId)){
           return true;
         }
         else {
