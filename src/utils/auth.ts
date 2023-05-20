@@ -20,7 +20,6 @@ export const checkToken = async () => {
           'Authorization': `Bearer ${token}`,
         }
       });
-      const data = await response.json();
       if (response.status === 200) {
         return true;
       } else {
