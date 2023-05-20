@@ -42,6 +42,8 @@
   
       const toggleGlimpse = () => {
         if (glimpsed.value) {
+          unGlimpsePlace(props);
+        } else {
           glimpsePlace(props);
         }
         glimpsed.value = !glimpsed.value;
@@ -75,6 +77,48 @@
         })
         .then((data) => {
           store.setSuccessMessage("Lieu Glimpsé !");
+          console.log('Success: ', data);
+          setTimeout(() => {
+            store.setSuccessMessage("");
+          }, 4000);
+        })
+        .catch((error) => {
+          store.setFetchError("Une erreur est survenue");
+          console.error('Error:', error);
+          setTimeout(() => {
+            store.setSuccessMessage("");
+          }, 4000);
+        })
+      };
+
+      const unGlimpsePlace = (props:any) => {
+        const token = localStorage.getItem('token');
+
+        fetch(`${process.env.VUE_APP_API_URL}/unvisit`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            placesId: parseInt(props.placeId)
+          }),
+        })
+        .then((response) => {
+          if (response.status === 401) {
+            store.setFetchError("Vous devez être connecté");
+            setTimeout(() => {
+              store.setFetchError("");
+            }, 3000);
+            logout();
+          }
+          else {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          store.setSuccessMessage("Lieu retiré des Glimpsés !");
           console.log('Success: ', data);
           setTimeout(() => {
             store.setSuccessMessage("");
