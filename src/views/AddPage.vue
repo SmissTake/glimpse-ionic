@@ -38,14 +38,14 @@ const accessibilities: Accessibility[] = store.accessibilities;
             <ion-note>{{ filePreview.length }} /8</ion-note>
           </div>
         </ion-item>
-        <ion-item class="custom" counter="true">
+        <ion-item class="custom" :counter="true">
           <ion-label position="floating">Titre</ion-label>
           <ion-input
             placeholder="Batiment abondonné"
             :required="true"
             :value="form.title"
             name="title"
-            maxlength="50"
+            :maxlength="50"
             @ionInput="onInput($event)"
             class="custom"
           ></ion-input>
@@ -69,14 +69,14 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-item class="custom" counter="true">
+        <ion-item class="custom" :counter="true">
           <ion-label position="floating">Ville</ion-label>
           <ion-input
             type="text"
             placeholder="Lyon"
             :value="form.town"
             name="town"
-            maxlength="50"
+            :maxlength="50"
             @ionInput="onInput($event)"
           ></ion-input>
         </ion-item>
@@ -112,13 +112,13 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </div>
           </ion-radio-group>
         </ion-item>
-        <ion-item class="custom" counter="true">
+        <ion-item class="custom" :counter="true">
           <ion-label position="floating">Mots-clés</ion-label>
           <ion-textarea
             placeholder="Mots-clés séparés par des virgules. Ex : batiment, abandonné, Lyon"
             :value="form.keyword"
             name="keyword"
-            maxlength="255"
+            :maxlength="255"
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
