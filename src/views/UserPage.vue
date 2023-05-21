@@ -27,7 +27,7 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
       <div class="header">
-      <ion-row class="banner ion-justify-content-end" >
+      <ion-row class="ion-justify-content-end dark banner" >
         <ion-col size="2">
           <ion-button size="small" v-if="user.id == connectedUserId">
             <ion-icon :icon="settingsIcon"></ion-icon>
@@ -37,13 +37,13 @@ const handleRefresh = (event: CustomEvent) => {
           </ion-button>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-justify-content-center">
+      <ion-row class="ion-justify-content-center dark">
         <ion-avatar class="user-avatar">
           <ion-img v-if="user.avatar" :src="imageSource+'/'+user.avatar"/>
           <ion-img v-else src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
         </ion-avatar>
       </ion-row>
-      <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-row class="ion-justify-content-center ion-align-items-center dark">
         <ion-text>
           <h1>{{ user.pseudonym }}</h1>
         </ion-text>
@@ -53,21 +53,21 @@ const handleRefresh = (event: CustomEvent) => {
           Suivre
         </ion-button>
       </ion-row>
-      <ion-row>
-        <ion-col>
+      <ion-row class="ion-justify-content-center row-data">
+        <ion-col class="data" size="auto">
           <span v-if="user.Followings">{{ user.Followings.length }}</span>
           <span v-else>0</span>
-          abonné(s)
+          <p>glimpsers</p>
         </ion-col>
-        <ion-col>
+        <ion-col class="data" size="auto">
           <span v-if="user.FavoritePlaces">{{ user.FavoritePlaces.length }}</span>
           <span v-else>0</span>
-          <p>like(s)</p>
+          <p>likes</p>
         </ion-col>
-        <ion-col>
+        <ion-col class="data" size="auto">
           <span v-if="user.posted">{{ user.posted.length }}</span>
           <span v-else>0</span>
-          <p>publication(s)</p>
+          <p>publications</p>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -83,6 +83,7 @@ const handleRefresh = (event: CustomEvent) => {
           Publier une nouvelle experience
         </ion-button>
       </ion-row>
+      <hr>
     </div>
     <div class="body">
       <ion-row v-if="user.posted?.length" class="section">
@@ -177,14 +178,58 @@ const handleRefresh = (event: CustomEvent) => {
 
 <style scoped>
   .banner {
-    background-color:rgb(44, 44, 44);
     background-size: cover;
     height: 100px;
   }
+
+  .dark {
+    background-color:rgb(44, 44, 44);
+  }
+
+  .dark:nth-of-type(3) {
+    padding-bottom: 30px;
+  }
+
   .user-avatar {
     width: 150px;
     height: 150px;
     margin-top: -75px;
+  }
+
+  h1 {
+    color: white;
+    font: var(--ion-title-medium);
+  }
+
+  hr {
+    background-color: var(--ion-color-primary);
+    margin: 1em 0;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .row-data {
+    gap: 2em;
+  }
+
+  .data {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 4em;
+    padding: 10px;
+    margin-top: -30px;
+
+    font: var(--ion-text-paragraph);
+
+    box-shadow: 0 0 7px var(--ion-color-primary);
+    background-color: white;
+    border-radius: 0.5em;
+  }
+
+  .data p {
+    margin: 0;
   }
 
   .biography {
