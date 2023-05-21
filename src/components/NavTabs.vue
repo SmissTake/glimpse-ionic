@@ -7,8 +7,8 @@
             <ion-icon :icon="homeIcon"></ion-icon>
           </ion-tab-button>
   
-          <ion-tab-button tab="like" href="/like">
-            <ion-icon :icon="heartIcon"></ion-icon>
+          <ion-tab-button tab="map" href="/map">
+            <ion-icon :icon="mapIcon"></ion-icon>
           </ion-tab-button>
   
           <ion-tab-button tab="add" href="/add">
@@ -30,14 +30,14 @@
   <script lang="ts">
     import { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon } from '@ionic/vue';
   
-    import { homeOutline, heartOutline, notificationsOutline, personOutline, addOutline } from 'ionicons/icons';
+    import { homeOutline, mapOutline, notificationsOutline, personOutline, addOutline } from 'ionicons/icons';
   
     export default {
       components: { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon },
       data() {
         return {
           homeIcon: homeOutline,
-          heartIcon: heartOutline,
+          mapIcon: mapOutline,
           addIcon: addOutline,
           notificationsIcon: notificationsOutline,
           personIcon: personOutline,
