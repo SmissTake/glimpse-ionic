@@ -1,221 +1,161 @@
 <template>
-<ion-modal>
-<ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-button @click="$emit('close')">
-          <ion-icon slot="icon-only" :icon="closeIcon"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
   <ion-content class="ion-padding-bottom">
-    <div>
-      <ion-img class="card-image">
-        <ion-skeleton-text :animated="true" />
-      </ion-img>
+    <ion-col>
+      <h1>  
+        <ion-skeleton-text :animated="true" style="width: 80%; height: 1.5em;"></ion-skeleton-text>
+      </h1>
+      <ion-text>
+        <p class="place-town">
+          <ion-skeleton-text :animated="true" style="width: 50%; height: 1em;"></ion-skeleton-text>
+        </p>
+      </ion-text>
+    </ion-col>
+    <div style="padding: 20px;">  
+      <ion-skeleton-text :animated="true" style="width: 100%; height: 400px;"></ion-skeleton-text>
     </div>
     <ion-card-content class="ion-margin-bottom">
-      <PlaceModalToolBar />
-      <ion-row class="place-data">
-        <ion-col class="flex">
-          <ion-icon :icon="accessibilityIcon"></ion-icon>
-          <span>
-            <ion-skeleton-text :animated="true" width="70px" />
-          </span>
-        </ion-col>
-        <ion-col class="flex">
-          <ion-icon :icon="businessIcon"></ion-icon>
-          <span>
-            <ion-skeleton-text :animated="true" width="70px" />
-          </span>
+      <ion-row class="posted-by" style="justify-content: space-between;">
+        <ion-row style="width: 40%;">
+          <ion-col size="auto">
+            <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
+          </ion-col>
+          <ion-col>
+            <ion-skeleton-text :animated="true" style="height: 1em;"></ion-skeleton-text>
+            <ion-skeleton-text :animated="true" style="width: 80%; height: 1em;"></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
+        <ion-col size="auto" >
+          <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <h1>
-            <ion-skeleton-text :animated="true" width="80%" />
-          </h1>
+      <ion-skeleton-text :animated="true" class="hr"></ion-skeleton-text>
+      <ion-row class="place-data">
+        <ion-col class="flex">
+          <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
+          <ion-skeleton-text :animated="true" style="width: 30%; height: 1em;"></ion-skeleton-text>
         </ion-col>
-        <ion-col>
-          <div class="posted-by">
-            <ion-row>
-              <ion-col>
-                <p class="username">
-                  <ion-skeleton-text :animated="true" width="70px" />
-                </p>
-                <p class="posted-at">
-                  <ion-skeleton-text :animated="true" width="50px" />
-                </p>
-              </ion-col>
-              <ion-col class="flex">
-                <ion-thumbnail slot="start">
-                  <ion-skeleton-text :animated="true"/>
-                </ion-thumbnail>
-              </ion-col>
-            </ion-row>
-          </div>
+        <ion-col class="flex">
+          <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
+          <ion-skeleton-text :animated="true" style="width: 30%; height: 1em;"></ion-skeleton-text>
+        </ion-col>
+        <ion-col class="flex">
+          <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
+          <ion-skeleton-text :animated="true" style="width: 30%; height: 1em;"></ion-skeleton-text>
         </ion-col>
       </ion-row>
       <div class="description">
         <h2>
-          <ion-skeleton-text :animated="true" width="100px" />
+          <ion-skeleton-text :animated="true" style="width: 80%; height: 2em;"></ion-skeleton-text>
         </h2>
-        <p>
-          <ion-skeleton-text :animated="true" width="100%" />
-          <ion-skeleton-text :animated="true" width="80%" />
-          <ion-skeleton-text :animated="true" width="90%" />
-          <ion-skeleton-text :animated="true" width="70%" />
-        </p>
+        <ion-skeleton-text :animated="true" style="width: 100%; height: 10em;"></ion-skeleton-text>
       </div>
       <div class="history">
         <h2>
-          <ion-skeleton-text :animated="true" width="100px" />
+          <ion-skeleton-text :animated="true" style="width: 70%; height: 2em;"></ion-skeleton-text>
         </h2>
-        <p>
-          <ion-skeleton-text :animated="true" width="100%" />
-          <ion-skeleton-text :animated="true" width="80%" />
-          <ion-skeleton-text :animated="true" width="90%" />
-          <ion-skeleton-text :animated="true" width="70%" />
-        </p>
+        <ion-skeleton-text :animated="true" style="width: 100%; height: 10em;"></ion-skeleton-text>
       </div>
       <div class="keywords">
-        <h2>
-          <ion-skeleton-text :animated="true" width="100px" />
-        </h2>
-        <p>
-          <ion-skeleton-text :animated="true" width="100%" />
-          <ion-skeleton-text :animated="true" width="80%" />
-        </p>
+        <ion-skeleton-text :animated="true" style="width: 20%; height: 1em; margin-right: 1em;"></ion-skeleton-text>
+        <ion-skeleton-text :animated="true" style="width: 25%; height: 1em; margin-right: 1em;"></ion-skeleton-text>
+        <ion-skeleton-text :animated="true" style="width: 30%; height: 1em; margin-right: 1em;"></ion-skeleton-text>
+        <ion-skeleton-text :animated="true" style="width: 25%; height: 1em; margin-right: 1em;"></ion-skeleton-text>
+        <ion-skeleton-text :animated="true" style="width: 15%; height: 1em; margin-right: 1em;"></ion-skeleton-text>
       </div>
+      <div class="share flex">
+        <ion-skeleton-text :animated="true" style="width: 2em; height: 2em;"></ion-skeleton-text>
+        <ion-skeleton-text :animated="true" style="width: 10%;"></ion-skeleton-text>
+      </div>
+      <hr>
       <div class="comments">
         <h2>
-          <ion-skeleton-text :animated="true" width="100px" />
+          <ion-skeleton-text :animated="true" style="width: 60%; height: 2em;"></ion-skeleton-text>
         </h2>
-        <CommentInput/>
-        <div>
-          <p>
-            <ion-skeleton-text :animated="true" width="70px" />
-          </p>
-        </div>
+        <ion-row style="margin-bottom: 1em;">
+          <ion-col size="auto">
+            <ion-skeleton-text :animated="true" style="width: 3em; height: 3em;"></ion-skeleton-text>
+          </ion-col>
+          <ion-col>
+            <ion-skeleton-text :animated="true" style="width: 40%; height: 1.5em;"></ion-skeleton-text>
+            <ion-skeleton-text :animated="true" style="width: 100%; height: 4em;"></ion-skeleton-text>
+          </ion-col>
+        </ion-row>
       </div>
     </ion-card-content>
   </ion-content>
-</ion-modal>
 </template>
+
 <script lang="ts">
-  import { IonModal, IonHeader, IonToolbar, IonContent, IonCardContent, IonIcon, IonButton, IonButtons, IonSkeletonText, IonThumbnail, IonCol, IonRow, IonImg } from '@ionic/vue';
-  import { defineComponent, ref } from 'vue';
-  import { closeOutline, heartOutline, accessibilityOutline, businessOutline, key } from 'ionicons/icons';
-  import PlaceModalToolBar from './PlaceModalToolBar.vue';
-  import CommentPlace from './CommentPlace.vue';
-  import UserAvatar from './UserAvatar.vue';
-  import CommentInput from './CommentInput.vue';
-  import 'swiper/css';
-  import { Swiper, SwiperSlide } from 'swiper/vue';
-  
-  export default defineComponent({
-    name: 'PlaceModal',
-    components: {
-    IonModal,
-    IonHeader,
-    IonToolbar,
+import { IonContent, IonCardContent, IonCol, IonRow, IonText, IonSkeletonText } from '@ionic/vue';
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'PlaceModalSkeleton',
+  components: {
     IonContent,
     IonCardContent,
-    IonIcon,
-    IonButton,
-    IonButtons,
-    PlaceModalToolBar,
-    CommentPlace,
-    UserAvatar,
-    CommentInput,
     IonSkeletonText,
-    IonThumbnail,
     IonCol,
     IonRow,
-    IonImg,
-    Swiper,
-    SwiperSlide
-},
-    props: {
-      isOpen: {
-        type: Boolean,
-        required: true,
-      },
-      presentingElement: null
-    },
-    data() {
-      return {
-        closeIcon: closeOutline,
-        heartIcon: heartOutline,
-        accessibilityIcon: accessibilityOutline,
-        businessIcon: businessOutline,
-      };
-    },
-  });
-  </script>
-  
-  <style scoped>
-  .username {
-    font-weight: bold;
-  }
-  .posted-at {
-    font-size: 0.8rem;
-    color: #8c8c8c;
-  }
-  .posted-by p {
-    text-align: end;
-  }
+    IonText,
+  },
+});
+</script>
 
-  h1 {
-    font-weight: bold;
-    font-size: 40px;
-  }
+<style scoped>
+.posted-by ion-col {
+  margin-left: 1em;
+}
 
-  h2 {
-    font-weight: bold;
-    margin-top: 2em;
-    margin-bottom: 1em;
-  }
-  
-  .likes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .description {
-    margin-top: 10px;
-  }
+.place-town {
+  margin: 0 20px;
+  font: var(--ion-title-small);
+}
 
-  .flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+h1 {
+  font: var(--ion-title-big);
+  margin: 0 20px;
+}
 
-  .place-data {
-    border-top: #8c8c8c solid 1px;
-  }
+h2 {
+  font: var(--ion-title-small);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  padding-left: 0;
+}
+.likes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .place-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-  }
+.description {
+  margin-top: 10px;
+  font: var(--ion-text-paragraph);
+}
 
-  ion-modal {
-    --border-radius: 16px;
-    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  }
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  ion-modal::part(backdrop) {
-    background: rgba(209, 213, 219);
-    opacity: 1;
-  }
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 2em;
+}
 
-  ion-modal ion-toolbar {
-    --background: var(--ion-color-light);
-    --color: var(--ion-color-primary);
-  }
-  </style>
+.share {
+  margin-top: 2em;
+}
+
+.hr {
+  height: 1px;
+  margin: 2em 0;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
