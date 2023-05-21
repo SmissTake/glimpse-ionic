@@ -117,6 +117,7 @@ ion-card-content {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
 
   position: absolute;
   top: 0;
