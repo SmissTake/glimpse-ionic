@@ -1,7 +1,7 @@
 <template>
     <ion-row>
         <form @submit.prevent="submitComment">
-            <ion-item>
+            <ion-item class="custom">
                 <ion-input 
                 label="Commentaire"
                 label-placement="stacked"
@@ -121,21 +121,19 @@ export default defineComponent({
         display: flex;
         justify-content: space-between;
         width: 100%;
+        gap: 1em;
     }
 
     ion-button {
         --background: var(--ion-color-primary);
         --color: var(--ion-color-secondary-contrast);
         border-radius: 0.5em;
+        height: 100%;
+        margin: 0;
     }
 
-    ion-input {
-    --placeholder-color: #ddd;
-    --placeholder-opacity: .8;
-    --border-radius: 0.5em;
-  }
-
-  ion-input {
-    color: var(--ion-color-step-700, #373737);
-  }
+    ion-item.custom {
+        margin-top: 0;
+        width: 100%;
+    }
 </style>
