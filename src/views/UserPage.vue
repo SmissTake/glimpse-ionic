@@ -85,7 +85,7 @@ const handleRefresh = (event: CustomEvent) => {
       </ion-row>
     </div>
     <div class="body">
-      <ion-row v-if="user.posted.length" class="section">
+      <ion-row v-if="user.posted?.length" class="section">
         <h2>Publié</h2>
         <ion-row class="slider">
         <ion-col size="10" v-for="place in user.posted" :key="place.id">
@@ -93,7 +93,7 @@ const handleRefresh = (event: CustomEvent) => {
         </ion-col>
         </ion-row>
       </ion-row>
-      <ion-row v-if="user.Visited.length" class="section">
+      <ion-row v-if="user.Visited?.length" class="section">
         <h2>Lieux visités</h2>
         <ion-row class="slider">
         <ion-col size="10" v-for="place in user.Visited" :key="place.id">
@@ -101,7 +101,7 @@ const handleRefresh = (event: CustomEvent) => {
         </ion-col>
         </ion-row>
       </ion-row>
-      <ion-row v-if="user.FavoritePlaces.length" class="section">
+      <ion-row v-if="user.FavoritePlaces?.length" class="section">
         <h2>Lieux favoris</h2>
         <ion-row class="slider">
         <ion-col size="10" v-for="place in user.FavoritePlaces" :key="place.id">
@@ -121,7 +121,7 @@ const handleRefresh = (event: CustomEvent) => {
       position="bottom"
       color="danger"
       :duration="4000"
-      @ionToastDidDismiss="store.fetchError = null"
+      @ionToastDidDismiss="store.fetchError = ''"
       v-if="store.fetchError"
     ></ion-toast>
     </ion-content>
@@ -130,7 +130,7 @@ const handleRefresh = (event: CustomEvent) => {
       position="bottom"
       color="success"
       :duration="4000"
-      @ionToastDidDismiss="store.successMessage = null"
+      @ionToastDidDismiss="store.successMessage = ''"
       v-if="store.successMessage"
     ></ion-toast>
   </ion-page>
