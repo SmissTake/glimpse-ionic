@@ -18,7 +18,7 @@
                 </p>
               </ion-text>
         </ion-col>
-        <swiper class="place-swiper">
+        <swiper class="place-swiper" :pagination="{ clickable: true }" :modules="modules" style="--swiper-pagination-color: white; --swiper-pagination-bullet-inactive-color: white; --swiper-pagination-bullet-inactive-opacity: 0.5">
           <swiper-slide v-for="(picture, index) in place.PicturePlaces" :key="index">
             <ion-img v-if="imageSource+'/'+picture.url" :src="imageSource+'/'+picture.url" class="place-image" loading="lazy" />
           </swiper-slide>
@@ -104,7 +104,9 @@
   import CommentInput from './CommentInput.vue';
   import KeywordPill from './KeywordPill.vue';
   import { Place } from '@/interfaces/place.interface';
+  import { Pagination } from 'swiper';
   import 'swiper/css';
+  import 'swiper/css/pagination';
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import ShareButton from './ShareButton.vue';
   import LikeButton from './LikeButton.vue';
@@ -164,6 +166,7 @@
         businessIcon: businessOutline,
         place: {} as Place,
         imageSource : process.env.VUE_APP_API_URL,
+        modules: [ Pagination ],
       };
     },
     watch: {
@@ -262,12 +265,6 @@
     border-radius: 0.5em;
   }
 
-  .likes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
   .description {
     margin-top: 10px;
     font: var(--ion-text-paragraph);
