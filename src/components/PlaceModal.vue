@@ -9,7 +9,7 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content v-if="place" :fullscreen="true" class="ion-padding-bottom">
+      <ion-content v-if="loaded" :fullscreen="true" class="ion-padding-bottom">
         <ion-col>
               <h1>{{ place.title }}</h1>
               <ion-text>
@@ -25,7 +25,8 @@
         </swiper>
         <ion-card-content class="ion-margin-bottom">
           <ion-row class="posted-by">
-                  <UserAvatar :userAvatar="imageSource+'/'+place.postedBy.avatar" />
+                  <UserAvatar v-if="place.postedBy.avatar" :userAvatar="imageSource+'/'+place.postedBy.avatar" />
+                  <UserAvatar v-else :userAvatar="'https://ionicframework.com/docs/img/demos/avatar.svg'" />
                 <ion-col>
                   <p class="username">
                     <router-link :to="{ name: 'user', params: { id: place.postedBy.id } }">{{ place.postedBy.pseudonym }}</router-link>
@@ -90,11 +91,7 @@
           </div>
         </ion-card-content>
       </ion-content>
-      <ion-content v-else>
-          <p>
-            Aucun lieu trouvé.
-          </p>
-        </ion-content>
+      <PlaceModalSkeleton v-else />
     </ion-modal>
   </template>
   
@@ -112,6 +109,7 @@
   import ShareButton from './ShareButton.vue';
   import LikeButton from './LikeButton.vue';
   import GlimpseButton from './GlimpseButton.vue';
+  import PlaceModalSkeleton from './skeletons/PlaceModalSkeleton.vue';
   import { usePlaceStore } from '@/stores';
   
   const store = usePlaceStore();
@@ -139,7 +137,8 @@
     ShareButton,
     GlimpseButton,
     IonText,
-    LikeButton
+    LikeButton,
+    PlaceModalSkeleton,
 },
     props: {
       isOpen: {
@@ -210,8 +209,9 @@
           return false;
         }
       },
-      fetchPlace(){
-        fetch(`${process.env.VUE_APP_API_URL}/place/show/${this.placeId}`)
+      async fetchPlace(){
+        this.setLoaded(false);
+        await fetch(`${process.env.VUE_APP_API_URL}/place/show/${this.placeId}`)
         .then((response) => response.json())
         .then((data) => {
           this.place = data;
@@ -219,6 +219,9 @@
         })
         .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          this.setLoaded(true);
         });
       }
     }
