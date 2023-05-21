@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { usePlaceStore } from '@/stores';
 import { RouteLocationNormalized, useRoute } from 'vue-router';
 import { computed } from 'vue';
 
 
 const route: RouteLocationNormalized = useRoute();
-
-const store = usePlaceStore();
 // Get the user id from the route or if not found, use the connected user id
 const userId = parseInt(route.params.id) || parseInt(localStorage.getItem('userId') || '0');
 const user = computed(() => {
@@ -47,15 +44,11 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-text>
           <h1>{{ user.pseudonym }}</h1>
         </ion-text>
-        <!-- if connected user is the user page, don't display the follow button -->
-        <ion-button v-if="user.id !== connectedUserId" color="primary" size="small" fill="outline">
-          <ion-icon :icon="addOutline"></ion-icon>
-          Suivre
-        </ion-button>
+        <FollowButton v-if="user.id !== connectedUserId" :initialIsFollowed="isFollowed(userId)" :userId="user.id"/>
       </ion-row>
       <ion-row class="ion-justify-content-center row-data">
         <ion-col class="data" size="auto">
-          <span v-if="user.Followings">{{ user.Followings.length }}</span>
+          <span v-if="user.Followers">{{ user.Followers.length }}</span>
           <span v-else>0</span>
           <p>glimpsers</p>
         </ion-col>
@@ -145,6 +138,10 @@ const handleRefresh = (event: CustomEvent) => {
   import { flagOutline, settingsOutline, addOutline, checkmark } from 'ionicons/icons';
   import PlaceCard from '@/components/PlaceCard.vue';
   import UserViewSkeleton from '@/components/skeletons/UserViewSkeleton.vue';
+  import FollowButton from '@/components/FollowButton.vue';
+  import { usePlaceStore } from '@/stores';
+  
+  const store = usePlaceStore();
 
   export default {
     components: {
@@ -159,7 +156,8 @@ const handleRefresh = (event: CustomEvent) => {
     IonToast,
     IonRefresher,
     IonRefresherContent,
-  },
+    FollowButton
+},
 
     data() {
       return {
@@ -171,6 +169,23 @@ const handleRefresh = (event: CustomEvent) => {
         connectedUserId: parseInt(`${localStorage.getItem('userId')}`),
       };
     },
+    methods: {
+      isFollowed(userId: number) {
+        const connectedUserId = Number(localStorage.getItem('userId'));
+        const userProfile = store.getUser(userId);
+
+        if (connectedUserId == userProfile?.id) {
+          console.log('same user');
+          return false;
+        }
+        else if(userProfile?.Followers?.find((follower) => follower.id == connectedUserId)) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+    }
 
   };
   
