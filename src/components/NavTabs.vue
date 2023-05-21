@@ -48,8 +48,23 @@
   </script>
 
 <style scoped>
-ion-tab-button {
-  --color-selected: var(--ion-color-primary);
-}
+  ion-tab-button {
+    --color-selected: var(--ion-color-primary);
+  }
+  ion-tab-button.tab-selected ion-icon {
+    color: var(--ion-color-primary);
+  }
+  ion-tab-button.tab-selected::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--ion-color-primary);
+    position: relative;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
 </style>
