@@ -24,7 +24,7 @@
       position="bottom"
       color="danger"
       :duration="4000"
-      @ionToastDidDismiss="store.fetchError = null"
+      @ionToastDidDismiss="store.fetchError = ''"
       v-if="store.fetchError"
     ></ion-toast>
     <ion-toast
@@ -32,7 +32,7 @@
       position="bottom"
       color="success"
       :duration="4000"
-      @ionToastDidDismiss="store.successMessage = null"
+      @ionToastDidDismiss="store.successMessage = ''"
       v-if="store.successMessage"
     ></ion-toast>
 </template>
