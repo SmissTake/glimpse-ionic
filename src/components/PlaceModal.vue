@@ -270,6 +270,11 @@
     font: var(--ion-text-paragraph);
   }
 
+  .history {
+    margin-top: 10px;
+    font: var(--ion-text-paragraph);
+  }
+
   .flex {
     display: flex;
     flex-direction: column;

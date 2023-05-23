@@ -121,8 +121,8 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-button type="submit" expand="block" v-if="!store.fetchError">Publier</ion-button>
-        <ion-button type="submit" expand="block" v-if="store.fetchError || canSubmit" disabled onClick="presentErrorToast">Publier</ion-button>
+        <ion-button type="submit" expand="block" class="custom" v-if="!store.fetchError">Publier</ion-button>
+        <ion-button type="submit" expand="block" class="custom" v-if="store.fetchError || canSubmit" disabled onClick="presentErrorToast">Publier</ion-button>
       </form>
       <ion-toast
       :message="store.fetchError"
@@ -354,6 +354,7 @@ ion-radio-group {
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin:auto;
 }
 
 ion-img {

@@ -60,7 +60,7 @@ const handleRefresh = (event: CustomEvent) => {
           </ion-row>
         </ion-row>
 
-        <ion-button expand="full" color="primary" fill="solid">
+        <ion-button expand="block" class="custom" style="margin: 20px;">
           <ion-icon :icon="earth" slot="start"></ion-icon>
           Fais-moi rêver !
         </ion-button>

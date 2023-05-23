@@ -72,7 +72,7 @@ const handleRefresh = (event: CustomEvent) => {
       </ion-row>
       <ion-row class="ion-justify-content-center" v-if="user.id == connectedUserId">
         <router-link to="/add">
-          <ion-button color="primary" expand="block">
+          <ion-button class="custom">
             <ion-icon :icon="addOutline"></ion-icon>
             Publier une nouvelle experience
           </ion-button>

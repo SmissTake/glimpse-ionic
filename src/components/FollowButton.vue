@@ -1,15 +1,15 @@
 <template>
     <div v-if="!isFollowed">
-      <ion-button @click="follow">
+      <ion-button @click="follow" class="custom">
         Suivre
       </ion-button>
     </div>
     <div v-else :class="'follow-button'">
-      <ion-button @click="unfollow" fill="outline">
+      <ion-button @click="unfollow" fill="outline" class="custom outline">
         Suivi
         <ion-icon :icon="checkmarkOutline"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button class="custom">
         <ion-icon :icon="sendOutline"></ion-icon>
       </ion-button>
     </div>

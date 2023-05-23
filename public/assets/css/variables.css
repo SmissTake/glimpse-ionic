@@ -77,9 +77,24 @@
     margin-top: 1em;
   }
 
+/* ion button not outline: color white */
+  ion-button.custom {
+    --color: #fff;
+    text-transform: none;
+    --border-radius: 0.7em;
+    height: 3em;
+    font-weight: 500;
+  }
+
+  ion-button.custom.outline {
+    --background: white;
+    color: var(--ion-color-primary);
+  }
+
   h2 {
     font: var(--ion-title-small);
     padding-left: 1em;
+    margin-bottom: 0;
   }
 
   .slider {
@@ -88,3 +103,8 @@
     flex-wrap: nowrap;
     gap: 0.4em;
   }
+
+  ::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none;
+}
