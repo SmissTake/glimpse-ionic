@@ -85,6 +85,7 @@ export default defineComponent({
             .then((response) => response.json())
             .then((data) => {
                 store.setSuccessMessage("Votre commentaire a bien été ajouté !");
+                this.commentForm = { ...this.commentForm, comment: '' };
                 console.log('Success:', data);
                 //reset the success message after toast duration
                 setTimeout(() => {

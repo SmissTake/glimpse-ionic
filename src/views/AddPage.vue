@@ -179,7 +179,6 @@ export default defineComponent({
         accessibilitiesId: '',
         keyword: "",
         image: [] as File[],
-        usersId: `${process.env.VUE_APP_USER_ID}`,
       },
       fileName: '',
       filePreview: [] as string[],
@@ -241,6 +240,18 @@ export default defineComponent({
       for (const value of data.values()) {
         console.log(value);
       }
+      // on sumbit, clear the form
+      this.form = {
+        title: "",
+        description: "",
+        history: "",
+        town: "",
+        categoriesId: '',
+        accessibilitiesId: '',
+        keyword: "",
+        image: [] as File[],
+      };
+      this.filePreview = [];
 
       // fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
       //   method: 'POST',
