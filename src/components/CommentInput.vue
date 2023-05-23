@@ -61,6 +61,7 @@ export default defineComponent({
             required: true,
         },
     },
+    emits: ['commentPosted'],
     methods: {
         onInput(event: any) {
             const name = event.target.name;
@@ -87,6 +88,7 @@ export default defineComponent({
                 store.setSuccessMessage("Votre commentaire a bien été ajouté !");
                 this.commentForm = { ...this.commentForm, comment: '' };
                 console.log('Success:', data);
+                this.$emit('commentPosted');
                 //reset the success message after toast duration
                 setTimeout(() => {
                     store.setSuccessMessage("");

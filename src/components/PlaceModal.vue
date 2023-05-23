@@ -74,7 +74,7 @@
           <hr>
           <div class="comments">
             <h2>Commentaires</h2>
-            <CommentInput :idPlace="placeId"/>
+            <CommentInput :idPlace="placeId" @commentPosted="fetchPlace()"/>
             <div v-if="place.Comments">
               <p>
                 {{ place.Comments.length }} commentaire(s)
