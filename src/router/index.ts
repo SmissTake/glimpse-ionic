@@ -48,6 +48,7 @@ const routes: Array<RouteRecordRaw> = [
           const store = usePlaceStore();
           await store.fetchPlaces();
           await store.fetchCategories();
+          await store.fetchUser(parseInt(`${localStorage.getItem('userId')}`));
           next();
         },
       },

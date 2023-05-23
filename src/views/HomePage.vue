@@ -6,6 +6,10 @@ const handleRefresh = (event: CustomEvent) => {
   store.fetchCategories().then(() => {
     event.detail.complete();
   });
+  const userId = parseInt(localStorage.getItem('userId') || '0');
+  store.fetchUser(userId).then(() => {
+    event.detail.complete();
+  });
 };
 </script>
 
