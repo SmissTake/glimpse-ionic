@@ -18,7 +18,10 @@ const accessibilities: Accessibility[] = store.accessibilities;
         <ion-item>
           <div v-if="filePreview" >
             <div class="dropper">
-              <ion-img v-for="file in filePreview" :key=file :src="file" alt="fileName" class="image" style="max-height: 256px"/>
+              <div v-for="(preview, index) in filePreview" :key="index" class="preview">
+                <ion-img :src="preview" class="preview-image"  alt="fileName" style="max-height: 256px"></ion-img>
+                <ion-icon :icon="closeCircle" class="preview-remove" @click="removeFile(index)"></ion-icon>
+              </div>
             </div>
           </div>
           <div class="add-image">
@@ -135,7 +138,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
 <script lang="ts">
 import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { addOutline, accessibilityOutline } from 'ionicons/icons';
+import { addOutline, accessibilityOutline, closeCircle } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
 import { logout } from '@/utils/auth';
 
@@ -182,12 +185,20 @@ export default defineComponent({
       filePreview: [] as string[],
       addOutline,
       accessibilityOutline,
+      closeCircle,
       canSubmit : false,
     }
   },
   methods: {
     getFile(event: any){
       const files: CustomFile[] = event.target.files;
+      if (files.length > 8 || this.form.image.length > 8) {
+        store.fetchError = 'Vous ne pouvez pas ajouter plus de 8 images';
+        setTimeout(() => {
+          store.setFetchError("");
+        }, 4000);
+        return;
+      }
       for (let i = 0; i < files.length; i++) {
         const file: CustomFile = files[i];
         const reader: FileReader = new FileReader();
@@ -206,6 +217,10 @@ export default defineComponent({
           };
         }
       }
+    },
+    removeFile(index:any) {
+      this.filePreview.splice(index, 1);
+      this.form.image.splice(index, 1);
     },
     submitForm() {
       const data = new FormData();
@@ -323,6 +338,16 @@ ion-radio-group {
   overflow-y: auto;
 }
 
+.preview-remove {
+  position: relative;
+  bottom: 80%;
+  left: 0;
+  font-size: 24px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
 .add-image {
   display: flex;
   flex-direction: column;
