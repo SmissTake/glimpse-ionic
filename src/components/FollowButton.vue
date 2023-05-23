@@ -34,11 +34,11 @@
       },
       sendOutline : {
         type: String,
-        default: '',
+        default: sendOutline,
       },
       checkmarkOutline : {
         type: String,
-        default: '',
+        default: checkmarkOutline,
       },
       userId: {
         type: Number,
