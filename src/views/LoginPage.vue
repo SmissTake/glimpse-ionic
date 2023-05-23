@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-img src="../public/assets/logo.png" class="logo"></ion-img>
+      <ion-img src="assets/icon/icon.png" class="logo"></ion-img>
       <form @submit.prevent="submitLogin">
         <ion-item class="custom">
           <ion-label position="stacked">Email</ion-label>
@@ -13,6 +13,7 @@
         </ion-item>
         <ion-button type="submit">Se connecter</ion-button>
       </form>
+      <router-link to="/signin" class="center">Pas de compte ? S'inscrire</router-link>
       <ion-toast
         :message="store.fetchError"
         position="bottom"
@@ -116,6 +117,11 @@
     height: 100%;
     --background: linear-gradient(180deg, #90A855 10.42%, #1D1D1B 100%);
   }
+  .logo{
+    width: 50%;
+    margin: 25% auto auto auto; 
+    display: block;
+  }
 
   form {
     display: flex;
@@ -123,7 +129,7 @@
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 100%;
+    height: 50%;
     min-width: 300px;
     margin: auto;
   }
@@ -133,5 +139,10 @@
   ion-button {
     --color: #fff;
     margin-top: 2em; 
+  }
+  .center {
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 </style>

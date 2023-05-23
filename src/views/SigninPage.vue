@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-img src="../public/assets/logo.png" class="logo"></ion-img>
+      <ion-img src="assets/icon/icon.png" class="logo"></ion-img>
       <form @submit.prevent="submitLogin">
         <ion-item class="custom">
           <ion-label position="stacked">Nom d'utilisateur</ion-label>
@@ -21,7 +21,7 @@
         </ion-item>
         <ion-button type="submit">En avant !</ion-button>
       </form>
-      <router-link to="/login">Vous connaissez déjà les lieux ? Connectez-vous</router-link>
+      <router-link to="/login" class="center">Vous connaissez déjà les lieux ? Connectez-vous</router-link>
       <ion-toast
         :message="store.fetchError"
         position="bottom"
@@ -148,9 +148,14 @@
     justify-content: center;
     align-items: center;
     width: 80%;
-    height: 90%;
+    height: 60%;
     min-width: 300px;
     margin: auto;
+  }
+  .logo{
+    width: 50%;
+    margin: 25% auto auto auto; 
+    display: block;
   }
   ion-item {
     width: 100%;
@@ -158,5 +163,10 @@
   ion-button {
     --color: #fff;
     margin-top: 2em; 
+  }
+  .center {
+    display: block;
+    width: 100%;
+    text-align: center;
   }
 </style>
