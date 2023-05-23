@@ -94,23 +94,19 @@ const accessibilities: Accessibility[] = store.accessibilities;
             </ion-select-option>
           </ion-select>
         </ion-item>
-
-        <ion-item class="accessibility">
-          <ion-radio-group
+        <ion-item class="custom">
+          <ion-label position="floating">Accessibilité</ion-label>
+          <ion-select
+            placeholder="Choisir une catégorie"
             :required="true"
             :value="form.accessibilitiesId"
             name="accessibilitiesId"
-            @ionInput="onInput($event)">
-          <ion-label>Accessibilité</ion-label>
-          <div class="choices">
-            <ion-item v-for="accessibility in accessibilities" :key="accessibility.id">
-              <ion-label>
-                <ion-icon :icon="accessibilityOutline"></ion-icon>
-              </ion-label>
-              <ion-radio slot="start" :value="accessibility.id"></ion-radio>
-            </ion-item>
-          </div>
-          </ion-radio-group>
+            @ionChange="onInput($event)">
+            <ion-select-option v-for="accessibility in accessibilities" :key="accessibility.id" 
+              :value="accessibility.id">
+              {{ accessibility.label }}
+            </ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item class="custom" :counter="true">
           <ion-label position="floating">Mots-clés</ion-label>
@@ -137,7 +133,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonRadioGroup, IonRadio, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { addOutline, accessibilityOutline } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
@@ -159,8 +155,6 @@ export default defineComponent({
     IonTextarea,
     IonSelect,
     IonSelectOption,
-    IonRadioGroup,
-    IonRadio,
     IonButton,
     IonPage,
     IonToast,
@@ -178,8 +172,8 @@ export default defineComponent({
         description: "",
         history: "",
         town: "",
-        categoriesId: "",
-        accessibilitiesId: "",
+        categoriesId: '',
+        accessibilitiesId: '',
         keyword: "",
         image: [] as File[],
         usersId: `${process.env.VUE_APP_USER_ID}`,
@@ -193,7 +187,9 @@ export default defineComponent({
   },
   methods: {
     getFile(event: any){
-        const file: CustomFile = event.target.files[0];
+      const files: CustomFile[] = event.target.files;
+      for (let i = 0; i < files.length; i++) {
+        const file: CustomFile = files[i];
         const reader: FileReader = new FileReader();
         if (file) {
           reader.readAsDataURL(file);
@@ -209,10 +205,11 @@ export default defineComponent({
             console.log('Error ', error);
           };
         }
+      }
     },
     submitForm() {
       const data = new FormData();
-      data.append('accessibilitiesId', "1");
+      data.append('accessibilitiesId', this.form.accessibilitiesId);
       data.append('categoriesId', this.form.categoriesId);
       data.append('title', this.form.title);
       data.append('description', this.form.description);
@@ -225,45 +222,50 @@ export default defineComponent({
 
       const token = localStorage.getItem('token');
 
-      fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: data,
-      })
-      .then(response => {
-        if (response.status === 401) {
-          throw new Error('Unauthorized');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data); // handle success
-        store.setSuccessMessage("Votre lieu a bien été ajouté !");
-        //reset the success message after toast duration
-        setTimeout(() => {
-          store.setSuccessMessage("");
-        }, 4000);
-        this.$router.push({ path: '/user' });
-      })
-      .catch(error => {
-        console.error(error); // handle error
-        if (error.message === 'Unauthorized') {
-          store.setFetchError("Vous devez être connecté pour ajouter un lieu");
-          //reset the error message after toast duration
-          setTimeout(() => {
-            store.setFetchError("");
-          }, 4000);
-          logout();
-        } else {
-          store.setFetchError("Une erreur est survenue lors de l'ajout de votre lieu");
-          //reset the error message after toast duration
-          setTimeout(() => {
-            store.setFetchError("");
-          }, 4000);
-        }
-      });
+      //console log data values
+      for (const value of data.values()) {
+        console.log(value);
+      }
+
+      // fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Authorization': `Bearer ${token}`,
+      //   },
+      //   body: data,
+      // })
+      // .then(response => {
+      //   if (response.status === 401) {
+      //     throw new Error('Unauthorized');
+      //   }
+      //   return response.json();
+      // })
+      // .then(data => {
+      //   console.log(data); // handle success
+      //   store.setSuccessMessage("Votre lieu a bien été ajouté !");
+      //   //reset the success message after toast duration
+      //   setTimeout(() => {
+      //     store.setSuccessMessage("");
+      //   }, 4000);
+      //   this.$router.push({ path: '/user' });
+      // })
+      // .catch(error => {
+      //   console.error(error); // handle error
+      //   if (error.message === 'Unauthorized') {
+      //     store.setFetchError("Vous devez être connecté pour ajouter un lieu");
+      //     //reset the error message after toast duration
+      //     setTimeout(() => {
+      //       store.setFetchError("");
+      //     }, 4000);
+      //     logout();
+      //   } else {
+      //     store.setFetchError("Une erreur est survenue lors de l'ajout de votre lieu");
+      //     //reset the error message after toast duration
+      //     setTimeout(() => {
+      //       store.setFetchError("");
+      //     }, 4000);
+      //   }
+      // });
     },
     onInput(event: any) {
       const name = event.target.name;
