@@ -44,7 +44,7 @@ const handleRefresh = (event: CustomEvent) => {
         <ion-text>
           <h1>{{ user.pseudonym }}</h1>
         </ion-text>
-        <FollowButton v-if="user.id !== connectedUserId" :initialIsFollowed="isFollowed(userId)" :userId="user.id"/>
+        <FollowButton v-if="user.id !== connectedUserId" :initialIsFollowed="isFollowed(userId)" :userId="user.id" class="follow-button"/>
       </ion-row>
       <ion-row class="ion-justify-content-center row-data">
         <ion-col class="data" size="auto">
@@ -216,6 +216,7 @@ const handleRefresh = (event: CustomEvent) => {
   h1 {
     color: white;
     font: var(--ion-title-medium);
+    margin-left: 20px;
   }
 
   hr {
@@ -256,5 +257,10 @@ const handleRefresh = (event: CustomEvent) => {
   .section {
     display: flex;
     flex-direction: column;
+  }
+
+  .follow-button {
+    margin-top: 10px;
+    margin-left: 10px;
   }
 </style>

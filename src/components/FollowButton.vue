@@ -5,7 +5,7 @@
       </ion-button>
     </div>
     <div v-else :class="'follow-button'">
-      <ion-button @click="unfollow">
+      <ion-button @click="unfollow" fill="outline">
         Suivi
         <ion-icon :icon="checkmarkOutline"></ion-icon>
       </ion-button>
