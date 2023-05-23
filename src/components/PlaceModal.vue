@@ -36,7 +36,7 @@
                   </p>
                 </ion-col>
                 <ion-col>
-                  <LikeButton :placeId="place.id" :initialIsLiked="isFavorited(place.id)" :initialLikeCount="likeCount"></LikeButton>
+                  <LikeButton :placeId="place.id" :initialIsLiked="isFavorited(place.id)" :initialLikeCount="likeCount" :size="'large black'"></LikeButton>
                 </ion-col>
           </ion-row>
           <hr>

@@ -160,7 +160,7 @@
     margin-top: 3px;
   }
 
-  .large ion-icon {
+  .large:not(.black) ion-icon {
     color : #fff;
   }
   </style>
