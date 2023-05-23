@@ -253,45 +253,45 @@ export default defineComponent({
       };
       this.filePreview = [];
 
-      // fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Authorization': `Bearer ${token}`,
-      //   },
-      //   body: data,
-      // })
-      // .then(response => {
-      //   if (response.status === 401) {
-      //     throw new Error('Unauthorized');
-      //   }
-      //   return response.json();
-      // })
-      // .then(data => {
-      //   console.log(data); // handle success
-      //   store.setSuccessMessage("Votre lieu a bien été ajouté !");
-      //   //reset the success message after toast duration
-      //   setTimeout(() => {
-      //     store.setSuccessMessage("");
-      //   }, 4000);
-      //   this.$router.push({ path: '/user' });
-      // })
-      // .catch(error => {
-      //   console.error(error); // handle error
-      //   if (error.message === 'Unauthorized') {
-      //     store.setFetchError("Vous devez être connecté pour ajouter un lieu");
-      //     //reset the error message after toast duration
-      //     setTimeout(() => {
-      //       store.setFetchError("");
-      //     }, 4000);
-      //     logout();
-      //   } else {
-      //     store.setFetchError("Une erreur est survenue lors de l'ajout de votre lieu");
-      //     //reset the error message after toast duration
-      //     setTimeout(() => {
-      //       store.setFetchError("");
-      //     }, 4000);
-      //   }
-      // });
+      fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: data,
+      })
+      .then(response => {
+        if (response.status === 401) {
+          throw new Error('Unauthorized');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data); // handle success
+        store.setSuccessMessage("Votre lieu a bien été ajouté !");
+        //reset the success message after toast duration
+        setTimeout(() => {
+          store.setSuccessMessage("");
+        }, 4000);
+        this.$router.push({ path: '/user' });
+      })
+      .catch(error => {
+        console.error(error); // handle error
+        if (error.message === 'Unauthorized') {
+          store.setFetchError("Vous devez être connecté pour ajouter un lieu");
+          //reset the error message after toast duration
+          setTimeout(() => {
+            store.setFetchError("");
+          }, 4000);
+          logout();
+        } else {
+          store.setFetchError("Une erreur est survenue lors de l'ajout de votre lieu");
+          //reset the error message after toast duration
+          setTimeout(() => {
+            store.setFetchError("");
+          }, 4000);
+        }
+      });
     },
     onInput(event: any) {
       const name = event.target.name;
