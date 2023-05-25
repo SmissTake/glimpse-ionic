@@ -102,8 +102,30 @@ const routes: Array<RouteRecordRaw> = [
             console.error(error);
             next(false);
           }
+        },
+      },
+      {
+        path: 'params',
+        name: 'params',
+        component: () => import('../views/ParametersPage.vue'),
+        beforeEnter: async (to, from, next) => {
+          const store = usePlaceStore();
+          const userId = to.params.id ? parseInt(`${to.params.id}`) : parseInt(`${localStorage.getItem('userId')}`);
+          try {
+            const userExists = store.users.find((user) => user.id === userId);
+      
+            if (userExists) {
+              next();
+            } else {
+              await store.fetchUser(userId);
+              next();
+            }
+          } catch (error) {
+            console.error(error);
+            next(false);
+          }
         }
-      }
+      },
     ],
   },
 ];

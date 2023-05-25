@@ -26,9 +26,11 @@ const handleRefresh = (event: CustomEvent) => {
       <div class="header">
       <ion-row class="ion-justify-content-end dark banner" >
         <ion-col size="2">
-          <ion-button size="small" v-if="user.id == connectedUserId">
+          <router-link :to="{ name: 'params' }" v-if="user.id == connectedUserId">
+          <ion-button size="small">
             <ion-icon :icon="settingsIcon"></ion-icon>
           </ion-button>
+        </router-link>
           <ion-button size="small" color="danger" v-else>
             <ion-icon :icon="flagIcon"></ion-icon>
           </ion-button>
