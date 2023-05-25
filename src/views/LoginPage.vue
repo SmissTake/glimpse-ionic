@@ -11,7 +11,10 @@
           <ion-label position="stacked">Mot de passe</ion-label>
           <ion-input type="password" v-model="loginForm.password"></ion-input>
         </ion-item>
-        <ion-button type="submit">Se connecter</ion-button>
+        <ion-button type="submit" :disabled="isSubmitting">
+          <span v-if="!isSubmitting">Se connecter</span>
+          <ion-spinner v-if="isSubmitting"></ion-spinner>
+        </ion-button>
       </form>
       <router-link to="/signin" class="center">Pas de compte ? S'inscrire</router-link>
       <ion-toast
@@ -36,6 +39,7 @@
     IonButton,
     IonToast,
     IonImg,
+    IonSpinner,
   } from "@ionic/vue";
   import { defineComponent } from "vue";
   import { usePlaceStore } from "@/stores";
@@ -52,7 +56,8 @@
       IonInput,
       IonButton,
       IonToast,
-      IonImg
+      IonImg,
+      IonSpinner
     },
     data() {
       return {
@@ -61,10 +66,21 @@
           password: "",
         },
         store,
+        isSubmitting: false,
       };
     },
     methods: {
       submitLogin() {
+        this.isSubmitting = true;
+
+        if (this.loginForm.email === "" || this.loginForm.password === "") {
+          store.fetchError = "Veuillez remplir tous les champs";
+          setTimeout(() => {
+            store.setFetchError("");
+          }, 4000);
+          this.isSubmitting = false;
+          return;
+        }
         const data = {
           mail: this.loginForm.email,
           password: this.loginForm.password,
@@ -106,6 +122,9 @@
           })
           .catch((error) => {
             store.fetchError = error;
+          })
+          .finally(() => {
+            this.isSubmitting = false;
           });
       },
     },

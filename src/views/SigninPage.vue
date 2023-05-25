@@ -19,7 +19,10 @@
           <ion-label position="stacked">Confirmez le mot de passe</ion-label>
           <ion-input type="password" v-model="checkPassword"></ion-input>
         </ion-item>
-        <ion-button type="submit">En avant !</ion-button>
+        <ion-button type="submit" :disabled="isSubmitting">
+          <span v-if="!isSubmitting">En avant !</span>
+          <ion-spinner v-if="isSubmitting"></ion-spinner>
+        </ion-button>
       </form>
       <router-link to="/login" class="center">Vous connaissez déjà les lieux ? Connectez-vous</router-link>
       <ion-toast
@@ -44,6 +47,7 @@
     IonButton,
     IonToast,
     IonImg,
+    IonSpinner
   } from "@ionic/vue";
   import { defineComponent } from "vue";
   import { usePlaceStore } from "@/stores";
@@ -60,7 +64,8 @@
       IonInput,
       IonButton,
       IonToast,
-      IonImg
+      IonImg,
+      IonSpinner
     },
     data() {
       return {
@@ -71,11 +76,13 @@
         },
         checkPassword: "",
         store,
+        isSubmitting: false,
       };
     },
     methods: {
       submitLogin() {
         if(this.validForm()){
+          this.isSubmitting = true;
           const data = {
             pseudonym: this.loginForm.pseudonym,
             mail: this.loginForm.email,
@@ -108,6 +115,9 @@
             })
             .catch((error) => {
               store.fetchError = error;
+            })
+            .finally(() => {
+              this.isSubmitting = false;
             });
         }
       },
@@ -129,6 +139,10 @@
           }
         }
         else {
+          store.fetchError = "Veuillez remplir tous les champs";
+          setTimeout(() => {
+            store.setFetchError("");
+          }, 4000);
           return false;
         }
       }

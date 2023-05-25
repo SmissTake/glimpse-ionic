@@ -124,8 +124,10 @@ const accessibilities: Accessibility[] = store.accessibilities;
             @ionInput="onInput($event)"
           ></ion-textarea>
         </ion-item>
-        <ion-button type="submit" expand="block" class="custom" v-if="!store.fetchError">Publier</ion-button>
-        <ion-button type="submit" expand="block" class="custom" v-if="store.fetchError || canSubmit" disabled onClick="presentErrorToast">Publier</ion-button>
+        <ion-button type="submit" :disabled="!isFormValid || isSubmitting" expand="block" class="custom">
+          <span v-if="!isSubmitting">Publier</span>
+          <ion-spinner v-if="isSubmitting"></ion-spinner>
+        </ion-button>
       </form>
       <ion-toast
       :message="store.fetchError"
@@ -140,7 +142,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
   </ion-page>
 </template>
 <script lang="ts">
-import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
+import { IonPage, IonContent, IonItem, IonLabel, IonInput, IonTextarea, IonSelect, IonSelectOption, IonButton, IonToast, IonImg, IonNote, IonHeader, IonToolbar, IonTitle, IonIcon, IonSpinner } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { addOutline, accessibilityOutline, closeCircle } from 'ionicons/icons';
 import { usePlaceStore } from '@/stores';
@@ -170,7 +172,8 @@ export default defineComponent({
     IonHeader,
     IonToolbar,
     IonTitle,
-    IonIcon
+    IonIcon,
+    IonSpinner
   },
   data(){
     return {
@@ -190,6 +193,7 @@ export default defineComponent({
       accessibilityOutline,
       closeCircle,
       canSubmit : false,
+      isSubmitting: false,
     }
   },
   methods: {
@@ -226,6 +230,8 @@ export default defineComponent({
       this.form.image.splice(index, 1);
     },
     submitForm() {
+      this.isSubmitting = true;
+
       const data = new FormData();
       data.append('accessibilitiesId', this.form.accessibilitiesId);
       data.append('categoriesId', this.form.categoriesId);
@@ -239,23 +245,6 @@ export default defineComponent({
       }
 
       const token = localStorage.getItem('token');
-
-      //console log data values
-      for (const value of data.values()) {
-        console.log(value);
-      }
-      // on sumbit, clear the form
-      this.form = {
-        title: "",
-        description: "",
-        history: "",
-        town: "",
-        categoriesId: '',
-        accessibilitiesId: '',
-        keyword: "",
-        image: [] as File[],
-      };
-      this.filePreview = [];
 
       fetch(`${process.env.VUE_APP_API_URL}/place/create`, {
         method: 'POST',
@@ -272,6 +261,7 @@ export default defineComponent({
       })
       .then(data => {
         console.log(data); // handle success
+        this.clearForm();
         store.setSuccessMessage("Votre lieu a bien été ajouté !");
         //reset the success message after toast duration
         setTimeout(() => {
@@ -295,6 +285,9 @@ export default defineComponent({
             store.setFetchError("");
           }, 4000);
         }
+      })
+      .finally(() => {
+        this.isSubmitting = false;
       });
     },
     onInput(event: any) {
@@ -302,7 +295,25 @@ export default defineComponent({
       const value = event.target.value;
       this.form = { ...this.form, [name]: value };
     },
+    clearForm() {
+      this.form = {
+        title: "",
+        description: "",
+        history: "",
+        town: "",
+        categoriesId: '',
+        accessibilitiesId: '',
+        keyword: "",
+        image: [] as File[],
+      };
+      this.filePreview = [];
+    }
   },
+  computed: {
+    isFormValid() {
+      return this.form.title && this.form.description && this.form.history && this.form.town && this.form.categoriesId && this.form.accessibilitiesId && this.form.keyword && this.form.image.length > 0;
+    }
+  }
 });
 
 </script>
