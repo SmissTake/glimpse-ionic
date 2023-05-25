@@ -42,7 +42,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </div>
         </ion-item>
         <ion-item class="custom" :counter="true">
-          <ion-label position="floating">Titre</ion-label>
+          <ion-label position="stacked">Titre</ion-label>
           <ion-input
             placeholder="Batiment abondonné"
             :required="true"
@@ -54,8 +54,9 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-input>
         </ion-item>
         <ion-item class="custom">
-          <ion-label position="floating">Description</ion-label>
+          <ion-label position="stacked">Description</ion-label>
           <ion-textarea
+            :autoGrow="true"
             placeholder="Un batiment abandonné dans la ville de Lyon"
             :required="true"
             :value="form.description"
@@ -64,8 +65,9 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-textarea>
         </ion-item>
         <ion-item class="custom">
-          <ion-label position="floating">Histoire</ion-label>
+          <ion-label position="stacked">Histoire</ion-label>
           <ion-textarea
+            :autoGrow="true"
             placeholder="Ce batiment a été construit en 1900 par l'architecte ..."
             :value="form.history"
             name="history"
@@ -73,7 +75,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-textarea>
         </ion-item>
         <ion-item class="custom" :counter="true">
-          <ion-label position="floating">Ville</ion-label>
+          <ion-label position="stacked">Ville</ion-label>
           <ion-input
             type="text"
             placeholder="Lyon"
@@ -84,7 +86,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
           ></ion-input>
         </ion-item>
         <ion-item class="custom">
-          <ion-label position="floating">Catégorie</ion-label>
+          <ion-label position="stacked">Catégorie</ion-label>
           <ion-select
             placeholder="Choisir une catégorie"
             :required="true"
@@ -98,7 +100,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </ion-select>
         </ion-item>
         <ion-item class="custom">
-          <ion-label position="floating">Accessibilité</ion-label>
+          <ion-label position="stacked">Accessibilité</ion-label>
           <ion-select
             placeholder="Choisir une catégorie"
             :required="true"
@@ -112,8 +114,9 @@ const accessibilities: Accessibility[] = store.accessibilities;
           </ion-select>
         </ion-item>
         <ion-item class="custom" :counter="true">
-          <ion-label position="floating">Mots-clés</ion-label>
+          <ion-label position="stacked">Mots-clés</ion-label>
           <ion-textarea
+            :autoGrow="true"
             placeholder="Mots-clés séparés par des virgules. Ex : batiment, abandonné, Lyon"
             :value="form.keyword"
             name="keyword"
@@ -128,6 +131,7 @@ const accessibilities: Accessibility[] = store.accessibilities;
       :message="store.fetchError"
       position="bottom"
       color="danger"
+      class="mb"
       :duration="4000"
       @ionToastDidDismiss="store.fetchError == null"
       v-if="store.fetchError"
