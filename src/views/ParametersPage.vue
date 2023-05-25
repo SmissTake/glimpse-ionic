@@ -69,6 +69,7 @@
   import { usePlaceStore } from "@/stores";
   import PlaceItemManage from "@/components/PlaceItemManage.vue";
   import { Place } from "@/interfaces/place.interface";
+  import { logout as logoutAction } from "@/utils/auth";
 
   const store = usePlaceStore();
 
@@ -113,7 +114,7 @@
       };
 
       const logout = () => {
-        // Implement logout logic here
+        logoutAction();
       };
 
       return {
