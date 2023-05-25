@@ -86,5 +86,18 @@ export const usePlaceStore = defineStore("places", {
         setSuccessMessage(message: string) {
             this.successMessage = message;
         },
+        deletePostedPlace(id: number) {
+            // delete de place from connected user.posted
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                const user = this.getUser(parseInt(userId));
+                if (user && user.posted) {
+                    const index = user.posted.findIndex((place) => place.id === id);
+                    if (index !== -1) {
+                        user.posted.splice(index, 1);
+                    }
+                }
+            }
+        },
     }
 })
