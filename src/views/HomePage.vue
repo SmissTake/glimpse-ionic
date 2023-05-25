@@ -17,7 +17,7 @@ const handleRefresh = (event: CustomEvent) => {
   <ion-page>
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-searchbar class="custom" animated="true" placeholder="Rechercher"></ion-searchbar>
+        <ion-searchbar class="custom" :animated="true" placeholder="Rechercher"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
     <ion-content v-if="!store.fetchError">
