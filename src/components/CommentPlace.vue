@@ -7,7 +7,7 @@
             </ion-col>
             <ion-col>
                 <p class="username">
-                    {{ CommentPlace.postedBy.pseudonym }}
+                    <router-link :to="{ name: 'user', params: { id: CommentPlace.postedBy.id } }">{{ CommentPlace.postedBy.pseudonym }}</router-link>
                 </p>
                 <p class="comment">
                     {{ CommentPlace.comment }}
