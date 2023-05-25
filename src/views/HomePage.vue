@@ -79,7 +79,7 @@ const handleRefresh = (event: CustomEvent) => {
       <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-      <PlaceCardSkeleton v-for="n in 10" :key="n" />
+      <FeedSkeleton />
       <ion-toast
       :message="store.fetchError"
       position="bottom"
@@ -94,7 +94,6 @@ const handleRefresh = (event: CustomEvent) => {
 <script lang="ts">
 import PlaceCard from '@/components/PlaceCard.vue';
 import CategoryLink from '@/components/CategoryLink.vue';
-import PlaceCardSkeleton from '@/components/skeletons/PlaceCardSkeleton.vue';
 import { IonHeader, IonToolbar, IonSearchbar, IonPage, IonContent, IonToast, IonRefresher, IonRefresherContent, IonRow, IonCol, IonButton, IonIcon } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { earth } from 'ionicons/icons';
@@ -102,6 +101,7 @@ import { usePlaceStore } from '@/stores';
 import { Place } from '@/interfaces/place.interface';
 import { Category } from '@/interfaces/category.interface';
 import CategoryCard from '@/components/CategoryCard.vue';
+import FeedSkeleton from '@/components/skeletons/FeedSkeleton.vue';
 
 const store = usePlaceStore();
 
@@ -121,7 +121,8 @@ export default defineComponent({
     IonRow,
     IonCol,
     IonButton,
-    CategoryCard
+    CategoryCard,
+    FeedSkeleton
 },
   data() {
     return {

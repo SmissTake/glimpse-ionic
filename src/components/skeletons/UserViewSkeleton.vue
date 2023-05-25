@@ -14,26 +14,24 @@
           </ion-avatar>
         </ion-row>
         <ion-row class="ion-justify-content-center ion-align-items-center">
-          <ion-text>
-            <h1>
-                <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
-            </h1>
-          </ion-text>
+          <h1 style="width: 100%;">
+              <ion-skeleton-text animated style="width: 50%; height: 2em; margin: auto;"></ion-skeleton-text>
+          </h1>
         </ion-row>
         <ion-row>
-          <ion-col>
+          <ion-col style="margin-left: 1em;">
             <span>
-                <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 80%; height: 2em;"></ion-skeleton-text>
             </span>
           </ion-col>
           <ion-col>
             <span>
-                <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 80%; height: 2em;"></ion-skeleton-text>
             </span>
           </ion-col>
           <ion-col>
             <span>
-                <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
+                <ion-skeleton-text animated style="width: 80%; height: 2em;"></ion-skeleton-text>
             </span>
           </ion-col>
         </ion-row>
@@ -41,64 +39,22 @@
           <ion-col>
             <ion-text>
               <p class="biography">
-                <ion-skeleton-text :animated="true" width="100%" />
-                <ion-skeleton-text :animated="true" width="80%" />
+                <ion-skeleton-text :animated="true" style="width: 60%; height: 1em;" />
+                <ion-skeleton-text :animated="true" style="width: 40%; height: 1em;" />
               </p>
             </ion-text>
           </ion-col>
         </ion-row>
       </div>
-      <div class="body">
-        <ion-row>
-          <h2>
-            <ion-skeleton-text animated style="width: 100%; height: 20px;"></ion-skeleton-text>
-          </h2>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="n in 5" :key="n" >
-            <PlaceCardSkeleton/>
-          </swiper-slide>
-          </swiper>
-        </ion-row>
-        <ion-row>
-          <h2>
-            <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
-          </h2>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="n in 5" :key="n" >
-            <PlaceCardSkeleton/>
-          </swiper-slide>
-          </swiper>
-        </ion-row>
-        <ion-row>
-          <h2>
-            <ion-skeleton-text animated style="width: 100%; height: 100%;"></ion-skeleton-text>
-          </h2>
-          <swiper
-          :freemode="true"
-          :modules="modules">
-          <swiper-slide v-for="n in 5" :key="n" >
-            <PlaceCardSkeleton/>
-          </swiper-slide>
-          </swiper>
-        </ion-row>
-      </div>
+      <FeedSkeleton />
       </ion-content>
     </ion-page>
   </template>
 
 <script lang="ts">
 import { IonContent, IonPage, IonRow, IonCol, IonAvatar, IonSkeletonText, IonText } from '@ionic/vue';
-import PlaceCardSkeleton from '@/components/skeletons/PlaceCardSkeleton.vue';
-import { Swiper,SwiperSlide } from 'swiper/vue';
-import { FreeMode } from 'swiper';
-import 'swiper/css';
+import FeedSkeleton from '@/components/skeletons/FeedSkeleton.vue';
 import { defineComponent } from 'vue';
-
-import 'swiper/css/free-mode';
 
 export default defineComponent ({
   name: 'UserViewSkeleton',
@@ -108,16 +64,32 @@ export default defineComponent ({
     IonRow,
     IonCol,
     IonAvatar,
-    Swiper,
-    SwiperSlide,
     IonSkeletonText,
     IonText,
-    PlaceCardSkeleton
+    FeedSkeleton
   },
-    data() {
-        return {
-        modules: [FreeMode]
-        }
-    }
 });
 </script>
+
+<style scoped>
+ion-card {
+  border-radius: 16px;
+  margin-inline: 0;
+}
+h1 {
+  font: var(--ion-title-medium);
+}
+h2 {
+  font: var(--ion-title-small);
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  padding-left: 0;
+  width: 100%;
+  margin-left: 20px;
+}
+.biography {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+</style>

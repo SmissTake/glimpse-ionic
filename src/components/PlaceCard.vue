@@ -153,7 +153,6 @@ ion-card-subtitle {
 }
 
 ion-card {
-  max-width: 400px;
   border-radius: 0.5rem;
   margin-inline: 0;
 }
