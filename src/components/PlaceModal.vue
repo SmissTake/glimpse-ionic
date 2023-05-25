@@ -222,10 +222,9 @@
         })
         .catch((error) => {
           console.error(error);
+          store.setFetchError("Erreur lors du chargement du lieu")
+          this.setLoaded(false);
         })
-        .finally(() => {
-          this.setLoaded(true);
-        });
       }
     }
   });
