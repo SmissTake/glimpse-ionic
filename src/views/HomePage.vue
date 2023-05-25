@@ -64,6 +64,16 @@ const handleRefresh = (event: CustomEvent) => {
           <ion-icon :icon="earth" slot="start"></ion-icon>
           Fais-moi rêver !
         </ion-button>
+        <ion-toast
+          :message="store.successMessage"
+          position="bottom"
+          color="success"
+          class="mb"
+          :duration="4000"
+          @ionToastDidDismiss="store.successMessage = ''"
+          cssClass="toast"
+          v-if="store.successMessage"
+        ></ion-toast>
     </ion-content>
     <ion-content v-else>
       <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
