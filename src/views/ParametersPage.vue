@@ -95,7 +95,6 @@
     setup() {
       const parameters = ref([
         { id: 1, name: "Modifier mon profil", content: "Content 1" },
-        { id: 2, name: "Gérer mes lieux", content: "Content 2" },
         { id: 3, name: "Conditions d'utilisation", content: "Content 3" },
         { id: 4, name: "Politique de confidentialité", content: "Content 4" },
         { id: 5, name: "A propos", content: "Content 5" },
