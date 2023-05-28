@@ -28,7 +28,7 @@
                   <UserAvatar v-if="place.postedBy.avatar" :userAvatar="imageSource+'/'+place.postedBy.avatar" />
                   <UserAvatar v-else :userAvatar="'https://ionicframework.com/docs/img/demos/avatar.svg'" />
                 <ion-col>
-                  <p class="username">
+                  <p class="username" @click="$emit('close')">
                     <router-link :to="{ name: 'user', params: { id: place.postedBy.id } }">{{ place.postedBy.pseudonym }}</router-link>
                   </p>
                   <p class="posted-at">
@@ -72,7 +72,7 @@
             <ShareButton :place="place" />
           </div>
           <hr>
-          <div class="comments">
+          <div class="comments" style="margin-bottom: 2em;">
             <h2>Commentaires</h2>
             <CommentInput :idPlace="placeId" @commentPosted="fetchPlace()"/>
             <div v-if="place.Comments">
@@ -80,7 +80,7 @@
                 {{ place.Comments.length }} commentaire(s)
               </p>
               <div v-for="comment in place.Comments" :key="comment.id">
-                <CommentPlace :CommentPlace="comment" />
+                <CommentPlace :CommentPlace="comment" @username-clicked="$emit('close')"/>
               </div>
             </div>
             <div v-else>

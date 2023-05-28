@@ -6,7 +6,7 @@
                 <UserAvatar v-else userAvatar="https://www.bsn.eu/wp-content/uploads/2016/12/user-icon-image-placeholder-300-grey.jpg" />
             </ion-col>
             <ion-col>
-                <p class="username">
+                <p class="username" @click="$emit('username-clicked')">
                     <router-link :to="{ name: 'user', params: { id: CommentPlace.postedBy.id } }">{{ CommentPlace.postedBy.pseudonym }}</router-link>
                 </p>
                 <p class="comment">
