@@ -108,3 +108,7 @@
 *::-webkit-scrollbar {
   display: none;
 }
+
+ion-skeleton-text {
+  --border-radius: 16px;
+}
