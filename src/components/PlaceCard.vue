@@ -10,7 +10,7 @@
           <LikeButton class="like-button" :placeId="place.id" :initialIsLiked="isFavorited(place.id)" :size="'large'"></LikeButton>
         </ion-col>
       </ion-row>
-      <ion-row class="titles">
+      <ion-row class="titles" @click="cardClicked">
         <ion-card-title>{{ place.title }}</ion-card-title>
         <ion-card-subtitle>{{ place.town }}</ion-card-subtitle>
       </ion-row>
@@ -147,6 +147,7 @@ ion-card-content {
 ion-card-title {
   font: var(--ion-title-small);
   color: var(--ion-color-light);
+  text-align: center;
 }
 ion-card-subtitle {
   color: var(--ion-color-light);
