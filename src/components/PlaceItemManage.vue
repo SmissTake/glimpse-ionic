@@ -5,7 +5,7 @@
       </ion-item>
 
       <ion-item-options>
-        <ion-item-option @click="editPlace(placeId)">Modifier</ion-item-option>
+        <ion-item-option style="color: white;" @click="editPlace(placeId)">Modifier</ion-item-option>
         <ion-item-option color="danger" @click="deletePlace(placeId)">Supprimer</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -19,7 +19,6 @@ import { logout } from '@/utils/auth';
 import { usePlaceStore } from '@/stores';
 
 const store = usePlaceStore();
-
 export default defineComponent({
   name: 'PlaceItemManage',
   components: {
@@ -40,6 +39,10 @@ export default defineComponent({
     },
   },
   setup(props) {
+
+    
+    console.log('place', props.placeTitle);
+    console.log('placeId', props.placeId);
     const editPlace = (placeId: number) => {
       console.log('editPlace', placeId);
     };
