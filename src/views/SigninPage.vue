@@ -100,6 +100,7 @@
             .then((data) => {
               if (data.error) {
                 store.fetchError = data.error;
+                this.isSubmitting = false;
                 //reset the error message after toast duration
                 setTimeout(() => {
                   store.setFetchError("");
@@ -111,13 +112,12 @@
                   store.setSuccessMessage("");
                 }, 4000);
                 this.$router.push({ path : '/login'});
+                this.isSubmitting = false;
               }
             })
             .catch((error) => {
-              store.fetchError = error;
-            })
-            .finally(() => {
               this.isSubmitting = false;
+              store.fetchError = error;
             });
         }
       },

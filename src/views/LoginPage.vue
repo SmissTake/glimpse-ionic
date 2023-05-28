@@ -97,6 +97,7 @@
           .then((data) => {
             if (data.error) {
               store.fetchError = data.error;
+              this.isSubmitting = false;
               //reset the success message after toast duration
               setTimeout(() => {
                 store.setFetchError("");
@@ -111,7 +112,9 @@
                 localStorage.setItem("userId", data.id);
                 localStorage.setItem("token", data.token);
                 this.$router.push({ path : '/home'});
+                this.isSubmitting = false;
               } else {
+                this.isSubmitting = false;
                 store.fetchError = "Identifiants incorrects";
                 //reset the success message after toast duration
                 setTimeout(() => {
@@ -122,8 +125,6 @@
           })
           .catch((error) => {
             store.fetchError = error;
-          })
-          .finally(() => {
             this.isSubmitting = false;
           });
       },
