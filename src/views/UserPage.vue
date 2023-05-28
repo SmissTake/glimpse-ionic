@@ -92,7 +92,7 @@ const handleRefresh = (event: CustomEvent) => {
         </ion-row>
       </ion-row>
       <ion-row v-if="user.Visited?.length" class="section">
-        <h2>Lieux visités</h2>
+        <h2>Lieux glimpses</h2>
         <ion-row class="slider">
         <ion-col size="10" v-for="place in user.Visited" :key="place.id">
           <PlaceCard :place="place" />
