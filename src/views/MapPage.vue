@@ -10,7 +10,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <div class="example-content">Like content</div>
+      <div class="example-content">Map content</div>
     </ion-content>
   </ion-page>
 </template>

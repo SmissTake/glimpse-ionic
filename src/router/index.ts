@@ -53,8 +53,8 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
-        path: 'like',
-        component: () => import('../views/LikePage.vue'),
+        path: 'map',
+        component: () => import('../views/MapPage.vue'),
       },
       {
         path: 'add',
